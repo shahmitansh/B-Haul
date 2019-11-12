@@ -1,0 +1,6 @@
+.Footer {
+    background-color: rgb(250, 210, 223);
+    margin-top: 25vh;
+    min-height: 18.5vh;
+    display: flex;
+}

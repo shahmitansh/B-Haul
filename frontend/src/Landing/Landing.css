@@ -1,0 +1,18 @@
+.Body-Prompt {
+    margin-top: 30vh;
+    font-size: 6vh;
+    font-weight: 200;
+    text-align: center;
+  }
+  
+  .Options {
+    margin:2vh 36vw;
+    text-align: left;
+  }
+  
+  .Click {
+    text-align: center;
+    color: maroon;
+    font-weight: 600;
+    font-size: 2.5vh;
+  }
