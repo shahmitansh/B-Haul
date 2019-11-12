@@ -2,7 +2,7 @@ const express = require('express');
 const API_KEY = 'yVorBMk3X9NbVuWK6h9I8TwEDC0hTUgT';
 const request = require('request');
 import Product from './product.js'
-
+import ProductList from './product.js'
 const app = express();
 const port = 3000;
 
@@ -27,4 +27,10 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 	console.log('body:', body); // Print the HTML for the Google homepage.
 	});
+}
+
+
+
+function getProductList(){
+	// return product list
 }
