@@ -4,11 +4,11 @@ import './Landing.css';
 import HeaderBuy from '../Header/HeaderBuy.js';
 import FooterPictures from '../FooterPictures/FooterPictures.js';
 
-import Dropdown from 'react-dropdown'
-import 'react-dropdown/style.css'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const options = [
-  'Table', 'Desk', 'Chair', 'Bed'
+  'Table', 'Desk', 'Bed', 'Chair'
 ]
 const defaultOption = options[0];
 
@@ -17,9 +17,15 @@ export default class Landing extends Component {
         return (
             <div>
                 <HeaderBuy />
-                <div className="Body-Prompt"> What are you looking for? </div>
-                <Dropdown className='Options' options={options} value={defaultOption} placeholder="Select an option" />
-                <div className="Click"> Next > </div>
+                <div className="Landing-Prompt"> What are you looking for? </div>
+                <Dropdown className='Landing-Options' options={options} value={defaultOption} />
+                <div className="Landing-Click"> 
+                    <a  href="localhost:3000/preference"
+                        className="Landing-Color"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        > Next > </a> 
+                </div>
                 <FooterPictures />
             </div>
         )
