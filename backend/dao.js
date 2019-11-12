@@ -1,12 +1,6 @@
 const mongo = require('mongodb').MongoClient
 const assert = require('assert');
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
-
-// Database Name
-const dbName = 'products';
-
 function MongoDao(mongoUri, dbname) {
     var _this = this;
     var options = {
