@@ -1,4 +1,5 @@
-const mongo = require('mongodb').MongoClient
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 const assert = require('assert');
 
 function MongoDao(mongoUri, dbname) {
