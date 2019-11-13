@@ -1,13 +1,24 @@
+const {Product, ProductList} = require('./product.js')
+
 const express = require('express');
 const API_KEY = 'yVorBMk3X9NbVuWK6h9I8TwEDC0hTUgT';
 const request = require('request');
-import Product from './product.js'
-import ProductList from './product.js'
 const app = express();
 const port = 3000;
+const MongoDao = require('./dao.js');
+
+// Connection URL
+let mongoDao = null;
+const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?retryWrites=true&w=majority';
+const dbName = 'bhaul';
 
 app.get('/', (req, res) => res.send('Hello World!'));
-
+app.get('/getProductList', (req, res) => {
+	mongoDao.readCollection('products').toArray((err, items) => {
+		console.log(items);
+		res.send(items);
+	});
+}); 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
 	[req.params["latSrc"], req.params["longSrc"], req.params["latDest"], req.params["longDest"]];
@@ -16,6 +27,7 @@ app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
+initDb();
 
 function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
@@ -30,7 +42,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 }
 
 
-
-function getProductList(){
-	// return product list
+async function initDb() {
+	mongoDao = await new MongoDao(url, dbName);
 }
+
