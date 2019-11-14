@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
+import logo from '../BHaul.png';
 import './HeaderSell.css';
 
-function HeaderSell() {
-    return (
-        <header className="App-header">
-            <p className="Text BHaul">B-HAUL</p>   
-            <div className="Text Buy">  Looking to buy? </div>      
-        </header>
-    )
+export default class HeaderSell extends Component {
+    render() {
+        return (
+            <header className="App-header">
+                <img src={logo} className="Logo" alt="logo" /> 
+                <div className="Text Buy">  Looking to buy? </div>      
+            </header>
+        )
+    }
 }
-
-export default HeaderSell;

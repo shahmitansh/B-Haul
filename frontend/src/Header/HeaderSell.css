@@ -9,16 +9,10 @@
 .Text {
     color: white;
     margin: 2vh 2vw;
-}
-
-.BHaul {
-    font-family:Comic Sans;
-}
-
-.Buy {
     font-style: italic;
 }
 
-.Option {
-    text-align: right;
+.Logo {
+    height: 3vmin;
+    margin: 2vh 1vw;
 }
