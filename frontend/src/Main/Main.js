@@ -22,7 +22,7 @@ export default class Main extends Component {
                       <PreferencePage />
                     </Route>
                     <Route exact path='/map'>
-                      <MapView />
+                      <MapView userLat={this.props.userLat} userLng={this.props.userLng} />
                     </Route>
                 </Switch>
             </Router>

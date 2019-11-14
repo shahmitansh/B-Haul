@@ -36,6 +36,8 @@ class MapView extends React.Component {
           <div id="map">
             <Map
               items={items}
+              userLat={this.props.userLat}
+              userLng={this.props.userLng}
             />
           </div>
         </div>

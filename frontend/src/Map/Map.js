@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMapGL, {Marker, Popup} from 'react-map-gl';
 
 import ListingPin from './ListingPin';
+import UserPin from './UserPin';
 
 class Map extends React.Component {
   state = {
@@ -27,10 +28,20 @@ class Map extends React.Component {
     )
   }
 
+  _renderUserMarker = (lat, lng) => {
+    return (
+      <Marker longitude={lng} latitude={lat}>
+        <UserPin />
+      </Marker>
+    );
+  }
+
   render () {
     const {
       viewport,
     } = this.state
+
+    const [userLat, userLng] = [this.props.userLat, this.props.userLng];
 
     return (
       <ReactMapGL
@@ -42,6 +53,7 @@ class Map extends React.Component {
         mapStyle="mapbox://styles/mapbox/streets-v11"
       >
         {this.props.items.map(this._renderListingMarker)}
+        {(userLat && userLng) && this._renderUserMarker(userLat, userLng)}
       </ReactMapGL>
     )
   }

@@ -7,13 +7,13 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
 
 const pinStyle = {
   cursor: 'pointer',
-  fill: '#d00',
+  fill: '#4c4cff',
   stroke: 'none'
 };
 
-class ListingPin extends React.Component {
+class UserPin extends React.Component {
   render() {
-    const {size = 30} = this.props;
+    const {size = 20} = this.props;
 
     return (
       <svg
@@ -24,11 +24,11 @@ class ListingPin extends React.Component {
           transform: `translate(${-size/2}px, ${-size}px)`
         }}
       >
-        <path d={ICON} />
-        <text x="50%" y="50%" dy="0.1em" className="label-text">{this.props.number}</text>
+        <circle style={{fill:"white"}} cx="12" cy="12" r="12"/>
+        <circle cx="12" cy="12" r="8"/>
       </svg>
     );
   }
 }
 
-export default ListingPin;
+export default UserPin;
