@@ -22,7 +22,7 @@ class MapView extends React.Component {
       }
     };
 
-    const items = [sampleItem, sampleItem];
+    const items = [sampleItem, sampleItem, sampleItem, sampleItem, sampleItem, sampleItem];
 
     return (
       <div id="container">
