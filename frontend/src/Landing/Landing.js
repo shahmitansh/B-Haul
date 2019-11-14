@@ -19,12 +19,12 @@ export default class Landing extends Component {
                 <HeaderBuy />
                 <div className="Landing-Prompt"> What are you looking for? </div>
                 <Dropdown className='Landing-Options' options={options} value={defaultOption} />
-                <div className="Landing-Click"> 
+                <div className="Landing-Click">
                     <a  href="localhost:3000/preference"
                         className="Landing-Color"
                         target="_blank"
                         rel="noopener noreferrer"
-                        > Next > </a> 
+                        > Next > </a>
                 </div>
                 <FooterPictures />
             </div>
