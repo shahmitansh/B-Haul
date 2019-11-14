@@ -10,6 +10,10 @@ class MapView extends React.Component {
     const sampleItem = {
       title: "Small Wooden Dining Table",
       description: "A small wooden dining table.",
+      location: {
+        lat: 34.067138,
+        lng: -118.451128
+      },
       properties: {
         color: "Brown",
         distance: "0.2 mi",
@@ -18,17 +22,21 @@ class MapView extends React.Component {
       }
     };
 
+    const items = [sampleItem, sampleItem];
+
     return (
       <div id="container">
         <HeaderBuy />
         <div id="map-container">
           <div id="sidebar">
             <Sidebar
-              items={[sampleItem]}
+              items={items}
             />
           </div>
           <div id="map">
-            <Map />
+            <Map
+              items={items}
+            />
           </div>
         </div>
       </div>
