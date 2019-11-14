@@ -5,9 +5,10 @@ import SidebarItem from './SidebarItem/SidebarItem';
 
 class Sidebar extends React.Component {
   render() {
-    const sidebarItemList = this.props.items.map((item) =>
+    const sidebarItemList = this.props.items.map((item, index) =>
       <SidebarItem
         item={item}
+        index={index}
       />
     );
 

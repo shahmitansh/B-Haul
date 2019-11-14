@@ -1,6 +1,8 @@
 import React from 'react';
 import './SidebarItem.css';
 
+import CircleLabel from './CircleLabel';
+
 class SidebarItem extends React.Component {
   render() {
     const properties = this.props.item.properties;
@@ -16,6 +18,7 @@ class SidebarItem extends React.Component {
       <div className="sidebar-item">
         <div className="sidebar-picture-container">
           <div className="sidebar-picture"></div>
+          <CircleLabel number={this.props.index+1} />
         </div>
         <div className="sidebar-desc-container">
           <div className="sidebar-desc-title">{this.props.item.title}</div>
