@@ -1,20 +1,24 @@
 .Preference-Prompt {
-    margin-top: 30vh;
-    font-size: 6vh;
-    font-weight: 200;
-    text-align: center;
+  font-size: 6vh;
+  font-weight: 200;
+  text-align: center;
 }
-  
+
 .Preference-Options {
-    margin:2vh 40vw;
+  width: 300px;
+  margin: 0 auto;
 }
-  
+
+.Preference-Options-Container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .Preference-Click {
     text-align: center;
     color: maroon;
     font-weight: 600;
     font-size: 2.5vh;
-    margin-bottom: 18vh;
 }
 
 .Preference-Opts {

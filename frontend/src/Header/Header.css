@@ -1,0 +1,28 @@
+.App-header {
+    background-color: #282c34;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    /* font-size: calc(10px + 2vmin); */
+}
+
+.Logo {
+    height: 25px;
+    margin-left: 25px;
+}
+
+.Text {
+    color: white;
+    font-style: italic;
+    margin-right: 25px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.text-container {
+  display: flex;
+  align-items: center;
+}

@@ -6,9 +6,8 @@ import {
   Link
 } from 'react-router-dom';
 
-import Landing from '../Landing/Landing.js';
-import PreferencePage from '../PreferencePage/PreferencePage.js';
 import MapView from '../MapView/MapView';
+import Home from '../Home/Home';
 
 export default class Main extends Component {
     render() {
@@ -16,10 +15,10 @@ export default class Main extends Component {
             <Router>
                 <Switch>
                     <Route exact path='/'>
-                      <Landing />
+                      <Home pageMode='buy' pageType='landing' />
                     </Route>
                     <Route exact path='/preference'>
-                      <PreferencePage />
+                      <Home pageMode='buy' pageType='preference' />
                     </Route>
                     <Route exact path='/map'>
                       <MapView userLat={this.props.userLat} userLng={this.props.userLng} />

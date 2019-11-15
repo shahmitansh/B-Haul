@@ -1,20 +1,21 @@
 .Landing-Prompt {
-    margin-top: 30vh;
     font-size: 6vh;
     font-weight: 200;
     text-align: center;
   }
-  
+
   .Landing-Options {
-    margin:2vh 36vw;
     text-align: left;
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
-  
+
   .Landing-Click {
     text-align: center;
     font-weight: 600;
     font-size: 2.5vh;
-    margin-bottom: 25vh;
   }
 
   .Landing-Color {

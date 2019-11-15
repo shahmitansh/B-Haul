@@ -9,7 +9,7 @@ class CircleLabel extends React.Component {
           <g>
             <circle style={{fill:"white"}} cx="20" cy="20" r="20"></circle>
             <circle style={{fill:"#d00"}} cx="20" cy="20" r="15"></circle>
-            <text className="label-text" x="50%" y="50%" text-anchor="middle" dy=".3em">{this.props.number}</text>
+            <text className="label-text" x="50%" y="50%" textAnchor="middle" dy=".3em">{this.props.number}</text>
           </g>
         </svg>
       </div>

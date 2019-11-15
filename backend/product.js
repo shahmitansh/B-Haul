@@ -1,14 +1,15 @@
 const productTypes = {"Table": 1, "Bed": 2, "Chair": 3, "Couch": 4};
 
-class Product {
-	constructor(productID, name, address, description, sellerID, price, type, location){
+export class Product {
+	constructor(productID, title, elevation, address, description, sellerID, price, type, location){
 		this.productID = productID;
-		this.name = name;
+		this.title = title;
 		this.address = address;
 		this.description = description;
 		this.sellerID = sellerID;
 		this.price = price;
-		if (!(type in productTypes)){
+		this.elevation = elevation;
+		if !(type in productTypes){
 			console.log(`product type ${type} not in allowed product types ${productTypes}`);
 		}
 		this.type = type;
@@ -16,7 +17,7 @@ class Product {
 	}
 }
 
-class ProductList{
+export class ProductList{
 	constructor(productList){
 		if(productList == undefined){
 			this.products = {};
@@ -48,5 +49,3 @@ class ProductList{
 	}
 
 }
-
-module.exports = {Product, ProductList}

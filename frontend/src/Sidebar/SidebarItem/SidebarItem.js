@@ -14,10 +14,15 @@ class SidebarItem extends React.Component {
       </div>
     );
 
+    const imgPath = `${this.props.item.image}`;
+    console.log(imgPath);
+
     return (
       <div className="sidebar-item">
         <div className="sidebar-picture-container">
-          <div className="sidebar-picture"></div>
+          <div className="sidebar-picture">
+            <img height="100%" width="100%" src={imgPath} />
+          </div>
           <CircleLabel number={this.props.index+1} />
         </div>
         <div className="sidebar-desc-container">
