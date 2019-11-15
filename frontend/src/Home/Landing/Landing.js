@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import './Landing.css';
-
-import HeaderBuy from '../Header/HeaderBuy.js';
-import FooterPictures from '../FooterPictures/FooterPictures.js';
+import '../Home.css';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -15,8 +13,7 @@ const defaultOption = options[0];
 export default class Landing extends Component {
     render(){
         return (
-            <div>
-                <HeaderBuy />
+            <div className="middle-home-container">
                 <div className="Landing-Prompt"> What are you looking for? </div>
                 <Dropdown className='Landing-Options' options={options} value={defaultOption} />
                 <div className="Landing-Click">
@@ -26,7 +23,6 @@ export default class Landing extends Component {
                         rel="noopener noreferrer"
                         > Next > </a>
                 </div>
-                <FooterPictures />
             </div>
         )
     }
