@@ -1,7 +1,14 @@
 {
+  "name": "B-Haul",
+  "version": "1.0.0",
+  "main": "backend/main.js",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "mongo": "^0.1.0",
     "mongodb": "^3.3.4"
+  },
+  "scripts": {
+    "start": "node backend/main.js"
   }
 }
