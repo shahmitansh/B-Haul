@@ -1,8 +1,15 @@
 {
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "express": "^4.17.1",
+    "mocha": "^6.2.2",
     "mongo": "^0.1.0",
     "mongodb": "^3.3.4",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "sinon": "^7.5.0"
+  }, 
+  "scripts": {
+    "test": "mocha"
   }
 }

@@ -1,4 +1,4 @@
-export class User{
+class User{
 	constructor(userID, email, firstName, lastName, password){
 		this.userID = userID;
 		this.email = email;
@@ -11,7 +11,7 @@ export class User{
 	}	
 }
 
-export class BuyerFunctionality{
+class BuyerFunctionality{
 	constructor(userID){
 		this.userID = userId
 		this.saved = [];
@@ -31,7 +31,7 @@ export class BuyerFunctionality{
 }
 
 
-export class SellerFunctionality{
+class SellerFunctionality{
 	constructor(userID){
 		this.postings = [];
 	}
@@ -46,5 +46,8 @@ export class SellerFunctionality{
 				console.log(`Successfully removed ${productID} from postings`);
 				break;
 			}
-		}	
+		}
+	}	
 }
+
+module.exports = {User, BuyerFunctionality, SellerFunctionality}
