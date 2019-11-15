@@ -4,7 +4,7 @@ const express = require('express');
 const API_KEY = 'yVorBMk3X9NbVuWK6h9I8TwEDC0hTUgT';
 const request = require('request');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const MongoDao = require('./dao.js');
 
 // Connection URL
@@ -25,7 +25,8 @@ app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 	let elevationRequestResponse = getElevationProfile(latSrc, latLong, latDest, longDest);
 	res.send(elevationRequestResponse);
 });
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port);
+console.log(`Example app listening on port ${port}!`);
 console.log("Hi");
 initDb();
 
