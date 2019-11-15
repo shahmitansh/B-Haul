@@ -6,6 +6,13 @@ import Map from '../Map/Map';
 import Sidebar from '../Sidebar/Sidebar';
 import HeaderBuy from '../Header/HeaderBuy';
 
+import table1 from './mock/table1.jpg';
+import table2 from './mock/table2.jpg';
+import table3 from './mock/table3.jpg';
+import table4 from './mock/table4.jpg';
+import table5 from './mock/table5.jpg';
+import table6 from './mock/table6.jpg';
+
 class MapView extends React.Component {
   state = {
     distance: 0
@@ -13,12 +20,11 @@ class MapView extends React.Component {
 
   userLat = this.props.userLat;
   userLng = this.props.userLng;
-  mockImages = [];
 
   sampleItem1 = {
     title: "Small Wooden Dining Table",
     description: "A small wooden dining table.",
-    image: this.mockImages[0] ? this.mockImages[0] : '',
+    image: table1,
     location: {
       lat: 34.067138,
       lng: -118.451128
@@ -34,7 +40,7 @@ class MapView extends React.Component {
   sampleItem2 = {
     title: "Big Wooden Dining Table",
     description: "A small wooden dining table.",
-    image: this.mockImages[1] ? this.mockImages[1] : '',
+    image: table2,
     location: {
       lat: 34.067370,
       lng: -118.452740
@@ -50,7 +56,7 @@ class MapView extends React.Component {
   sampleItem3 = {
     title: "Cute Coffee Table",
     description: "A small wooden dining table.",
-    image: this.mockImages[2] ? this.mockImages[2] : '',
+    image: table3,
     location: {
       lat: 34.066280,
       lng: -118.450370
@@ -66,7 +72,7 @@ class MapView extends React.Component {
   sampleItem4 = {
     title: "TV Table",
     description: "A small wooden dining table.",
-    image: this.mockImages[3] ? this.mockImages[3] : '',
+    image: table4,
     location: {
       lat: 34.068740,
       lng: -118.447560
@@ -82,7 +88,7 @@ class MapView extends React.Component {
   sampleItem5 = {
     title: "Small Wooden Dining Table",
     description: "A small wooden dining table.",
-    image: this.mockImages[4] ? this.mockImages[4] : '',
+    image: table5,
     location: {
       lat: 34.064150,
       lng: -118.452730
@@ -98,7 +104,7 @@ class MapView extends React.Component {
   sampleItem6 = {
     title: "Small Wooden Dining Table",
     description: "A small wooden dining table.",
-    image: this.mockImages[5] ? this.mockImages[5] : '',
+    image: table6,
     location: {
       lat: 34.070040,
       lng: -118.453400
@@ -123,7 +129,7 @@ class MapView extends React.Component {
       }
     }, 5000)
   }
-  
+
   compute_helper =(loop) => {
     const userLats = this.props.userLat
     const userLngs = this.props.userLng
@@ -134,7 +140,7 @@ class MapView extends React.Component {
     const url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + userLats + ',%20lng:' + userLngs +'%20}%20},%20{%20latLng:{%20lat:' + itemLat + ',%20lng:'+ itemLng + '}%20}%20],%20options:{%20manyToOne:true%20}}'
 
     axios.get(url)
-      .then(response => 
+      .then(response =>
         {
           this.items[loop].properties.distance = response.data.distance[1].toString() + " mi"
           this.setState({distance: this.items[loop].properties.distance})
@@ -146,8 +152,6 @@ class MapView extends React.Component {
     this.computeDistance()
     const reqPics = require.context('./mock', true, /\.jpg$/)
     const paths = reqPics.keys()
-    this.mockImages = paths.map(path => reqPics(path))
-    console.log(this.mockImages);
   }
 
   render() {
