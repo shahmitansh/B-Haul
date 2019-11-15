@@ -43,6 +43,8 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 
 
 async function initDb() {
-	mongoDao = await new MongoDao(url, dbName);
+	if (!mongoDao) {
+		mongoDao = await new MongoDao(url, dbName);
+	}
 }
 
