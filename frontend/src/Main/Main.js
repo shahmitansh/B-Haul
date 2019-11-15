@@ -8,6 +8,7 @@ import {
 
 import MapView from '../MapView/MapView';
 import Home from '../Home/Home';
+import Facebook from '../Facebook/Facebook.js';
 
 export default class Main extends Component {
     render() {
@@ -15,6 +16,9 @@ export default class Main extends Component {
             <Router>
                 <Switch>
                     <Route exact path='/'>
+                      <Facebook />
+                    </Route>
+                    <Route exact path='/landing'>
                       <Home pageMode='buy' pageType='landing' />
                     </Route>
                     <Route exact path='/preference'>

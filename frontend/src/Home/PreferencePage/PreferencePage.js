@@ -22,12 +22,12 @@ export default class PreferencePage extends Component {
                   <Dropdown className='Preference-Options' options={shapeOptions} placeholder='Shape' />
                 </div>
                 <div className="Preference-Click">
-                    <a  href="/"
+                    <a  href="/landing"
                         className="Preference-Pad Preference-Opts"
                         target="_self"
                         rel="noopener noreferrer"> Back </a>
                     <a  href="/map"
-                        className="Preference-Opts"
+                        className="Preference-Pad Preference-Opts"
                         target="_self"
                         rel="noopener noreferrer"> Search </a>
                 </div>

@@ -125,7 +125,8 @@ class MapView extends React.Component {
   computeDistance =() => {
     setTimeout(() => {
       for(var i = 0; i < this.items.length; i++) {
-        this.compute_helper(i)
+        if(this.props.userLat && this.props.userLng)
+          this.compute_helper(i)
       }
     }, 5000)
   }

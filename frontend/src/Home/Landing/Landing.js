@@ -6,7 +6,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 const options = [
-  'Table', 'Desk', 'Bed', 'Chair'
+  'Desk', 'Table', 'Bed', 'Chair'
 ]
 const defaultOption = options[0];
 
