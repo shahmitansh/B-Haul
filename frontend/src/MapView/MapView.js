@@ -6,10 +6,20 @@ import Sidebar from '../Sidebar/Sidebar';
 import HeaderBuy from '../Header/HeaderBuy';
 
 class MapView extends React.Component {
+  mockImages = []
+
+  componentDidMount() {
+    const reqPics = require.context('./mock', true, /\.jpg$/)
+    const paths = reqPics.keys()
+    this.mockImages = paths.map(path => reqPics(path))
+    console.log(this.mockImages);
+  }
+
   render() {
     const sampleItem1 = {
       title: "Small Wooden Dining Table",
       description: "A small wooden dining table.",
+      image: this.mockImages[0] ? this.mockImages[0] : '',
       location: {
         lat: 34.067138,
         lng: -118.451128
@@ -25,6 +35,7 @@ class MapView extends React.Component {
     const sampleItem2 = {
       title: "Big Wooden Dining Table",
       description: "A small wooden dining table.",
+      image: this.mockImages[1] ? this.mockImages[1] : '',
       location: {
         lat: 34.067370,
         lng: -118.452740
@@ -40,6 +51,7 @@ class MapView extends React.Component {
     const sampleItem3 = {
       title: "Cute Coffee Table",
       description: "A small wooden dining table.",
+      image: this.mockImages[2] ? this.mockImages[2] : '',
       location: {
         lat: 34.066280,
         lng: -118.450370
@@ -55,6 +67,7 @@ class MapView extends React.Component {
     const sampleItem4 = {
       title: "TV Table",
       description: "A small wooden dining table.",
+      image: this.mockImages[3] ? this.mockImages[3] : '',
       location: {
         lat: 34.068740,
         lng: -118.447560
@@ -70,6 +83,7 @@ class MapView extends React.Component {
     const sampleItem5 = {
       title: "Small Wooden Dining Table",
       description: "A small wooden dining table.",
+      image: this.mockImages[4] ? this.mockImages[4] : '',
       location: {
         lat: 34.064150,
         lng: -118.452730
@@ -85,6 +99,7 @@ class MapView extends React.Component {
     const sampleItem6 = {
       title: "Small Wooden Dining Table",
       description: "A small wooden dining table.",
+      image: this.mockImages[5] ? this.mockImages[5] : '',
       location: {
         lat: 34.070040,
         lng: -118.453400
