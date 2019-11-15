@@ -8,15 +8,17 @@ const port = 3000;
 const MongoDao = require('./dao.js');
 
 // Connection URL
-let mongoDao = null;
+var mongoDao = null;
 const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?retryWrites=true&w=majority';
 const dbName = 'bhaul';
 
 app.get('/', (req, res) => res.send('Hello World!'));
 app.get('/getProductList', (req, res) => {
-	mongoDao.readCollection('products').toArray((err, items) => {
-		console.log(items);
-		res.send(items);
+	initDb().then((mongoDao) => {
+		mongoDao.readCollection('products').toArray((err, items) => {
+			console.log(items);
+			res.send(items);
+		});
 	});
 }); 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
@@ -27,7 +29,6 @@ app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
-initDb();
 
 function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
@@ -42,7 +43,13 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 }
 
 
-async function initDb() {
-	mongoDao = await new MongoDao(url, dbName);
+function initDb() {
+	if (!mongoDao) {
+		mongoDao = new MongoDao(url, dbName);
+	}
+	return mongoDao
 }
+
+// For testing
+module.exports = app;
 
