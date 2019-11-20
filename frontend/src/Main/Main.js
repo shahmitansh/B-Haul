@@ -9,6 +9,8 @@ import {
 import MapView from '../MapView/MapView';
 import Home from '../Home/Home';
 import Facebook from '../Facebook/Facebook.js';
+import Listings from '../Listings/Listings.js';
+import SellingPage from '../SellingPage/SellingPage.js';
 
 export default class Main extends Component {
     render() {
@@ -26,6 +28,12 @@ export default class Main extends Component {
                     </Route>
                     <Route exact path='/map'>
                       <MapView userLat={this.props.userLat} userLng={this.props.userLng} />
+                    </Route>
+                    <Route exact path='/listings'>
+                      <Listings />
+                    </Route>
+                    <Route exact path='/sell'>
+                      <SellingPage />
                     </Route>
                 </Switch>
             </Router>
