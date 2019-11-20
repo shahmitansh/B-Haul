@@ -15,7 +15,8 @@ import table6 from './mock/table6.jpg';
 
 class MapView extends React.Component {
   state = {
-    distance: 0
+    distance: 0,
+    elevation: 0
   }
 
   userLat = this.props.userLat;
@@ -33,7 +34,7 @@ class MapView extends React.Component {
       color: "Brown",
       distance: "",
       size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: "112 ft UP 52 ft DOWN"
+      elevation: ""
     }
   };
 
@@ -49,7 +50,7 @@ class MapView extends React.Component {
       color: "Black",
       distance: "",
       size: "8.1 ft x 3.3 ft x 5.2 ft",
-      elevation: "12 ft UP 5 ft DOWN"
+      elevation: ""
     }
   };
 
@@ -65,7 +66,7 @@ class MapView extends React.Component {
       color: "Blue",
       distance: "",
       size: "3.1 ft x 4.3 ft x 3.2 ft",
-      elevation: "133 ft UP 25 ft DOWN"
+      elevation: ""
     }
   };
 
@@ -81,7 +82,7 @@ class MapView extends React.Component {
       color: "White",
       distance: "",
       size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: "112 ft UP 52 ft DOWN"
+      elevation: ""
     }
   };
 
@@ -97,7 +98,7 @@ class MapView extends React.Component {
       color: "Coffee",
       distance: "",
       size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: "112 ft UP 52 ft DOWN"
+      elevation: ""
     }
   };
 
@@ -113,7 +114,7 @@ class MapView extends React.Component {
       color: "Mocha",
       distance: "",
       size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: "112 ft UP 52 ft DOWN"
+      elevation: ""
     }
   };
 
@@ -138,14 +139,23 @@ class MapView extends React.Component {
     this.lng.push(this.items[loop].location.lng)
     var itemLat=this.lat[loop]
     var itemLng=this.lng[loop]
-    const url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + userLats + ',%20lng:' + userLngs +'%20}%20},%20{%20latLng:{%20lat:' + itemLat + ',%20lng:'+ itemLng + '}%20}%20],%20options:{%20manyToOne:true%20}}'
-
-    axios.get(url)
+    const distance_url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + userLats + ',%20lng:' + userLngs +'%20}%20},%20{%20latLng:{%20lat:' + itemLat + ',%20lng:'+ itemLng + '}%20}%20],%20options:{%20manyToOne:true%20}}'
+    const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&shapeFormat=raw&latLngCollection=' + userLats + ',' + userLngs + ',' + itemLat + ',' + itemLng
+    
+    axios.get(distance_url)
       .then(response =>
         {
           this.items[loop].properties.distance = response.data.distance[1].toString() + " mi"
           this.setState({distance: this.items[loop].properties.distance})
         }
+      )
+    
+    axios.get(elevation_url)
+      .then(response => 
+        {
+          this.items[loop].properties.elevation = response.data.elevationProfile[1].height.toString() + " m"
+          this.setState({elevation: this.items[loop].properties.elevation})
+        }  
       )
   }
 
