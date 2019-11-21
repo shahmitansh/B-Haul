@@ -10,7 +10,7 @@ export default class HeaderSell extends Component {
                 <img src={logo} className="Logo" alt="logo" />
               </div>
               <div className="text-container">
-                <a href="/landing"
+                <a  href="/landing"
                     className="Text Buy"
                     target="_self"
                     rel="noopener noreferrer"
