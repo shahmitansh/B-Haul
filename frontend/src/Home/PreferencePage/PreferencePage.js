@@ -23,11 +23,11 @@ export default class PreferencePage extends Component {
                 </div>
                 <div className="Preference-Click">
                     <a  href="/landing"
-                        className="Preference-Pad Preference-Opts"
+                        className="Preference-Pads Preference-Opt"
                         target="_self"
                         rel="noopener noreferrer"> Back </a>
                     <a  href="/map"
-                        className="Preference-Pad Preference-Opts"
+                        className="Preference-Opt"
                         target="_self"
                         rel="noopener noreferrer"> Search </a>
                 </div>

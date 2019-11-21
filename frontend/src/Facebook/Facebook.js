@@ -25,13 +25,13 @@ const componentClicked = () => {
   const UserScreen = ({user}) => (
     <>
     <div className="User">
-        <h1>Welcome {user.name}!</h1>
-        <p>{ user.email }</p>
-        <img src={user.picture.data.url} height={user.picture.height} width={user.picture.width} alt="avatar"/> <br></br>
+        <div className="User-Name">Welcome {user.name}!</div>
+        {/* <div className="User-Email">{ user.email }</div>
+        <img className="User-Pic" src={user.picture.data.url} height={user.picture.height} width={user.picture.width} alt="avatar"/> <br></br> */}
         <a  href="/landing"
             className="Preference-Pad Preference-Opts"
             target="_self"
-            rel="noopener noreferrer"> Look for furniture! </a>
+            rel="noopener noreferrer"> Get Searching! </a>
     </div>
     </>
   )

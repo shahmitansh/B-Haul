@@ -1,25 +1,15 @@
 import React, {Component} from 'react';
-import {Form} from 'react-forms-processor';
+import {Form, FormValue} from 'react-forms-processor';
 import {renderer, FormButton} from 'react-forms-processor-atlaskit';
 import './SellingPage.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
 
-// const fields = [
-//     {
-//         id: "NAME",
-//         name: "name",
-//         type: "text",
-//         label: "Name",
-//         defaultValue: "0"
-//     }
-// ];
-
 const fields = 
 [
     {
       "id": "TYPE",
-      "name": "type",
+      "name": "Type",
       "type": "select",
       "label": "Type of Furniture",
       "description": "",
@@ -68,167 +58,33 @@ const fields =
       "useChangesAsValues": false
     },
     {
-      "id": "SIZE",
-      "name": "Size ",
-      "type": "textarea",
-      "label": "Size",
-      "description": "",
-      "placeholder": "Enter Size Here",
-      "defaultValue": "",
-      "visible": false,
-      "required": false,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in color",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Table"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": [],
-      "shouldMatchRegex": false,
-      "hasMinLength": false,
-      "hasMaxLength": false,
-      "hasNumericalRange": false,
-      "shouldCompareTo": false
+        "id": "OTHERNAME",
+        "name": "Other Name",
+        "type": "text",
+        "label": "Type",
+        "description": "",
+        "placeholder": "Type",
+        "defaultValue": "",
+        "visible": false,
+        "required": true,
+        "disabled": false,
+        "visibleWhen": [
+          {
+            "id": "Add other types",
+            "field": "TYPE",
+            "is": [
+              {
+                "value": "Other"
+              }
+            ]
+          }
+        ],
+        "requiredWhen": [],
+        "disabledWhen": []
     },
-    {
-      "id": "COLOR",
-      "name": " Color",
-      "type": "text",
-      "label": "Color",
-      "description": "",
-      "placeholder": "Brown",
-      "defaultValue": "",
-      "options": [],
-      "visible": false,
-      "required": false,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in color",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Bed"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": [],
-      "shouldMatchRegex": false,
-      "hasMinLength": false,
-      "hasMaxLength": false,
-      "hasNumericalRange": false,
-      "shouldCompareTo": false
-    },
-    {
-      "id": "PRICE",
-      "name": "Price",
-      "type": "text",
-      "label": "Price",
-      "description": "",
-      "placeholder": "Price",
-      "defaultValue": "",
-      "visible": false,
-      "required": false,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in price",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Bed"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    },
-    {
-      "id": "ELEVATOR",
-      "name": " Elevator",
-      "type": "select",
-      "label": "Elevator",
-      "description": "",
-      "placeholder": "Elevator",
-      "defaultValue": "",
-      "options": [
-        {
-          "heading": "",
-          "items": [
-            {
-              "label": "Yes",
-              "value": "Yes"
-            },
-            {
-              "label": "No",
-              "value": "No"
-            }
-          ]
-        }
-      ],
-      "visible": false,
-      "required": false,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in elevator",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Bed"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    },
-    {
+    {   
       "id": "BEDSIZE",
-      "name": " Size",
+      "name": "Bed Size",
       "type": "select",
       "label": "Size",
       "description": "",
@@ -262,7 +118,7 @@ const fields =
         }
       ],
       "visible": false,
-      "required": false,
+      "required": true,
       "disabled": false,
       "visibleWhen": [
         {
@@ -277,7 +133,177 @@ const fields =
       ],
       "requiredWhen": [],
       "disabledWhen": []
-    }
+    },
+    {
+      "id": "SIZE",
+      "name": "Size",
+      "type": "text",
+      "label": "Size (width/height/depth)",
+      "description": "",
+      "placeholder": "Size",
+      "visible": false,
+      "required": true,
+      "disabled": false,
+      "visibleWhen": [
+        {
+          "id": "Puts in color",
+          "field": "TYPE",
+          "is": [
+            {
+              "value": "Chair"
+            },
+            {
+              "value": "Desk"
+            },
+            {
+              "value": "Table"
+            },
+            {
+              "value": "Other"
+            }
+          ]
+        }
+      ],
+      "requiredWhen": [],
+      "disabledWhen": [],
+      "shouldMatchRegex": false,
+      "hasMinLength": false,
+      "hasMaxLength": false,
+      "hasNumericalRange": false,
+      "shouldCompareTo": false
+    },
+    {
+      "id": "COLOR",
+      "name": "Color",
+      "type": "text",
+      "label": "Color",
+      "description": "",
+      "placeholder": "Color",
+      "defaultValue": "",
+      "options": [],
+      "visible": false,
+      "required": true,
+      "disabled": false,
+      "visibleWhen": [
+        {
+          "id": "Puts in color",
+          "field": "TYPE",
+          "is": [
+            {
+              "value": "Desk"
+            },
+            {
+              "value": "Table"
+            },
+            {
+              "value": "Chair"
+            },
+            {
+              "value": "Bed"
+            },
+            {
+              "value": "Other"
+            }
+          ]
+        }
+      ],
+      "requiredWhen": [],
+      "disabledWhen": [],
+      "shouldMatchRegex": false,
+      "hasMinLength": false,
+      "hasMaxLength": false,
+      "hasNumericalRange": false,
+      "shouldCompareTo": false
+    },
+    {
+      "id": "PRICE",
+      "name": "Price",
+      "type": "text",
+      "label": "Price ($)",
+      "description": "",
+      "placeholder": "Price",
+      "defaultValue": "",
+      "visible": false,
+      "required": true,
+      "disabled": false,
+      "visibleWhen": [
+        {
+          "id": "Puts in price",
+          "field": "TYPE",
+          "is": [
+            {
+              "value": "Desk"
+            },
+            {
+              "value": "Chair"
+            },
+            {
+              "value": "Table"
+            },
+            {
+              "value": "Bed"
+            },
+            {
+              "value": "Other"
+            }
+          ]
+        }
+      ],
+      "requiredWhen": [],
+      "disabledWhen": []
+    },
+    {
+      "id": "ELEVATOR",
+      "name": "Elevator",
+      "type": "select",
+      "label": "Elevator",
+      "description": "",
+      "placeholder": "Elevator",
+      "defaultValue": "",
+      "options": [
+        {
+          "heading": "",
+          "items": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        }
+      ],
+      "visible": false,
+      "required": true,
+      "disabled": false,
+      "visibleWhen": [
+        {
+          "id": "Puts in elevator",
+          "field": "TYPE",
+          "is": [
+            {
+              "value": "Desk"
+            },
+            {
+              "value": "Chair"
+            },
+            {
+              "value": "Table"
+            },
+            {
+              "value": "Bed"
+            },
+            {
+              "value": "Other"
+            }
+          ]
+        }
+      ],
+      "requiredWhen": [],
+      "disabledWhen": []
+    } 
   ];
 
 export default class SellingPage extends Component {
@@ -285,9 +311,16 @@ export default class SellingPage extends Component {
         return (
             <div>
                 <HeaderSell />
-                <Form renderer={renderer} defaultFields={fields}>
-                    <FormButton />
-                </Form>
+                <div className="Landing-Prompt"> What are you selling? </div>
+                <div className="columns">
+                    <Form renderer={renderer} defaultFields={fields}>
+                        <FormButton 
+                            onClick={(value: FormValue) => 
+                                console.log("Button value", value)
+                            }
+                        />
+                    </Form>
+                </div>
             </div>
         );
     }

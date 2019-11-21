@@ -7,11 +7,31 @@
 }
 
 .Preference-Opts {
-    color: maroon;
+    color: darkgreen;
     text-decoration: none;
+    font-size: 6vh;
 }
 
 .Preference-Pad {
     padding-top: 3vh;
     padding-right: 0vw;
+}
+
+.User-Name {
+    font-weight: 300;
+    font-size: 10vh;
+    margin-bottom: 8vh;
+}
+
+.User-Email {
+    font-size: 3vh;
+    color: blue;
+    margin-top: 3vh;
+}
+
+.User-Pic {
+    height: 14vh;
+    width: 6.5vw;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
 }
