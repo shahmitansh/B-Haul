@@ -25,7 +25,7 @@ const componentClicked = () => {
   const UserScreen = ({user}) => (
     <>
     <div className="User">
-        <div className="User-Name">Welcome {user.name}!</div>
+        <div className="User-Name">Hey {user.name}!</div>
         {/* <div className="User-Email">{ user.email }</div>
         <img className="User-Pic" src={user.picture.data.url} height={user.picture.height} width={user.picture.width} alt="avatar"/> <br></br> */}
         <a  href="/landing"
@@ -46,7 +46,10 @@ const componentClicked = () => {
             <HeaderBuy />
                 <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}>
                 { this.state.user ? <UserScreen user={this.state.user}/> :
+                  <div>
+                    <div className="Preference-Prompt"> Welcome to B-Haul </div>
                     <LoginButton className = "Facebook" facebookResponse={this.facebookResponse}/>
+                  </div>
                 }
                 </div>
             <FooterPictures />
