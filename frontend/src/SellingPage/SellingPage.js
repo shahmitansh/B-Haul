@@ -5,6 +5,8 @@ import './SellingPage.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
 
+// TODO: Add bundle options in fields
+
 const fields = 
 [
     {
@@ -303,7 +305,81 @@ const fields =
       ],
       "requiredWhen": [],
       "disabledWhen": []
-    } 
+    },
+    {
+      "id": "OWNED",
+      "name": "Time Owned",
+      "type": "text",
+      "label": "Years owned (months)?",
+      "description": "",
+      "placeholder": "#",
+      "defaultValue": "",
+      "visible": false,
+      "required": true,
+      "disabled": false,
+      "visibleWhen": [
+        {
+          "id": "Puts in years owned field",
+          "field": "TYPE",
+          "is": [
+            {
+              "value": "Desk"
+            },
+            {
+              "value": "Chair"
+            },
+            {
+              "value": "Table"
+            },
+            {
+              "value": "Bed"
+            },
+            {
+              "value": "Other"
+            }
+          ]
+        }
+      ],
+      "requiredWhen": [],
+      "disabledWhen": []
+    },
+    {
+      "id": "DESCRIPTION",
+      "name": "Description",
+      "type": "textarea",
+      "label": "Any other details?",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "visible": false,
+      "required": false,
+      "disabled": false,
+      "visibleWhen": [
+        {
+          "id": "Puts in description",
+          "field": "TYPE",
+          "is": [
+            {
+              "value": "Desk"
+            },
+            {
+              "value": "Chair"
+            },
+            {
+              "value": "Table"
+            },
+            {
+              "value": "Bed"
+            },
+            {
+              "value": "Other"
+            }
+          ]
+        }
+      ],
+      "requiredWhen": [],
+      "disabledWhen": []
+    }
   ];
 
 export default class SellingPage extends Component {
@@ -317,6 +393,16 @@ export default class SellingPage extends Component {
                         <FormButton 
                             onClick={(value: FormValue) => 
                                 console.log("Button value", value)
+                                // Returns an object and this is a sample
+                                // Bed Size: ""
+                                // Color: "Black"
+                                // Description: "One year old."
+                                // Elevator: "Yes"
+                                // Other Name: ""
+                                // Price: "20"
+                                // Size: "8/12/24"
+                                // Type: "Desk"
+                                // Years Owned: 2
                             }
                         />
                     </Form>
