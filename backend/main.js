@@ -15,6 +15,7 @@ const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?
 const dbName = 'bhaul';
 
 app.get('/', (req, res) => res.send('Hello World!'));
+
 app.get('/getProductList', (req, res) => {
 	initDb().then((mongoDao) => {
 		mongoDao.readCollection('products').toArray((err, items) => {
@@ -26,9 +27,14 @@ app.get('/getProductList', (req, res) => {
 
 app.post('/addListing', function(request, response){
 	initDb();
+	let listings = getListings();
+	console.log(listings)
 	mongoDao.insertDocument("products", request.body, () => {});
 	response.send("Successfully inserted document")
+
 });
+
+
 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
@@ -51,6 +57,14 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	console.log('body:', body); // Print the HTML for the Google homepage.
 	});
 }
+
+function getListings(){
+	initDb();
+	let listings = mongoDao.readCollection('products');
+	return listings;
+}
+
+// getListings()
 
 
 async function initDb() {
