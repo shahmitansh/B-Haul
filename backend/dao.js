@@ -65,4 +65,10 @@ MongoDao.prototype.deleteAllDocuments = function(collectionName, callback) {
 	});
 }
 
+MongoDao.prototype.findDocument = function(collectionName, doc, callback) {
+	this.dbConnection.collection(collectionName).find(doc).toArray((err, docs) => {
+		callback(err, docs);
+	});
+}
+
 module.exports = MongoDao;

@@ -35,4 +35,17 @@ describe('MongoDao', () => {
 			});
 		});
 	});
+
+	describe('Find one product from MongoDao', () => {
+		it('it should find one product', (done) => {
+			let doc = {"key1": "value1"}
+			mongoDao.insertDocument(collection, doc, () => {
+				mongoDao.findDocument(collection, {key1: "value1"}, (err, docs) => {
+					chai.assert.equal(docs.length, 1);
+					chai.assert.deepEqual(doc, docs[0])
+					done();
+				})
+			});
+		});
+	});
 });
