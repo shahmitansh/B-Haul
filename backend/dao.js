@@ -57,4 +57,12 @@ MongoDao.prototype.deleteDocument = function(collectionName, doc, callback) {
 	});
 }
 
+MongoDao.prototype.deleteAllDocuments = function(collectionName, callback) {
+	this.dbConnection.collection(collectionName).deleteMany({}, function(err, result) {
+		assert.equal(null,err);
+		console.log("cleared all documents successfully");
+		callback();
+	});
+}
+
 module.exports = MongoDao;
