@@ -1,9 +1,11 @@
 const {Product, ProductList} = require('./product.js')
-
+const bodyParser = require('body-parser')
 const express = require('express');
 const API_KEY = 'yVorBMk3X9NbVuWK6h9I8TwEDC0hTUgT';
 const request = require('request');
 const app = express();
+app.use(bodyParser());
+
 const port = 3000;
 const MongoDao = require('./dao.js');
 
@@ -21,6 +23,13 @@ app.get('/getProductList', (req, res) => {
 		});
 	});
 }); 
+
+app.post('/addListing', function(request, response){
+	initDb();
+	mongoDao.insertDocument("products", request.body, () => {});
+	response.send("Successfully inserted document")
+});
+
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
 	[req.params["latSrc"], req.params["longSrc"], req.params["latDest"], req.params["longDest"]];
@@ -29,6 +38,7 @@ app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
+mongoDao = initDb()
 
 function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
@@ -43,10 +53,12 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 }
 
 
-function initDb() {
+async function initDb() {
 	if (!mongoDao) {
-		mongoDao = new MongoDao(url, dbName);
+		mongoDao = await new MongoDao(url, dbName);
+		console.log("db initted")
 	}
+
 	return mongoDao
 }
 
