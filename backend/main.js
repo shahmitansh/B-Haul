@@ -19,6 +19,9 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/getProductList', async (req, res) => {
 	await initDb();
+
+	let products1 = await mongoDao.findDocuments('products', {productID: 2});
+	console.log(products1);
 	let products = await getProductListClass();
 	res.send(products)
 }); 
@@ -92,12 +95,12 @@ async function nextProductID(){
 async function getProductListClass(){
 	await initDb();
 	let listings = await mongoDao.readCollection('products');
-	let arraylength = listings.length
-	let products = {}
+	let arraylength = listings.length;
+	let products = {};
 	for (let i = 0; i < arraylength; i++){
-		let doc = listings[i]
-		let productID = doc["productID"]
-		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"])
+		let doc = listings[i];
+		let productID = doc["productID"];
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"]);
 	}
 	return new ProductList(products);
 }
