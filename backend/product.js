@@ -1,4 +1,5 @@
 const productTypes = {"Table": 1, "Bed": 2, "Chair": 3, "Couch": 4};
+const FilterFactory = require('./filterFactory.js')
 
 class Product {
 	constructor(productID, title, elevation, address, description, sellerID, price, type, location){
@@ -38,15 +39,15 @@ class ProductList{
 		}
 	}
 
-	returnFilteredProducts(type){
-		let returnList = [];
-		for (let key in this.products){
-			if (this.products[key].type == type){
-				returnList.push(this.products[key])
-			}
-		}
-		return returnList;
+	returnFilteredProductsType(type){
+		return filterMethod(this.products, type, "type");
 	}
+
+	returnFilteredProductsPrice(lower_bound, upper_bound){
+		upper_bounded_products = filterMethod(this.products, upper_bound, "pricelower");
+		return filterMethod(upper_bounded_products, lower_bound, "pricehigher");
+	}
+		
 
 }
 

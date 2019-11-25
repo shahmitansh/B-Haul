@@ -19,20 +19,18 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/getProductList', async (req, res) => {
 	await initDb();
-	let products = await mongoDao.readCollection('products');
+	let products = await getProductListClass();
 	res.send(products)
 }); 
 
-app.post('/addListing', function(request, response){
+app.post('/addListing', async function(request, response){
 	initDb();
-	let listings = getListings();
-	console.log(listings)
-	mongoDao.insertDocument("products", request.body, () => {});
+	productID = await nextProductID()
+	doc = request.body
+	product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"])
+	mongoDao.insertDocument("products", product, () => {});
 	response.send("Successfully inserted document")
-
 });
-
-
 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
@@ -75,11 +73,34 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	
 }
 
-// function getListings(){
-// 	initDb();
-// 	let listings = mongoDao.readCollection('products');
-// 	return listings;
-// }
+async function nextProductID(){
+	await initDb();
+	let listings = await mongoDao.readCollection('products');
+	let arraylength = listings.length
+	let maxID = 0
+	for (let i = 0; i < arraylength; i++){
+		let pID = listings[i]["productID"]
+		if (pID > maxID){
+			maxID = pID
+			console.log("here")
+		}
+	}
+	return maxID + 1;
+}
+
+
+async function getProductListClass(){
+	await initDb();
+	let listings = await mongoDao.readCollection('products');
+	let arraylength = listings.length
+	let products = {}
+	for (let i = 0; i < arraylength; i++){
+		let doc = listings[i]
+		let productID = doc["productID"]
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"])
+	}
+	return new ProductList(products);
+}
 
 // getListings()
 
