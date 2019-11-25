@@ -13,13 +13,10 @@ const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?
 const dbName = 'bhaul';
 
 app.get('/', (req, res) => res.send('Hello World!'));
-app.get('/getProductList', (req, res) => {
-	initDb().then((mongoDao) => {
-		mongoDao.readCollection('products').toArray((err, items) => {
-			console.log(items);
-			res.send(items);
-		});
-	});
+app.get('/getProductList', async (req, res) => {
+	await initDb();
+	let products = await mongoDao.readCollection('products');
+	res.send(products)
 }); 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
@@ -43,9 +40,9 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 }
 
 
-function initDb() {
+async function initDb() {
 	if (!mongoDao) {
-		mongoDao = new MongoDao(url, dbName);
+		mongoDao = await new MongoDao(url, dbName);
 	}
 	return mongoDao
 }
