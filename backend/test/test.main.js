@@ -29,18 +29,18 @@ describe('getProductList', () => {
         done();
     });
 
-    describe('getProductList with valid input', () => {
-        it('it should return items obtained', (done) => {
-            // let mockMongoDao = sinon.mock(MongoDao);
-            let cb = sinon.spy();
-            getProductList(
-                new mockMongoDao(), 
-                cb
-            );
-            chai.assert.isTrue(cb.called)
-            done();
-        });
-    });
+    // describe('getProductList with valid input', () => {
+    //     it('it should return items obtained', (done) => {
+    //         // let mockMongoDao = sinon.mock(MongoDao);
+    //         let cb = sinon.spy();
+    //         getProductList(
+    //             new mockMongoDao(), 
+    //             cb
+    //         );
+    //         chai.assert.isTrue(cb.called)
+    //         done();
+    //     });
+    // });
 });
 
 

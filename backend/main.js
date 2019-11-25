@@ -17,13 +17,10 @@ const dbName = 'bhaul';
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/getProductList', (req, res) => {
-	initDb().then((mongoDao) => {
-		mongoDao.readCollection('products').toArray((err, items) => {
-			console.log(items);
-			res.send(items);
-		});
-	});
+app.get('/getProductList', async (req, res) => {
+	await initDb();
+	let products = await mongoDao.readCollection('products');
+	res.send(products)
 }); 
 
 app.post('/addListing', function(request, response){
@@ -85,7 +82,6 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 // }
 
 // getListings()
-
 
 async function initDb() {
 	if (!mongoDao) {
