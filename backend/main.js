@@ -7,6 +7,7 @@ const app = express();
 app.use(bodyParser());
 
 const port = 3000;
+const FilterFactory = require('./filterFactory.js')
 const MongoDao = require('./dao.js');
 
 // Connection URL
@@ -36,33 +37,52 @@ app.post('/addListing', function(request, response){
 
 
 
-app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', (req, res) => {
+app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
 	[req.params["latSrc"], req.params["longSrc"], req.params["latDest"], req.params["longDest"]];
-	let elevationRequestResponse = getElevationProfile(latSrc, latLong, latDest, longDest);
+	let elevationRequestResponse = await getElevationProfile(latSrc, latLong, latDest, longDest);
 	res.send(elevationRequestResponse);
 });
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
 mongoDao = initDb()
 
 function getElevationProfile(latSrc, longSrc, latDest, longDest){
-	const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
-	let latLongCollection = `${latSrc},${longSrc},${latDest},${longDest}`;
-	let request_url = `${base_url}?key=${API_KEY}&latLngCollection=${latLongCollection}`;
-	console.log(request_url);
-	let resp =  request(request_url, function (error, response, body){
-	console.error('error:', error); // Print the error if one occurred
-	console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-	console.log('body:', body); // Print the HTML for the Google homepage.
-	});
+	return new Promise(function(resolve, reject) {
+		const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
+		let latLongCollection = `${latSrc},${longSrc},${latDest},${longDest}`;
+		let request_url = `${base_url}?key=${API_KEY}&latLngCollection=${latLongCollection}`;
+		console.log(request_url);
+		
+		let resp =  request(request_url, function (error, response, body){
+			if (error) {
+				console.error('error:', error); // Print the error if one occurred
+				reject(error);
+			} else {
+				let responsedict = {};
+				console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+				console.log('body:', body); // Print the HTML for the Google homepage.
+				let elevationProfile = JSON.parse(body)["elevationProfile"];
+				let elevationSrc = elevationProfile[0]["height"]
+				let elevationDest = elevationProfile[1]["height"]
+				responsedict["elevationSrc"] = elevationSrc
+				responsedict["elevationDest"] = elevationDest
+				console.log(elevationSrc)
+				console.log(elevationDest)
+
+				resolve(responsedict);
+			}
+		});
+	})
+	
 }
 
-function getListings(){
-	initDb();
-	let listings = mongoDao.readCollection('products');
-	return listings;
-}
+// function getListings(){
+// 	initDb();
+// 	let listings = mongoDao.readCollection('products');
+// 	return listings;
+// }
 
 // getListings()
 
