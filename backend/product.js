@@ -1,5 +1,5 @@
-const productTypes = {"Table": 1, "Bed": 2, "Chair": 3, "Couch": 4};
-const FilterFactory = require('./filterFactory.js')
+const productTypes = {"table": 1, "bed": 2, "chair": 3, "couch": 4};
+const filterFactory =  require('./filterFactory.js');
 
 class Product {
 	constructor(productID, title, elevation, address, description, sellerID, price, type, location){
@@ -10,8 +10,9 @@ class Product {
 		this.sellerID = sellerID;
 		this.price = price;
 		this.elevation = elevation;
+		// console.log( "couch" in productTypes)
 		if (!(type in productTypes)){
-			console.log(`product type ${type} not in allowed product types ${productTypes}`);
+			console.log(`product type ${type} not in allowed product types ${JSON.stringify(productTypes)}`);
 		}
 		this.type = type;
 		this.location = location;
@@ -40,12 +41,13 @@ class ProductList{
 	}
 
 	returnFilteredProductsType(type){
-		return filterMethod(this.products, type, "type");
+		console.log("inside returnFilteredProductsType")
+		return filterFactory.filterMethod(this.products, type, "type");
 	}
 
 	returnFilteredProductsPrice(lower_bound, upper_bound){
-		upper_bounded_products = filterMethod(this.products, upper_bound, "pricelower");
-		return filterMethod(upper_bounded_products, lower_bound, "pricehigher");
+		upper_bounded_products = filterFactory.filterMethod(this.products, upper_bound, "pricelower");
+		return filterFactory.filterMethod(upper_bounded_products, lower_bound, "pricehigher");
 	}
 		
 

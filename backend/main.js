@@ -19,21 +19,46 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/getProductList', async (req, res) => {
 	await initDb();
-
-	let products1 = await mongoDao.findDocuments('products', {productID: 2});
-	console.log(products1);
 	let products = await getProductListClass();
 	res.send(products)
 }); 
 
+app.get('/getProductList/type/:filterType',  async (req, res) => {
+	await initDb();
+	let products = await getProductListClass();
+	let filterType = req.params['filterType']
+	let filteredProducts = products.returnFilteredProductsType(filterType);
+	console.log("heree")
+	console.log(JSON.stringify(filteredProducts))
+	res.send(filteredProducts)
+}); 
+
+
 app.post('/addListing', async function(request, response){
 	initDb();
-	productID = await nextProductID()
-	doc = request.body
-	product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"])
+	let productID = await nextProductID()
+	let doc = request.body
+	let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"])
 	mongoDao.insertDocument("products", product, () => {});
 	response.send("Successfully inserted document")
 });
+
+
+app.get('/getProductById/:productID', async function(request, response){
+	initDb();
+	let pID = Number(request.params["productID"])
+	let product = await mongoDao.findDocuments('products', {productID: pID});
+	response.send(product[0])
+})
+
+app.delete('/deletePosting/:productID', async function(request, response){
+	initDb();
+	let toDeleteProductID = Number(request.params["productID"])
+	let query = {productID: toDeleteProductID}
+	console.log(query)
+	mongoDao.deleteDocument('products', query)
+	response.send("Successfully deleted document")
+})
 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res) => {
 	let [latSrc, latLong, latDest, longDest] = 
