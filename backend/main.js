@@ -23,6 +23,16 @@ app.get('/getProductList', async (req, res) => {
 	res.send(products)
 }); 
 
+app.get('/getProductList/type/:filterType',  async (req, res) => {
+	await initDb();
+	let products = await getProductListClass();
+	let filterType = req.params['filterType']
+	let filteredProducts = products.returnFilteredProductsType(filterType);
+	console.log("heree")
+	console.log(JSON.stringify(filteredProducts))
+	res.send(filteredProducts)
+}); 
+
 app.post('/addListing', async function(request, response){
 	initDb();
 	productID = await nextProductID()
