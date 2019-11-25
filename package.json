@@ -17,6 +17,7 @@
   },
   "homepage": "",
   "dependencies": {
+    "express": "^4.17.1",
     "react-forms-processor": "0.0.40",
     "react-forms-processor-atlaskit": "0.0.40",
     "styled-components": "^4.4.1"
