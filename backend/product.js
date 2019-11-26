@@ -46,8 +46,8 @@ class ProductList{
 	}
 
 	returnFilteredProductsPrice(lower_bound, upper_bound){
-		upper_bounded_products = filterFactory.filterMethod(this.products, upper_bound, "pricelower");
-		return filterFactory.filterMethod(upper_bounded_products, lower_bound, "pricehigher");
+		let upperBoundedProducts = filterFactory.filterMethod(this.products, upper_bound, "pricelower");
+		return filterFactory.filterMethod(upperBoundedProducts, lower_bound, "pricehigher");
 	}
 		
 

@@ -28,7 +28,17 @@ app.get('/getProductList/type/:filterType',  async (req, res) => {
 	let products = await getProductListClass();
 	let filterType = req.params['filterType']
 	let filteredProducts = products.returnFilteredProductsType(filterType);
-	console.log("heree")
+	console.log(JSON.stringify(filteredProducts))
+	res.send(filteredProducts)
+}); 
+
+
+app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res) => {
+	await initDb();
+	let products = await getProductListClass();
+	let lowPrice = req.params['lowPrice']
+	let highPrice = req.params["highPrice"]
+	let filteredProducts = products.returnFilteredProductsPrice(lowPrice, highPrice);
 	console.log(JSON.stringify(filteredProducts))
 	res.send(filteredProducts)
 }); 
@@ -110,7 +120,6 @@ async function nextProductID(){
 		let pID = listings[i]["productID"]
 		if (pID > maxID){
 			maxID = pID
-			console.log("here")
 		}
 	}
 	return maxID + 1;
