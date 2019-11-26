@@ -43,12 +43,31 @@ app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res) => {
 	res.send(filteredProducts)
 }); 
 
+app.get('/getProductList/color/:filterColor',  async (req, res) => {
+	await initDb();
+	let products = await getProductListClass();
+	let filterColor = req.params['filterColor']
+	let filteredProducts = products.returnFilteredProductsColor(filterColor);
+	// console.log(JSON.stringify(filteredProducts))
+	res.send(filteredProducts)
+}); 
+
+app.get('/getProductList/size/:filterSize',  async (req, res) => {
+	await initDb();
+	let products = await getProductListClass();
+	let filterSize = req.params['filterSize']
+	let filteredProducts = products.returnFilteredProductsSize(filterSize);
+	// console.log(JSON.stringify(filteredProducts))
+	res.send(filteredProducts)
+}); 
+
+
 
 app.post('/addListing', async function(request, response){
 	initDb();
 	let productID = await nextProductID()
 	let doc = request.body
-	let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"])
+	let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"])
 	mongoDao.insertDocument("products", product, () => {});
 	response.send("Successfully inserted document")
 });
@@ -134,7 +153,7 @@ async function getProductListClass(){
 	for (let i = 0; i < arraylength; i++){
 		let doc = listings[i];
 		let productID = doc["productID"];
-		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"]);
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"]);
 	}
 	return new ProductList(products);
 }
