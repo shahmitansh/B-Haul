@@ -6,6 +6,7 @@ import CircleLabel from './CircleLabel';
 class SidebarItem extends React.Component {
   render() {
     const properties = this.props.item.properties;
+    Object.keys(properties).forEach(key => properties[key] === undefined ? delete properties[key] : '');
 
     const propertyList = Object.keys(properties).map((pair) =>
       <div className="sidebar-property">
