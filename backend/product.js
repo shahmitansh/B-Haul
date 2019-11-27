@@ -14,16 +14,16 @@ class Product {
 		this.elevation = elevation;
 		this.hasElevator = hasElevator
 		this.size = size
-		if (!(color in productColors)){
-			console.log(`product color ${color} not in allowed product colors ${JSON.stringify(productColors)}`);
-		}
-		// console.log( "couch" in productTypes)
-		let arraylength = type.length;
-		for (let i = 0; i < arraylength; i++){
-			if (!(type[i] in productTypes)){
-				console.log(`product type ${type[i]} not in allowed product types ${JSON.stringify(productTypes)}`);
-			}
-		}
+		// if (!(color in productColors)){
+		// 	console.log(`product color ${color} not in allowed product colors ${JSON.stringify(productColors)}`);
+		// }
+		// // console.log( "couch" in productTypes)
+		// let arraylength = type.length;
+		// for (let i = 0; i < arraylength; i++){
+		// 	if (!(type[i] in productTypes)){
+		// 		console.log(`product type ${type[i]} not in allowed product types ${JSON.stringify(productTypes)}`);
+		// 	}
+		// }
 		this.type = type;
 		this.color = color
 		this.location = location;
