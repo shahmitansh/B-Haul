@@ -7,18 +7,48 @@ module.exports = {
 			return filterPriceLower(products, param);
 		}else if (method =="pricehigher" || method == "PriveHigher"){
 			return filterPriceHigher(products, param);
+		}else if (method == "color"){
+			return filterColor(products, param)
+		}else if (method == "size"){
+			return filterSize(products, param)
 		}
 	}
 
 }
 
+
+function filterSize(products, size){
+	let returnList = [];
+	for (let key in products){
+		if (products[key].size == size){
+			returnList.push(products[key])
+		}
+	}
+	return returnList;
+}
+
+
+
+function filterColor(products, color){
+	let returnList = [];
+	for (let key in products){
+		if (products[key].color == color){
+			returnList.push(products[key])
+		}
+	}
+	return returnList;
+}
+
+
 function filterType(products, type){
 	let returnList = [];
-	console.log("in filter function")
-	console.log(JSON.stringify(products))
+	// console.log("in filter function")
+	// console.log(JSON.stringify(products))
 	for (let key in products){
-		console.log(key)
-		if (products[key].type == type){
+		if (Array.isArray(products[key].type) && products[key].type.includes(type)){
+			returnList.push(products[key])
+
+		}else if (products[key].type == type){
 			returnList.push(products[key])
 		}
 	}
