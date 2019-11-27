@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMapGL, {Marker, Popup} from 'react-map-gl';
+import axios from 'axios';
 
 import ListingPin from './ListingPin';
 import UserPin from './UserPin';
@@ -42,7 +43,7 @@ class Map extends React.Component {
     } = this.state
 
     const [userLat, userLng] = [this.props.userLat, this.props.userLng];
-
+    
     return (
       <ReactMapGL
         width='100%'

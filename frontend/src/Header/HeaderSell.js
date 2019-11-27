@@ -6,8 +6,23 @@ export default class HeaderSell extends Component {
     render() {
         return (
             <header className="App-header">
-                <img src={logo} className="Logo" alt="logo" />
-                <div className="Text Buy">  Looking to buy? </div>
+              <div className="logo-container">
+                <a href="/"
+                    className="Text Buy"
+                    target="_self"
+                    rel="noopener noreferrer"
+                  >
+                    <img src={logo} className="Logo" alt="logo" />
+                  </a>
+              </div>
+              <div className="text-container">
+                <a  href="/landing"
+                    className="Text Buy"
+                    target="_self"
+                    rel="noopener noreferrer"
+                >Looking to buy?</a>
+
+              </div>
             </header>
         )
     }

@@ -1,0 +1,59 @@
+.listing-table {
+    /* padding: 20vh 15vw; */
+}
+
+.listing-header {
+    display: flex;
+    flex-direction: row;
+    width: 50vw;
+    border-bottom: 1px solid lightgray;
+    justify-content: space-between;
+}
+
+.listing-name {
+    font-size: 28px;
+    font-weight: 600;
+    padding-bottom: 2px;
+}
+
+.listing-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 20px 0px;
+}
+
+.status-listing {
+    display: flex;
+    flex-direction: row;
+    padding-top: 12vh;
+    padding-left: 15vw;
+}
+
+.status-table {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    padding-top: 5vh;
+    height: 100px;
+    /* padding-bottom: vh; */
+    background-color: lightgray;
+}
+
+.status-item {
+    padding-bottom: 10px;
+    font-weight: 200;
+}
+
+.listing-add {
+    padding-left: 1vw;
+    padding-right:1vw;
+    text-decoration: none;
+    margin-right: 3vw;
+    margin-bottom: 2px;
+    background-color: rgb(108, 202, 233);
+    color: white;
+    border-radius: 17px;
+    font-size: 24px;
+}

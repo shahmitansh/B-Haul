@@ -1,118 +1,132 @@
 import React from 'react';
 import './MapView.css';
 
+import axios from 'axios';
 import Map from '../Map/Map';
 import Sidebar from '../Sidebar/Sidebar';
 import HeaderBuy from '../Header/HeaderBuy';
 
-class MapView extends React.Component {
-  mockImages = []
+import table1 from './mock/table1.jpg';
+import table2 from './mock/table2.jpg';
+import table3 from './mock/table3.jpg';
+import table4 from './mock/table4.jpg';
+import table5 from './mock/table5.jpg';
+import table6 from './mock/table6.jpg';
 
-  componentDidMount() {
+class MapView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      listings: []
+    };
+    this.distanceSet = false;
+  }
+
+  componentDidMount(){
     const reqPics = require.context('./mock', true, /\.jpg$/)
     const paths = reqPics.keys()
-    this.mockImages = paths.map(path => reqPics(path))
-    console.log(this.mockImages);
+
+    fetch('http://localhost:3000/getProductList')
+      .then(res => res.json())
+      .then(result => this._processListings(result));
+  }
+
+  _processListings(rawListings) {
+    // Example product
+    // {
+    //   title: "Small Wooden Dining Table",
+    //   description: "A small wooden dining table.",
+    //   image: table6,
+    //   productID: 13,
+    //   sellerID: 15,
+    //   location: {
+    //     lat: 34.070040,
+    //     lng: -118.453400
+    //   },
+    //   properties: {
+    //     color: "Mocha",
+    //     distance: "",
+    //     size: "2.1 ft x 6.3 ft x 4.2 ft",
+    //     elevation: ""
+    //   }
+    // }
+
+    let productList = Object.values(rawListings['products']);
+    let tempListings = [];
+
+    for (let product of productList) {
+      tempListings.push({
+        title: product.name,
+        description: product.description,
+        image: table1,
+        location: product.location,
+        productID: product.productID,
+        sellerID: product.sellerID,
+        properties: {
+          type: product.type,
+          color: product.color,
+          distance: '',
+          size: product.size,
+          elevation: product.elevation
+        }
+      });
+    }
+
+    this.setState({listings: tempListings});
+  }
+
+  _computeDistances() {
+    const _distanceHelper = (url, index) => {
+      fetch(url)
+        .then(res => res.json())
+        .then(result => {
+          this.setState(state => {
+            const tempListings = state.listings;
+            tempListings[index].properties.distance = result.distance[1].toString() + ' mi';
+            return {listings: tempListings};
+          });
+        });
+    };
+
+    const currentListings = this.state.listings;
+    let index = 0;
+    for (let listing of currentListings) {
+      const distance_url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + this.props.userLat + ',%20lng:' + this.props.userLng +'%20}%20},%20{%20latLng:{%20lat:' + listing.location.lat + ',%20lng:'+ listing.location.lng + '}%20}%20],%20options:{%20manyToOne:true%20}}';
+      _distanceHelper(distance_url, index);
+      index++;
+    }
+  }
+
+  _computeElevations() {
+    const _elevationHelper = (url, index) => {
+      fetch(url)
+        .then(res => res.json())
+        .then(result => {
+          this.setState(state => {
+            const tempListings = state.listings;
+            tempListings[index].properties.elevation = result.elevationProfile[1].height.toString() + ' m';
+            return {listings: tempListings};
+          });
+        });
+    }
+
+    const currentListings = this.state.listings;
+    let index = 0;
+    for (let listing of currentListings) {
+      const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&shapeFormat=raw&latLngCollection=' + this.props.userLat + ',' + this.props.userLng + ',' + listing.location.lat + ',' + listing.location.lng;
+      _elevationHelper(elevation_url, index);
+      index++;
+    }
   }
 
   render() {
-    const sampleItem1 = {
-      title: "Small Wooden Dining Table",
-      description: "A small wooden dining table.",
-      image: this.mockImages[0] ? this.mockImages[0] : '',
-      location: {
-        lat: 34.067138,
-        lng: -118.451128
-      },
-      properties: {
-        color: "Brown",
-        distance: "0.3 mi",
-        size: "2.1 ft x 6.3 ft x 4.2 ft",
-        elevation: "112 ft UP 52 ft DOWN"
-      }
-    };
-
-    const sampleItem2 = {
-      title: "Big Wooden Dining Table",
-      description: "A small wooden dining table.",
-      image: this.mockImages[1] ? this.mockImages[1] : '',
-      location: {
-        lat: 34.067370,
-        lng: -118.452740
-      },
-      properties: {
-        color: "Black",
-        distance: "0.2 mi",
-        size: "8.1 ft x 3.3 ft x 5.2 ft",
-        elevation: "12 ft UP 5 ft DOWN"
-      }
-    };
-
-    const sampleItem3 = {
-      title: "Cute Coffee Table",
-      description: "A small wooden dining table.",
-      image: this.mockImages[2] ? this.mockImages[2] : '',
-      location: {
-        lat: 34.066280,
-        lng: -118.450370
-      },
-      properties: {
-        color: "Blue",
-        distance: "0.5 mi",
-        size: "3.1 ft x 4.3 ft x 3.2 ft",
-        elevation: "133 ft UP 25 ft DOWN"
-      }
-    };
-
-    const sampleItem4 = {
-      title: "TV Table",
-      description: "A small wooden dining table.",
-      image: this.mockImages[3] ? this.mockImages[3] : '',
-      location: {
-        lat: 34.068740,
-        lng: -118.447560
-      },
-      properties: {
-        color: "White",
-        distance: "0.4 mi",
-        size: "2.1 ft x 6.3 ft x 4.2 ft",
-        elevation: "112 ft UP 52 ft DOWN"
-      }
-    };
-
-    const sampleItem5 = {
-      title: "Small Wooden Dining Table",
-      description: "A small wooden dining table.",
-      image: this.mockImages[4] ? this.mockImages[4] : '',
-      location: {
-        lat: 34.064150,
-        lng: -118.452730
-      },
-      properties: {
-        color: "Coffee",
-        distance: "0.3 mi",
-        size: "2.1 ft x 6.3 ft x 4.2 ft",
-        elevation: "112 ft UP 52 ft DOWN"
-      }
-    };
-
-    const sampleItem6 = {
-      title: "Small Wooden Dining Table",
-      description: "A small wooden dining table.",
-      image: this.mockImages[5] ? this.mockImages[5] : '',
-      location: {
-        lat: 34.070040,
-        lng: -118.453400
-      },
-      properties: {
-        color: "Mocha",
-        distance: "0.1 mi",
-        size: "2.1 ft x 6.3 ft x 4.2 ft",
-        elevation: "112 ft UP 52 ft DOWN"
-      }
-    };
-
-    const items = [sampleItem1, sampleItem2, sampleItem3, sampleItem4, sampleItem5, sampleItem6];
+    const items = this.state.listings;
+    if (!this.distanceSet && items.length > 0 && this.props.userLat != undefined && this.props.userLng != undefined) {
+      this.distanceSet = true;
+      this._computeDistances();
+      this._computeElevations();
+    }
 
     return (
       <div id="container">

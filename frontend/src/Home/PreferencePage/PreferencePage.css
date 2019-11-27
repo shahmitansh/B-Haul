@@ -7,10 +7,11 @@
 .Preference-Options {
   width: 300px;
   margin: 0 auto;
+  margin-bottom: 3vh;
 }
 
 .Preference-Options-Container {
-  padding-top: 20px;
+  padding-top: 10px;
   padding-bottom: 20px;
 }
 
@@ -21,11 +22,12 @@
     font-size: 2.5vh;
 }
 
-.Preference-Opts {
+.Preference-Opt {
     color: maroon;
     text-decoration: none;
+    font-size: 3vh;
 }
 
-.Preference-Pad {
-    padding-right: 3vw;
+.Preference-Pads {
+    padding-right: 6vw;
 }

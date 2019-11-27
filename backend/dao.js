@@ -19,41 +19,99 @@ function MongoDao(mongoUri, dbname) {
 }
 
 MongoDao.prototype.readCollection = function(collectionName) {
-	return this.dbConnection.collection(collectionName).find();
-}
-
-MongoDao.prototype.printDocument = function(collectionName, doc, callback) {
-	this.dbConnection.collection(collectionName).find({}).filter(doc).toArray(function(err, docs) {
-		console.log(docs[0]);
-		console.log("\n");
-		callback();
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+		_this.dbConnection.collection(collectionName).find().toArray((err, docs) => {
+			if(err) {
+				reject(err);
+			} else {
+				resolve(docs);
+			}
+		})
 	});
 }
 
-MongoDao.prototype.insertDocument = function(collectionName, doc, callback) {
-	var _this = this;
-	this.dbConnection.collection(collectionName).insertOne(doc, function(err, result) {
-		assert.equal(null, err);
-		console.log(" Document inserted successfully:");
-		_this.printDocument(collectionName, doc, callback);
+MongoDao.prototype.printDocument = function(collectionName, doc) {
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+			_this.dbConnection.collection(collectionName).find({}).filter(doc).toArray(function(err, docs) {
+				if(err) {
+					reject(err);
+				} else {
+					console.log(docs[0]);
+					console.log("\n");
+					resolve();
+				}	
+		});
 	});
 }
 
-MongoDao.prototype.updateDocument = function(collectionName, doc, updateDocument, callback) {
-	var _this = this;
-	this.dbConnection.collection(collectionName).updateMany(doc, updateDocument, function(err, result) {
-		assert.equal(null, err);
-		console.log(" Document updated successfully:");
-		_this.printDocument(collectionName, doc, callback);
-		callback();
+MongoDao.prototype.insertDocument = function(collectionName, doc) {
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+		_this.dbConnection.collection(collectionName).insertOne(doc, function(err, result) {
+			if(err) {
+				reject(err);
+			} else {
+				console.log(" Document inserted successfully:");
+				resolve();
+			}			
+		});
 	});
 }
 
-MongoDao.prototype.deleteDocument = function(collectionName, doc, callback) {
-	this.dbConnection.collection(collectionName).deleteOne(doc, function(err, result) {
-		assert.equal(null, err);
-		console.log(" Document deleted successfully:");
-		callback();
+MongoDao.prototype.updateDocument = function(collectionName, doc, updateDocument) {
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+			_this.dbConnection.collection(collectionName).updateMany(doc, updateDocument, function(err, result) {
+				if (err) {
+					reject(err);
+				} else {
+					console.log(" Document updated successfully:");
+					resolve();
+				}
+		});
+	});
+}
+
+MongoDao.prototype.deleteDocument = function(collectionName, doc) {
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+			_this.dbConnection.collection(collectionName).deleteOne(doc, function(err, result) {
+				if (err) {
+					reject(err);
+				} else {
+					console.log(" Document deleted successfully:");
+					resolve();
+				}
+		});
+	});
+}
+
+MongoDao.prototype.deleteAllDocuments = function(collectionName) {
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+			_this.dbConnection.collection(collectionName).deleteMany({}, function(err, result) {
+				if(err) {
+					reject(err);
+				} else {
+					console.log("cleared all documents successfully");
+					resolve();
+				}
+		});
+	});
+}
+
+MongoDao.prototype.findDocuments = function(collectionName, doc) {
+	let _this = this;
+	return new Promise(function(resolve, reject) {
+			_this.dbConnection.collection(collectionName).find(doc).toArray((err, docs) => {
+				if(err) {
+					reject(err);
+				} else {
+					resolve(docs);
+				}
+		});
 	});
 }
 

@@ -7,10 +7,20 @@ export default class HeaderBuy extends Component {
         return (
             <header className="App-header">
               <div className="logo-container">
-                <img src={logo} className="Logo" alt="logo" />
+                <a href="/"
+                   className="Text Buy"
+                   target="_self"
+                   rel="noopener noreferrer"
+                >
+                  <img src={logo} className="Logo" alt="logo" />
+                </a>
               </div>
               <div className="text-container">
-                <div className="Text Sell">Looking to sell?</div>
+                <a  href="/listings"
+                    className="Text Buy"
+                    target="_self"
+                    rel="noopener noreferrer"
+                >Looking to sell?</a>
               </div>
             </header>
         )

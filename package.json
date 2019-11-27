@@ -4,16 +4,22 @@
   "description": "classifieds application",
   "main": "app.js",
   "scripts": {
-  "start": "node app.js"
-},
+    "start": "node app.js"
+  },
   "repository": {
-  "type": "git",
-  "url": ""
-},
+    "type": "git",
+    "url": ""
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
-  "url": ""
-},
-  "homepage": ""
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react-forms-processor": "0.0.40",
+    "react-forms-processor-atlaskit": "0.0.40",
+    "styled-components": "^4.4.1"
+  }
 }

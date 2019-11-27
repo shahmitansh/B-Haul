@@ -1,0 +1,47 @@
+.Facebook {
+    padding: 32vh 25vw;
+    padding-top: 5vh;
+}
+
+.User {
+    padding: 25vh;
+}
+
+.Preference-Prompt {
+    padding-top: 20vh;
+    font-size: 6vh;
+    font-weight: 200;
+    text-align: center;
+  }
+
+.Preference-Opts {
+    text-decoration: none;
+    font-size: 5vh;
+    background: -webkit-linear-gradient(blue,pink);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Preference-Pad {
+    padding-top: 3vh;
+    padding-right: 0vw;
+}
+
+.User-Name {
+    font-weight: 300;
+    font-size: 8vh;
+    margin-bottom: 8vh;
+}
+
+.User-Email {
+    font-size: 3vh;
+    color: blue;
+    margin-top: 3vh;
+}
+
+.User-Pic {
+    height: 14vh;
+    width: 6.5vw;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
