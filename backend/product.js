@@ -3,10 +3,10 @@ const productColors = {"red": 1, "green": 2, "blue":3, "black":4, "grey":5, "bro
 const filterFactory =  require('./filterFactory.js');
 
 class Product {
-	constructor(productID, title, elevation, address, description, 
+	constructor(productID, name, elevation, address, description, 
 		sellerID, price, type, location, hasElevator, color, size){
 		this.productID = productID;
-		this.title = title;
+		this.name = name;
 		this.address = address;
 		this.description = description;
 		this.sellerID = sellerID;
