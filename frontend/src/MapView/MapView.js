@@ -57,7 +57,7 @@ class MapView extends React.Component {
 
     for (let product of productList) {
       tempListings.push({
-        title: "Temp Title",
+        title: product.name,
         description: product.description,
         image: table1,
         location: product.location,
