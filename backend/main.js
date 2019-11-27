@@ -62,7 +62,6 @@ app.get('/getProductList/size/:filterSize',  async (req, res) => {
 }); 
 
 
-
 app.post('/addListing', async function(request, response){
 	initDb();
 	let productID = await nextProductID()
