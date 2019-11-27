@@ -14,159 +14,119 @@ import table5 from './mock/table5.jpg';
 import table6 from './mock/table6.jpg';
 
 class MapView extends React.Component {
-  state = {
-    distance: 0,
-    elevation: 0
-  }
 
-  userLat = this.props.userLat;
-  userLng = this.props.userLng;
-
-  sampleItem1 = {
-    title: "Small Wooden Dining Table",
-    description: "A small wooden dining table.",
-    image: table1,
-    location: {
-      lat: 34.067138,
-      lng: -118.451128
-    },
-    properties: {
-      color: "Brown",
-      distance: "",
-      size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: ""
-    }
-  };
-
-  sampleItem2 = {
-    title: "Big Wooden Dining Table",
-    description: "A small wooden dining table.",
-    image: table2,
-    location: {
-      lat: 34.067370,
-      lng: -118.452740
-    },
-    properties: {
-      color: "Black",
-      distance: "",
-      size: "8.1 ft x 3.3 ft x 5.2 ft",
-      elevation: ""
-    }
-  };
-
-  sampleItem3 = {
-    title: "Cute Coffee Table",
-    description: "A small wooden dining table.",
-    image: table3,
-    location: {
-      lat: 34.066280,
-      lng: -118.450370
-    },
-    properties: {
-      color: "Blue",
-      distance: "",
-      size: "3.1 ft x 4.3 ft x 3.2 ft",
-      elevation: ""
-    }
-  };
-
-  sampleItem4 = {
-    title: "TV Table",
-    description: "A small wooden dining table.",
-    image: table4,
-    location: {
-      lat: 34.068740,
-      lng: -118.447560
-    },
-    properties: {
-      color: "White",
-      distance: "",
-      size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: ""
-    }
-  };
-
-  sampleItem5 = {
-    title: "Small Wooden Dining Table",
-    description: "A small wooden dining table.",
-    image: table5,
-    location: {
-      lat: 34.064150,
-      lng: -118.452730
-    },
-    properties: {
-      color: "Coffee",
-      distance: "",
-      size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: ""
-    }
-  };
-
-  sampleItem6 = {
-    title: "Small Wooden Dining Table",
-    description: "A small wooden dining table.",
-    image: table6,
-    location: {
-      lat: 34.070040,
-      lng: -118.453400
-    },
-    properties: {
-      color: "Mocha",
-      distance: "",
-      size: "2.1 ft x 6.3 ft x 4.2 ft",
-      elevation: ""
-    }
-  };
-
-  items = [this.sampleItem1, this.sampleItem2, this.sampleItem3, this.sampleItem4, this.sampleItem5, this.sampleItem6];
-
-  lat = [];
-  lng = [];
-
-  computeDistance =() => {
-    setTimeout(() => {
-      for(var i = 0; i < this.items.length; i++) {
-        if(this.props.userLat && this.props.userLng)
-          this.compute_helper(i)
-      }
-    }, 5000)
-  }
-
-  compute_helper =(loop) => {
-    const userLats = this.props.userLat
-    const userLngs = this.props.userLng
-    this.lat.push(this.items[loop].location.lat)
-    this.lng.push(this.items[loop].location.lng)
-    var itemLat=this.lat[loop]
-    var itemLng=this.lng[loop]
-    const distance_url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + userLats + ',%20lng:' + userLngs +'%20}%20},%20{%20latLng:{%20lat:' + itemLat + ',%20lng:'+ itemLng + '}%20}%20],%20options:{%20manyToOne:true%20}}'
-    const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&shapeFormat=raw&latLngCollection=' + userLats + ',' + userLngs + ',' + itemLat + ',' + itemLng
-    
-    axios.get(distance_url)
-      .then(response =>
-        {
-          this.items[loop].properties.distance = response.data.distance[1].toString() + " mi"
-          this.setState({distance: this.items[loop].properties.distance})
-        }
-      )
-    
-    axios.get(elevation_url)
-      .then(response => 
-        {
-          this.items[loop].properties.elevation = response.data.elevationProfile[1].height.toString() + " m"
-          this.setState({elevation: this.items[loop].properties.elevation})
-        }  
-      )
+  constructor(props) {
+    super(props);
+    this.state = {
+      listings: []
+    };
+    this.distanceSet = false;
   }
 
   componentDidMount(){
-    this.computeDistance()
     const reqPics = require.context('./mock', true, /\.jpg$/)
     const paths = reqPics.keys()
+
+    fetch('http://localhost:3000/getProductList')
+      .then(res => res.json())
+      .then(result => this._processListings(result));
+  }
+
+  _processListings(rawListings) {
+    // Example product
+    // {
+    //   title: "Small Wooden Dining Table",
+    //   description: "A small wooden dining table.",
+    //   image: table6,
+    //   productID: 13,
+    //   sellerID: 15,
+    //   location: {
+    //     lat: 34.070040,
+    //     lng: -118.453400
+    //   },
+    //   properties: {
+    //     color: "Mocha",
+    //     distance: "",
+    //     size: "2.1 ft x 6.3 ft x 4.2 ft",
+    //     elevation: ""
+    //   }
+    // }
+
+    let productList = Object.values(rawListings['products']);
+    let tempListings = [];
+
+    for (let product of productList) {
+      tempListings.push({
+        title: product.name,
+        description: product.description,
+        image: table1,
+        location: product.location,
+        productID: product.productID,
+        sellerID: product.sellerID,
+        properties: {
+          type: product.type,
+          color: product.color,
+          distance: '',
+          size: product.size,
+          elevation: product.elevation
+        }
+      });
+    }
+
+    this.setState({listings: tempListings});
+  }
+
+  _computeDistances() {
+    const _distanceHelper = (url, index) => {
+      fetch(url)
+        .then(res => res.json())
+        .then(result => {
+          this.setState(state => {
+            const tempListings = state.listings;
+            tempListings[index].properties.distance = result.distance[1].toString() + ' mi';
+            return {listings: tempListings};
+          });
+        });
+    };
+
+    const currentListings = this.state.listings;
+    let index = 0;
+    for (let listing of currentListings) {
+      const distance_url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + this.props.userLat + ',%20lng:' + this.props.userLng +'%20}%20},%20{%20latLng:{%20lat:' + listing.location.lat + ',%20lng:'+ listing.location.lng + '}%20}%20],%20options:{%20manyToOne:true%20}}';
+      _distanceHelper(distance_url, index);
+      index++;
+    }
+  }
+
+  _computeElevations() {
+    const _elevationHelper = (url, index) => {
+      fetch(url)
+        .then(res => res.json())
+        .then(result => {
+          this.setState(state => {
+            const tempListings = state.listings;
+            tempListings[index].properties.elevation = result.elevationProfile[1].height.toString() + ' m';
+            return {listings: tempListings};
+          });
+        });
+    }
+
+    const currentListings = this.state.listings;
+    let index = 0;
+    for (let listing of currentListings) {
+      const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&shapeFormat=raw&latLngCollection=' + this.props.userLat + ',' + this.props.userLng + ',' + listing.location.lat + ',' + listing.location.lng;
+      _elevationHelper(elevation_url, index);
+      index++;
+    }
   }
 
   render() {
-    const items = this.items;
+    const items = this.state.listings;
+    if (!this.distanceSet && items.length > 0 && this.props.userLat != undefined && this.props.userLng != undefined) {
+      this.distanceSet = true;
+      this._computeDistances();
+      this._computeElevations();
+    }
 
     return (
       <div id="container">
