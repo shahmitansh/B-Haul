@@ -1,11 +1,16 @@
-.listing-table {
-    /* padding: 20vh 15vw; */
-}
-
 .listing-header {
     display: flex;
     flex-direction: row;
-    width: 50vw;
+    width: 35vw;
+    border-bottom: 1px solid lightgray;
+    justify-content: space-between;
+}
+
+.bundle-header {
+    display: flex;
+    flex-direction: row;
+    width: 30vw;
+    margin-left: 5vw;
     border-bottom: 1px solid lightgray;
     justify-content: space-between;
 }
@@ -22,11 +27,20 @@
     padding: 20px 20px 20px 0px;
 }
 
+.bundle-item {
+    margin-left: 5vw;
+}
+
+.divider {
+    border-right: 2px solid lightgray;
+    padding-right: 5vw;
+}
+
 .status-listing {
     display: flex;
     flex-direction: row;
     padding-top: 12vh;
-    padding-left: 15vw;
+    padding-left: 10vw;
 }
 
 .status-table {

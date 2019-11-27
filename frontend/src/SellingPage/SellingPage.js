@@ -5,382 +5,533 @@ import './SellingPage.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
 
-// TODO: Add bundle options in fields
-
 const fields = 
 [
-    {
-      "id": "TYPE",
-      "name": "Type",
-      "type": "select",
-      "label": "Type of Furniture",
-      "description": "",
-      "placeholder": "Chair",
-      "defaultValue": "",
-      "options": [
-        {
-          "heading": "Furniture",
-          "items": [
-            {
-              "label": "Chair",
-              "value": "Chair"
-            },
-            {
-              "label": "Desk",
-              "value": "Desk"
-            },
-            {
-              "label": "Table",
-              "value": "Table"
-            },
-            {
-              "label": "Bed",
-              "value": "Bed"
-            },
-            {
-              "label": "Other",
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "visible": true,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [],
-      "requiredWhen": [],
-      "disabledWhen": [],
-      "shouldMatchRegex": false,
-      "hasMinLength": false,
-      "hasMaxLength": false,
-      "hasNumericalRange": false,
-      "shouldCompareTo": false,
-      "omitWhenHidden": false,
-      "valueDelimiter": "",
-      "useChangesAsValues": false
-    },
-    {
-        "id": "OTHERNAME",
-        "name": "Other Name",
-        "type": "text",
-        "label": "Type",
-        "description": "",
-        "placeholder": "Type",
-        "defaultValue": "",
-        "visible": false,
-        "required": true,
-        "disabled": false,
-        "visibleWhen": [
+  {
+    "id": "GLOBAL_TYPE",
+    "name": "Global Type",
+    "type": "select",
+    "label": "Type",
+    "description": "",
+    "placeholder": "Type",
+    "defaultValue": "",
+    "options": [
+      {
+        "heading": "Type",
+        "items": [
           {
-            "id": "Add other types",
-            "field": "TYPE",
-            "is": [
-              {
-                "value": "Other"
-              }
-            ]
+            "label": "Seating",
+            "value": "Seating"
+          },
+          {
+            "label": "Beds",
+            "value": "Beds"
+          },
+          {
+            "label": "Tables",
+            "value": "Tables"
+          },
+          {
+            "label": "Storage",
+            "value": "Storage"
           }
-        ],
-        "requiredWhen": [],
-        "disabledWhen": []
-    },
-    {   
-      "id": "BEDSIZE",
-      "name": "Bed Size",
-      "type": "select",
-      "label": "Size",
-      "description": "",
-      "placeholder": "Size",
-      "defaultValue": "",
-      "options": [
-        {
-          "heading": "Size",
-          "items": [
-            {
-              "label": "California King",
-              "value": "California King"
-            },
-            {
-              "label": "King",
-              "value": "King"
-            },
-            {
-              "label": "Queen",
-              "value": "Queen"
-            },
-            {
-              "label": "Full",
-              "value": "Full"
-            },
-            {
-              "label": "Twin",
-              "value": "Twin"
-            }
-          ]
-        }
-      ],
-      "visible": false,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in bed size",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Bed"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    },
-    {
-      "id": "SIZE",
-      "name": "Size",
-      "type": "text",
-      "label": "Size (width/height/depth)",
-      "description": "",
-      "placeholder": "Size",
-      "visible": false,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in color",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": [],
-      "shouldMatchRegex": false,
-      "hasMinLength": false,
-      "hasMaxLength": false,
-      "hasNumericalRange": false,
-      "shouldCompareTo": false
-    },
-    {
-      "id": "COLOR",
-      "name": "Color",
-      "type": "text",
-      "label": "Color",
-      "description": "",
-      "placeholder": "Color",
-      "defaultValue": "",
-      "options": [],
-      "visible": false,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in color",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Bed"
-            },
-            {
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": [],
-      "shouldMatchRegex": false,
-      "hasMinLength": false,
-      "hasMaxLength": false,
-      "hasNumericalRange": false,
-      "shouldCompareTo": false
-    },
-    {
-      "id": "PRICE",
-      "name": "Price",
-      "type": "text",
-      "label": "Price ($)",
-      "description": "",
-      "placeholder": "Price",
-      "defaultValue": "",
-      "visible": false,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in price",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Bed"
-            },
-            {
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    },
-    {
-      "id": "ELEVATOR",
-      "name": "Elevator",
-      "type": "select",
-      "label": "Elevator",
-      "description": "",
-      "placeholder": "Elevator",
-      "defaultValue": "",
-      "options": [
-        {
-          "heading": "",
-          "items": [
-            {
-              "label": "Yes",
-              "value": "Yes"
-            },
-            {
-              "label": "No",
-              "value": "No"
-            }
-          ]
-        }
-      ],
-      "visible": false,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in elevator",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Bed"
-            },
-            {
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    },
-    {
-      "id": "OWNED",
-      "name": "Time Owned",
-      "type": "text",
-      "label": "Years owned (months)?",
-      "description": "",
-      "placeholder": "#",
-      "defaultValue": "",
-      "visible": false,
-      "required": true,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in years owned field",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Bed"
-            },
-            {
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    },
-    {
-      "id": "DESCRIPTION",
-      "name": "Description",
-      "type": "textarea",
-      "label": "Any other details?",
-      "description": "",
-      "placeholder": "",
-      "defaultValue": "",
-      "visible": false,
-      "required": false,
-      "disabled": false,
-      "visibleWhen": [
-        {
-          "id": "Puts in description",
-          "field": "TYPE",
-          "is": [
-            {
-              "value": "Desk"
-            },
-            {
-              "value": "Chair"
-            },
-            {
-              "value": "Table"
-            },
-            {
-              "value": "Bed"
-            },
-            {
-              "value": "Other"
-            }
-          ]
-        }
-      ],
-      "requiredWhen": [],
-      "disabledWhen": []
-    }
-  ];
+        ]
+      }
+    ],
+    "visible": true,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [],
+    "requiredWhen": [],
+    "disabledWhen": [],
+    "shouldMatchRegex": false,
+    "hasMinLength": false,
+    "hasMaxLength": false,
+    "hasNumericalRange": false,
+    "shouldCompareTo": false,
+    "omitWhenHidden": false,
+    "valueDelimiter": "",
+    "useChangesAsValues": false
+  },
+  {
+    "id": "BEDS_SIZE",
+    "name": " Bed Size",
+    "type": "select",
+    "label": "Size",
+    "description": "",
+    "placeholder": "Size",
+    "defaultValue": "",
+    "options": [
+      {
+        "heading": "Size",
+        "items": [
+          {
+            "label": "Twin",
+            "value": "Twin"
+          },
+          {
+            "label": "TwinXL",
+            "value": "TwinXL"
+          },
+          {
+            "label": "Full",
+            "value": "Full"
+          },
+          {
+            "label": "Queen",
+            "value": "Queen"
+          },
+          {
+            "label": "King",
+            "value": "King"
+          },
+          {
+            "label": "California King",
+            "value": "California King"
+          }
+        ]
+      }
+    ],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in bed size",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Beds"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": [],
+    "omitWhenHidden": false,
+    "valueDelimiter": "",
+    "useChangesAsValues": false,
+    "shouldMatchRegex": false,
+    "hasMinLength": false,
+    "hasMaxLength": false,
+    "hasNumericalRange": false,
+    "shouldCompareTo": false
+  },
+  {
+    "id": "MATTRESS",
+    "name": "Mattress",
+    "type": "select",
+    "label": "Mattress included?",
+    "description": "",
+    "placeholder": "Mattress",
+    "defaultValue": "",
+    "options": [
+      {
+        "items": [
+          {
+            "label": "Yes",
+            "value": "Yes"
+          },
+          {
+            "label": "No",
+            "value": "No"
+          }
+        ]
+      }
+    ],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in mattress",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Beds"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "SEATING",
+    "name": " Seating Type",
+    "type": "select",
+    "label": "Seating Type",
+    "description": "",
+    "placeholder": "Type",
+    "defaultValue": "",
+    "options": [
+      {
+        "heading": "Seating Type",
+        "items": [
+          {
+            "label": "Chair",
+            "value": "Chair"
+          },
+          {
+            "label": "Stool",
+            "value": "Stool"
+          },
+          {
+            "label": "Couch",
+            "value": "Couch"
+          },
+          {
+            "label": "Bench",
+            "value": "Bench"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          }
+        ]
+      }
+    ],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in seating type ",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "TABLES_TYPE",
+    "name": " Table Type",
+    "type": "select",
+    "label": "Table Type",
+    "description": "",
+    "placeholder": "Type",
+    "defaultValue": "",
+    "options": [
+      {
+        "heading": "Table Type",
+        "items": [
+          {
+            "label": "Desk",
+            "value": "Desk"
+          },
+          {
+            "label": "Coffee Table",
+            "value": "Coffee Table"
+          },
+          {
+            "label": "Dining Table",
+            "value": "Dining Table"
+          },
+          {
+            "label": "Folding Table",
+            "value": "Folding Table"
+          },
+          {
+            "label": "TV Table",
+            "value": "TV Table"
+          },
+          {
+            "label": "Nightstand",
+            "value": "Nightstand"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          }
+        ]
+      }
+    ],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in table type",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Tables"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "STORAGE_TYPE",
+    "name": "Storage Type",
+    "type": "select",
+    "label": "Storage Type",
+    "description": "",
+    "placeholder": "Type",
+    "defaultValue": "",
+    "options": [
+      {
+        "heading": "Storage Type",
+        "items": [
+          {
+            "label": "Bookshelf",
+            "value": "Bookshelf"
+          },
+          {
+            "label": "Cabinet/Cupboard",
+            "value": "Cabinet/Cupboard"
+          },
+          {
+            "label": "Dresser/Drawer",
+            "value": "Dresser/Drawer"
+          },
+          {
+            "label": "Wardrobe",
+            "value": "Wardrobe"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          }
+        ]
+      }
+    ],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in storage type",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "PRICE",
+    "name": "Price",
+    "type": "text",
+    "label": "Price",
+    "description": "",
+    "placeholder": "$",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in price",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Beds"
+          },
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "COLOR",
+    "name": "Color",
+    "type": "select",
+    "label": "Color",
+    "description": "",
+    "placeholder": "Color",
+    "defaultValue": "",
+    "options": [
+      {
+        "heading": "Color",
+        "items": [
+          {
+            "label": "Black",
+            "value": "Black"
+          },
+          {
+            "label": "White",
+            "value": "White"
+          },
+          {
+            "label": "Brown",
+            "value": "Brown"
+          },
+          {
+            "label": "Yellow",
+            "value": "Yellow"
+          },
+          {
+            "label": "Red",
+            "value": "Red"
+          },
+          {
+            "label": "Green",
+            "value": "Green"
+          },
+          {
+            "label": "Blue",
+            "value": "Blue"
+          },
+          {
+            "label": "Orange",
+            "value": "Orange"
+          },
+          {
+            "label": "Grey",
+            "value": "Grey"
+          },
+          {
+            "label": "Purple",
+            "value": "Purple"
+          },
+          {
+            "label": "Silver",
+            "value": "Silver"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          }
+        ]
+      }
+    ],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in color",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Beds"
+          },
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "LENGTH",
+    "name": "Length",
+    "type": "text",
+    "label": "Length",
+    "description": "",
+    "placeholder": "#",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in length",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "WIDTH",
+    "name": "Width",
+    "type": "text",
+    "label": "Width",
+    "description": "",
+    "placeholder": "#",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in width",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "HEIGHT",
+    "name": "Height",
+    "type": "text",
+    "label": "Height",
+    "description": "",
+    "placeholder": "#",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in height",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  }
+];
 
 export default class SellingPage extends Component {
     render() {
