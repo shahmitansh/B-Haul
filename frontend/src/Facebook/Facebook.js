@@ -26,6 +26,7 @@ const componentClicked = () => {
     <>
     <div className="User">
         <div className="User-Name">Hey {user.name}!</div>
+        {console.log(user.picture.data.url)}
         {/* <div className="User-Email">{ user.email }</div>
         <img className="User-Pic" src={user.picture.data.url} height={user.picture.height} width={user.picture.width} alt="avatar"/> <br></br> */}
         <a  href="/landing"
