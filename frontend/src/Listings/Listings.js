@@ -3,39 +3,57 @@ import './Listings.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
 import ListingItem from './ListingItem/ListingItem.js';
+import Checkbox from './Checkbox.js';
+import Bundle from './Bundle.js';
 
 export default class Listings extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        listingInBundle : true,
+        bundleClicked: true
+    }
+    
     sampleItem1 = {
-        title: "Small Wooden Dining Table"
+        title: "Small Wooden Dining Table",
+        index: 0,
+        in_bundle: false
     }
 
     sampleItem2 = {
-        title: "Wooden Dining Table"
+        title: "Wooden Dining Table",
+        index: 1,
+        in_bundle: false
     }
 
     sampleItem3 = {
-        title: "Dining Table"
+        title: "Dining Table",
+        index: 2,
+        in_bundle: false
     }
 
     sampleItem4 = {
-        title: "Table"
+        title: "Table",
+        index: 3,
+        in_bundle: false
     }
 
-    sampleBundle = {
-        title: "Bundle 1"
+    sampleBundle1 = {
+        title: "Bundle 1",
+        listings: [1, 2]
+    }
+
+    sampleBundle2 = {
+        title: "Bundle 2"
     }
 
     items = [this.sampleItem1, this.sampleItem2, this.sampleItem3, this.sampleItem4];
-    bundles = [this.sampleBundle]
+    bundles = [this.sampleBundle1, this.sampleBundle2]
 
     render() {
         const items = this.items;
-        const listingItems = items.map((item, index) => 
-            <ListingItem 
-                items={item}
-                index={index}
-            />
-        );
         const bundle = this.bundles;
 
         return (
@@ -51,7 +69,11 @@ export default class Listings extends Component {
                                 rel="noopener noreferrer" 
                                 > + </a>
                         </div>
-                        <div className="listing-item"> {listingItems} </div>
+                        <div className="listing-item"> 
+                            <Checkbox items={this.items}
+                                      inBundle={this.state.listingInBundle}
+                            />
+                        </div>
                     </div>
                     <div className="bundle-table">
                         <div className="bundle-header">
@@ -63,7 +85,12 @@ export default class Listings extends Component {
                                 rel="noopener noreferrer" 
                                 > + </a>
                         </div>
-                        <div className="listing-item bundle-item"> {this.sampleBundle.title} </div>
+                        <div className="listing-item bundle-item"> 
+                            <Bundle bundles={this.bundles}
+                                    bundleClicked={this.state.bundleClicked}
+                            />
+                        {/* {this.sampleBundle.title}  */}
+                        </div>
                     </div>
                 </div>
             </div>

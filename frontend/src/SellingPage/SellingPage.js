@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Form, FormValue} from 'react-forms-processor';
 import {renderer, FormButton} from 'react-forms-processor-atlaskit';
+import axios from 'axios';
 import './SellingPage.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
@@ -9,7 +10,7 @@ const fields =
 [
   {
     "id": "GLOBAL_TYPE",
-    "name": "Global Type",
+    "name": "GlobalType",
     "type": "select",
     "label": "Type",
     "description": "",
@@ -55,7 +56,7 @@ const fields =
   },
   {
     "id": "BEDS_SIZE",
-    "name": " Bed Size",
+    "name": "BedSize",
     "type": "select",
     "label": "Size",
     "description": "",
@@ -158,7 +159,7 @@ const fields =
   },
   {
     "id": "SEATING",
-    "name": " Seating Type",
+    "name": "SeatingType",
     "type": "select",
     "label": "Seating Type",
     "description": "",
@@ -210,7 +211,7 @@ const fields =
   },
   {
     "id": "TABLES_TYPE",
-    "name": " Table Type",
+    "name": "TableType",
     "type": "select",
     "label": "Table Type",
     "description": "",
@@ -270,7 +271,7 @@ const fields =
   },
   {
     "id": "STORAGE_TYPE",
-    "name": "Storage Type",
+    "name": "StorageType",
     "type": "select",
     "label": "Storage Type",
     "description": "",
@@ -335,6 +336,111 @@ const fields =
     "visibleWhen": [
       {
         "id": "Puts in price",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Beds"
+          },
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "ADDRESS",
+    "name": "Address",
+    "type": "text",
+    "label": "Address",
+    "description": "For your own privacy, please use the street address of your building and exclude your apartment/house number. If interested, a customer can contact you for more info.",
+    "placeholder": "Address",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in address",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Beds"
+          },
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "CITY",
+    "name": "City",
+    "type": "text",
+    "label": "City",
+    "description": "",
+    "placeholder": "City",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in city",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Beds"
+          },
+          {
+            "value": "Tables"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "ZIPCODE",
+    "name": "Zipcode",
+    "type": "text",
+    "label": "Zipcode",
+    "description": "",
+    "placeholder": "Zip",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in zip",
         "field": "GLOBAL_TYPE",
         "is": [
           {
@@ -534,6 +640,19 @@ const fields =
 ];
 
 export default class SellingPage extends Component {
+    computeLatLng = (address, city, zipcode) => {
+      const url = 'http://open.mapquestapi.com/geocoding/v1/address?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&location=' + address + ', ' + city + ', ' + zipcode
+      axios.get(url)
+        .then(response => 
+          {
+            console.log(response.data.results[0].locations[0].latLng.lat, 'response lat')
+            //returns lat
+            console.log(response.data.results[0].locations[0].latLng.lng, 'response lng')
+            //returns lng
+          }
+        )
+    }
+
     render() {
         return (
             <div>
@@ -543,17 +662,24 @@ export default class SellingPage extends Component {
                     <Form renderer={renderer} defaultFields={fields}>
                         <FormButton 
                             onClick={(value: FormValue) => 
+                              {
                                 console.log("Button value", value)
-                                // Returns an object and this is a sample
-                                // Bed Size: ""
-                                // Color: "Black"
-                                // Description: "One year old."
-                                // Elevator: "Yes"
-                                // Other Name: ""
-                                // Price: "20"
-                                // Size: "8/12/24"
-                                // Type: "Desk"
-                                // Years Owned: 2
+                                this.computeLatLng(value.Address, value.City, value.Zipcode)
+                              }
+                              // Address: "10965 Strathmore Drive"
+                              // BedSize: ""
+                              // City: "Los Angeles"
+                              // Color: "Black"
+                              // GlobalType: "Seating"
+                              // Height: ""
+                              // Length: ""
+                              // Mattress: ""
+                              // Price: "1"
+                              // SeatingType: "Chair"
+                              // StorageType: ""
+                              // TableType: ""
+                              // Width: ""
+                              // Zipcode: "90024"
                             }
                         />
                     </Form>
