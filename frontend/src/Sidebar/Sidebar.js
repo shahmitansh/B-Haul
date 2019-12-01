@@ -31,7 +31,7 @@ class Sidebar extends React.Component {
           <img style={{transform: this.state.filtersVisible ? 'rotate(180deg)' : ''}} className="sort-arrow" height="10px" src={downArrow} />
           Show filters
         </span>
-        {this.state.filtersVisible ? <FiltersPanel /> : sidebarItemList}
+        {this.state.filtersVisible ? <FiltersPanel globalFilters={this.props.globalFilters} localFilters={this.props.localFilters} /> : sidebarItemList}
       </div>
     );
   }

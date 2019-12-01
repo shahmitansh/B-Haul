@@ -8,7 +8,7 @@ import FooterPictures from '../FooterPictures/FooterPictures.js';
 const componentClicked = () => {
     console.log( "Clicked!" )
   }
-  
+
   const LoginButton = ({facebookResponse}) => (
     <div className="Facebook">
         <FacebookLogin
@@ -20,8 +20,8 @@ const componentClicked = () => {
       icon="fa-facebook"/>
     </div>
     )
-  
-  
+
+
   const UserScreen = ({user}) => (
     <>
     <div className="User">
@@ -36,19 +36,20 @@ const componentClicked = () => {
     </div>
     </>
   )
-  
+
   export default class Facebook extends Component {
     state = {user:false}
     facebookResponse = (response) => { console.log( response ); this.setState( {...this.state, user: response } ) }
-  
+
     render() {
+      console.log(this.state);
       return (
         <div>
             <HeaderBuy />
                 <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}>
-                { this.state.user ? <UserScreen user={this.state.user}/> :
+                { this.state.user && this.state.user.status != 'unknown' ? <UserScreen user={this.state.user}/> :
                   <div>
-                    <div className="Preference-Prompt"> Welcome to B-Haul </div>
+                    <div className="Preference-Prompt">Welcome to B-Haul</div>
                     <LoginButton className = "Facebook" facebookResponse={this.facebookResponse}/>
                   </div>
                 }
