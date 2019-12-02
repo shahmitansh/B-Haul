@@ -12,13 +12,13 @@ class Product {
 	* @param {Number} elevation - Elevation information for where the product is being sold from
 	* @param {String} address - Address of where the Seller plans to meet with potential Buyers
 	* @param {String} description - Description of Product
-  * @param {Number} sellerID - unique ID of person selling Product
-  * @param {Number} price - Price listed for Product
-  * @param {String} type - Description of Product type
-  * @param {String} location - Description of Product location
-  * @param {Boolean} hasElevator - Whether location has an elevator or not
-  * @param {String} color - Description of Product color
-  * @param {String} size - Description of Product size
+  	* @param {Number} sellerID - unique ID of person selling Product
+  	* @param {Number} price - Price listed for Product
+  	* @param {String} type - Description of Product type
+  	* @param {String} location - Description of Product location
+  	* @param {Boolean} hasElevator - Whether location has an elevator or not
+  	* @param {String} color - Description of Product color
+  	* @param {String} size - Description of Product size
  	*/
 	constructor(productID, name, elevation, address, description,
 		sellerID, price, type, location, hasElevator, color, size){
