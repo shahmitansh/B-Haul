@@ -13,6 +13,7 @@
     "test": "nyc --reporter=text mocha --exit"
   },
   "devDependencies": {
+    "jsdoc": "^3.6.3",
     "nyc": "^14.1.1"
   }
 }
