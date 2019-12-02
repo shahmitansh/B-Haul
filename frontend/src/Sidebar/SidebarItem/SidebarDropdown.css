@@ -1,0 +1,27 @@
+.sidebar-dropdown {
+    padding-bottom: 0.5vh;
+    font-size: 10px;
+}
+
+.sidebar-dropdown-container {
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+}
+
+.sidebar-opts {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar-email {
+    padding-right: 0.5vw;
+    font-size: 12px;
+}
+
+.sidebar-col {
+    flex: 1
+}
+
+.sidebar-link {
+    color: blue
+}

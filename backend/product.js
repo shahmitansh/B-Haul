@@ -1,4 +1,4 @@
-const productTypes = {"table": 1, "bed": 2, "chair": 3, "couch": 4};
+const productTypes = {"seating": 1, "bed": 2, "table": 3, "storage": 4, "other": 5};
 const productColors = {"red": 1, "green": 2, "blue":3, "black":4, "grey":5, "brown":6, "orange":7, "white":8}
 const filterFactory =  require('./filterFactory.js');
 
@@ -12,8 +12,15 @@ class Product {
 	* @param {Number} elevation - Elevation information for where the product is being sold from
 	* @param {String} address - Address of where the Seller plans to meet with potential Buyers
 	* @param {String} description - Description of Product
+  * @param {Number} sellerID - unique ID of person selling Product
+  * @param {Number} price - Price listed for Product
+  * @param {String} type - Description of Product type
+  * @param {String} location - Description of Product location
+  * @param {Boolean} hasElevator - Whether location has an elevator or not
+  * @param {String} color - Description of Product color
+  * @param {String} size - Description of Product size
  	*/
-	constructor(productID, name, elevation, address, description, 
+	constructor(productID, name, elevation, address, description,
 		sellerID, price, type, location, hasElevator, color, size){
 		this.productID = productID;
 		this.name = name;

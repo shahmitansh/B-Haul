@@ -31,39 +31,42 @@ app.get('/getProductList', async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 app.get('/getProductList/filtered',  async (req, res, next) => {
 	try {
 		await initDb();
 		let products = await getProductListClass();
-	
-		let filterType = req.query['type']
-		if (!(filterType== undefined)){
-			products = new ProductList(products.returnFilteredProductsType(filterType));
-		}
-		let filterPrice = req.query['price']
-		if (!(filterPrice== undefined)){
-			let [lowPrice, highPrice] = filterPrice.split(',')
-			lowPrice = parseFloat(lowPrice)
-			highPrice = parseFloat(highPrice)
+		if (Object.keys(req.query).length == 0) {
+			res.send(products);
+		} else {
+			let filterType = req.query['type'];
+			if (!(filterType== undefined)){
+				products = new ProductList(products.returnFilteredProductsType(filterType.toLowerCase()));
+			}
+			let filterPrice = req.query['price']
+			if (!(filterPrice== undefined)){
+				let [lowPrice, highPrice] = filterPrice.split(',')
+				lowPrice = parseFloat(lowPrice)
+				highPrice = parseFloat(highPrice)
 
-			products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
+				products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
+			}
+			let filterColor = req.query['color'];
+			if (!(filterColor== undefined)){
+				products = new ProductList(products.returnFilteredProductsColor(filterColor.toLowerCase()));
+			}
+			console.log(JSON.stringify(products))
+			res.send(products)
 		}
-		let filterColor = req.query['color']
-		if (!(filterColor== undefined)){
-			products = new ProductList(products.returnFilteredProductsColor(filterColor));
-		}
-		console.log(JSON.stringify(products))
-		res.send(products)
-
 	} catch (error) {
+		console.log(error);
 		let err = new Error('Database connection issue');
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 
@@ -81,7 +84,7 @@ app.get('/getProductList/type/:filterType',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res, next) => {
@@ -99,7 +102,7 @@ app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 app.get('/getProductList/color/:filterColor',  async (req, res, next) => {
 	try {
@@ -115,13 +118,13 @@ app.get('/getProductList/color/:filterColor',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 app.get('/getProductList/size/:filterSize',  async (req, res, next) => {
 	try {
 		await initDb();
 		let products = await getProductListClass();
-	
+
 		let filterSize = req.params['filterSize']
 		let filteredProducts = new ProductList(products.returnFilteredProductsSize(filterSize));
 		// console.log(JSON.stringify(filteredProducts))
@@ -132,7 +135,7 @@ app.get('/getProductList/size/:filterSize',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 app.post('/addListing', async function(request, response, next){
@@ -182,7 +185,7 @@ app.delete('/deletePosting/:productID', async function(request, response, next){
 })
 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res, next) => {
-	let [latSrc, latLong, latDest, longDest] = 
+	let [latSrc, latLong, latDest, longDest] =
 	[req.params["latSrc"], req.params["longSrc"], req.params["latDest"], req.params["longDest"]];
 
 	try {
@@ -213,7 +216,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 		let latLongCollection = `${latSrc},${longSrc},${latDest},${longDest}`;
 		let request_url = `${base_url}?key=${API_KEY}&latLngCollection=${latLongCollection}`;
 		console.log(request_url);
-		
+
 		let resp =  request(request_url, function (error, response, body){
 			if (error) {
 				console.error('error:', error); // Print the error if one occurred
@@ -234,7 +237,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 			}
 		});
 	})
-	
+
 }
 
 /**
@@ -296,4 +299,3 @@ async function initDb() {
 
 // For testing
 module.exports = app;
-

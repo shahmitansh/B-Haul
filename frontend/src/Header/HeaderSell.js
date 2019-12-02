@@ -15,14 +15,14 @@ export default class HeaderSell extends Component {
                     <img src={logo} className="Logo" alt="logo" />
                   </a>
               </div>
-              <div className="text-container">
-                <a  href="/landing"
-                    className="Text Buy"
-                    target="_self"
-                    rel="noopener noreferrer"
-                >Looking to buy?</a>
-
-              </div>
+                <div className="text-container">
+                  <a  href="/landing"
+                      className="Text Buy"
+                      target="_self"
+                      rel="noopener noreferrer"
+                  >Looking to buy?</a>
+                  <img className="User-Pic" src={(localStorage.getItem('facebookURL'))} alt="avatar"/> <br></br>  
+                </div>
             </header>
         )
     }

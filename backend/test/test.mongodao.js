@@ -44,6 +44,17 @@ describe('MongoDao', () => {
 			chai.assert.deepEqual(doc, docs[0])
 		});
 	});
+	
+	describe('Removing one product from MongoDao', () => {
+		it('it should remove one product', async () => {
+			let doc = {"key3": "value3"}
+			await mongoDao.insertDocument(collection, doc);
+			await mongoDao.deleteDocument(collection, doc);
+			let docs = await mongoDao.readCollection(collection);
+
+			chai.assert.equal(docs.length, 0);
+		});
+	});
 
 	describe('Update one product from MongoDao', () => {
 		it('it should update the product', async () => {
