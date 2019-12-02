@@ -25,12 +25,12 @@ const fields =
             "value": "Seating"
           },
           {
-            "label": "Beds",
-            "value": "Beds"
+            "label": "Bed",
+            "value": "Bed"
           },
           {
-            "label": "Tables",
-            "value": "Tables"
+            "label": "Table",
+            "value": "Table"
           },
           {
             "label": "Storage",
@@ -53,6 +53,76 @@ const fields =
     "omitWhenHidden": false,
     "valueDelimiter": "",
     "useChangesAsValues": false
+  },
+  {
+    "id": "TITLE",
+    "name": "Title",
+    "type": "text",
+    "label": "Title",
+    "description": "",
+    "placeholder": "Title",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in title",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Bed"
+          },
+          {
+            "value": "Table"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "DESCRIPTION",
+    "name": "Description",
+    "type": "text",
+    "label": "Description",
+    "description": "",
+    "placeholder": "Description",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in description",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Bed"
+          },
+          {
+            "value": "Table"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
   },
   {
     "id": "BEDS_SIZE",
@@ -102,7 +172,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Beds"
+            "value": "Bed"
           }
         ]
       }
@@ -149,7 +219,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Beds"
+            "value": "Bed"
           }
         ]
       }
@@ -161,7 +231,7 @@ const fields =
     "id": "SEATING",
     "name": "SeatingType",
     "type": "select",
-    "label": "Seating Type",
+    "label": "Category",
     "description": "",
     "placeholder": "Type",
     "defaultValue": "",
@@ -261,7 +331,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           }
         ]
       }
@@ -273,7 +343,7 @@ const fields =
     "id": "STORAGE_TYPE",
     "name": "StorageType",
     "type": "select",
-    "label": "Storage Type",
+    "label": "Category",
     "description": "",
     "placeholder": "Type",
     "defaultValue": "",
@@ -342,10 +412,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -377,10 +447,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -412,10 +482,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -447,10 +517,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -536,10 +606,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -568,7 +638,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -597,7 +667,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -626,7 +696,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -666,20 +736,41 @@ export default class SellingPage extends Component {
                                 console.log("Button value", value)
                                 this.computeLatLng(value.Address, value.City, value.Zipcode)
                               }
-                              // Address: "10965 Strathmore Drive"
+                              // Address: "1470 Via Di Salerno"
                               // BedSize: ""
-                              // City: "Los Angeles"
-                              // Color: "Black"
+                              // City: "Pleasanton"
+                              // Color: "Green"
+                              // Description: "a"
                               // GlobalType: "Seating"
                               // Height: ""
                               // Length: ""
                               // Mattress: ""
-                              // Price: "1"
+                              // Price: "a"
                               // SeatingType: "Chair"
                               // StorageType: ""
                               // TableType: ""
+                              // Title: "a"
                               // Width: ""
-                              // Zipcode: "90024"
+                              // Zipcode: "94566"
+
+                                  // Example product:
+    // {
+    //   title: "Small Wooden Dining Table",
+    //   description: "A small wooden dining table.",
+    //   image: table6,
+    //   productID: 13,
+    //   sellerID: 15,
+    //   location: {
+    //     lat: 34.070040,
+    //     lng: -118.453400
+    //   },
+    //   properties: {
+    //     color: "Mocha",
+    //     distance: "",
+    //     size: "2.1 ft x 6.3 ft x 4.2 ft",
+    //     elevation: ""
+    //   }
+    // }
                             }
                         />
                     </Form>
