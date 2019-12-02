@@ -1,5 +1,6 @@
 import React from 'react';
 import './MapView.css';
+import PropTypes from 'prop-types';
 
 import axios from 'axios';
 import Map from '../Map/Map';
@@ -30,6 +31,7 @@ class MapView extends React.Component {
   }
 
   componentDidMount(){
+    console.log(this.props.location);
     const reqPics = require.context('./mock', true, /\.jpg$/)
     const paths = reqPics.keys()
 
@@ -211,6 +213,32 @@ class MapView extends React.Component {
       </div>
     );
   }
+}
+
+MapView.propTypes = {
+  /**
+   * Longitude value for user location.
+   */
+  userLng: PropTypes.number.isRequired,
+  /**
+   * Latitude value for user location.
+   */
+  userLat: PropTypes.number.isRequired,
+  /**
+   * Object that stores URL location data, including query params and pathname.
+   */
+  location: PropTypes.shape({
+    hash: PropTypes.string,
+    pathname: PropTypes.string,
+    search: PropTypes.string,
+    state: PropTypes.string
+  })
+}
+
+MapView.defaultProps = {
+  userLng: undefined,
+  userLat: undefined,
+  location: {}
 }
 
 export default MapView;

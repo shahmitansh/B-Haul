@@ -24,7 +24,8 @@
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "doc": "react-doc-generator ./src -o docs.md"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -42,5 +43,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "react-doc-generator": "^1.2.5"
+  }
 }
