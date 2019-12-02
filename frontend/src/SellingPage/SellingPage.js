@@ -6,7 +6,7 @@ import './SellingPage.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
 
-const fields = 
+const fields =
 [
   {
     "id": "GLOBAL_TYPE",
@@ -710,17 +710,16 @@ const fields =
 ];
 
 export default class SellingPage extends Component {
-    computeLatLng = (address, city, zipcode) => {
+
+    async computeLatLng(address, city, zipcode) {
       const url = 'http://open.mapquestapi.com/geocoding/v1/address?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&location=' + address + ', ' + city + ', ' + zipcode
-      axios.get(url)
-        .then(response => 
-          {
-            console.log(response.data.results[0].locations[0].latLng.lat, 'response lat')
-            //returns lat
-            console.log(response.data.results[0].locations[0].latLng.lng, 'response lng')
-            //returns lng
-          }
-        )
+      try {
+        let res = await axios.get(url);
+        return [res.data.results[0].locations[0].latLng.lat, res.data.results[0].locations[0].latLng.lng];
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
 
     render() {
@@ -730,12 +729,65 @@ export default class SellingPage extends Component {
                 <div className="Landing-Prompt"> What are you selling? </div>
                 <div className="columns">
                     <Form renderer={renderer} defaultFields={fields}>
-                        <FormButton 
-                            onClick={(value: FormValue) => 
+                        <FormButton
+                            onClick={(value: FormValue) =>
                               {
                                 console.log("Button value", value)
                                 this.computeLatLng(value.Address, value.City, value.Zipcode)
-                                {console.log(localStorage.getItem('facebookID'), 'facebookID')}
+                                  .then(res => {
+                                    const postObj = {
+                                      name: value.Title,
+                                      description: value.Description,
+                                      image: '',
+                                      location: {
+                                        lat: res[0],
+                                        lng: res[1]
+                                      },
+                                      sellerID: 1234,
+                                      type: value.GlobalType,
+                                      color: value.Color,
+                                      distance: '',
+                                      elevation: '',
+                                      price: value.Price
+                                    };
+
+                                    fetch('http://localhost:3000/addListing', {
+                                      method: 'POST',
+                                      headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                      },
+                                      body: JSON.stringify(postObj)
+                                    });
+                                  })
+
+                                // const postObj = {
+                                //   title: value.Title,
+                                //   description: value.Description,
+                                //   image: '',
+                                //   sellerID: 1234,
+                                //   location: {
+                                //     lat: 34.070040,
+                                //     lng: -118.453400
+                                //   },
+                                //   properties: {
+                                //     price: value.Price,
+                                //     type: value.GlobalType,
+                                //     color: value.Color,
+                                //     distance: '',
+                                //     elevation: ''
+                                //   }
+                                // };
+                                //
+                                // if (postObj.properties.type === 'Seating') {
+                                //   postObj.properties.category = value.SeatingType;
+                                // } else if (postObj.properties.type === 'Storage') {
+                                //   postObj.properties.category = value.StorageType;
+                                // } else if (postObj.properties.type === 'Bed') {
+                                //   postObj.properties.size = value.BedSize;
+                                // } else if (postObj.properties.type === 'Table') {
+                                //   postObj.properties.category = value.TableType;
+                                // }
                               }
                               // Address: "1470 Via Di Salerno"
                               // BedSize: ""
