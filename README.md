@@ -1,5 +1,6 @@
 # B-Haul
 Moving Furniture Just got Easier!
+
 CS 130 Project for Ken Gu, Brian Lee, Edward Chu, Manish Rao, Mitansh Shah, Sanketh Hegde
 
 ## Deploying
