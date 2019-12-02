@@ -121,6 +121,7 @@ class MapView extends React.Component {
         productID: product.productID,
         sellerID: product.sellerID,
         properties: {
+          price: product.price,
           type: product.type,
           color: product.color,
           distance: '',
