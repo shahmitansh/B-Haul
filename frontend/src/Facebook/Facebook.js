@@ -50,6 +50,12 @@ const componentClicked = () => {
                 { this.state.user && this.state.user.status != 'unknown' ? 
                   <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}> 
                     <UserScreen user={this.state.user}/> 
+                    {localStorage.setItem('facebookID', this.state.user.id)}
+
+                    {console.log(localStorage.getItem('facebookID'), 'facebookID')}
+                    {console.log(this.state.user.picture.data.url, "pic")}
+                    {localStorage.setItem('facebookURL', this.state.user.picture.data.url)}
+                    {console.log(localStorage.getItem('facebookURL'), 'facebookURL')}
                   </div>  :
                   <div>
                     <div className="Preference-Prompt"> Welcome to B-Haul </div>

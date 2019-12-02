@@ -26,6 +26,9 @@ export default class HeaderBuy extends Component {
                 >Looking to sell?</a>
               </div>
               }
+              <div>  
+                <img className="User-Pic" src={(localStorage.getItem('facebookURL'))} alt="avatar"/> <br></br>  
+              </div>
             </header>
         )
     }

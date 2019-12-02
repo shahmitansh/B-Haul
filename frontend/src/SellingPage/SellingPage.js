@@ -735,6 +735,7 @@ export default class SellingPage extends Component {
                               {
                                 console.log("Button value", value)
                                 this.computeLatLng(value.Address, value.City, value.Zipcode)
+                                {console.log(localStorage.getItem('facebookID'), 'facebookID')}
                               }
                               // Address: "1470 Via Di Salerno"
                               // BedSize: ""
