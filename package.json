@@ -4,9 +4,8 @@
   "description": "classifieds application",
   "main": "app.js",
   "scripts": {
-    "package": "npm install",
-    "dependent": "cd $(backend) & npm package",
-    "start": "npm dependent & node backend/main.js"
+    "start": "node backend/main.js",
+    "heroku-postbuild": "cd frontend && yarn start"
   },
   "repository": {
     "type": "git",
