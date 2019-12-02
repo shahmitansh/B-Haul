@@ -758,7 +758,10 @@ export default class SellingPage extends Component {
                                         'Content-Type': 'application/json',
                                       },
                                       body: JSON.stringify(postObj)
-                                    });
+                                    })
+                                      .then(() => {
+                                        window.location = '/listings';
+                                      });
                                   })
 
                                 // const postObj = {

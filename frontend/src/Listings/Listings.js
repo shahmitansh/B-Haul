@@ -8,6 +8,9 @@ import Bundle from './Bundle.js';
 export default class Listings extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+          listings: []
+        };
     }
 
     state = {
@@ -51,9 +54,38 @@ export default class Listings extends Component {
     items = [this.sampleItem1, this.sampleItem2, this.sampleItem3, this.sampleItem4];
     bundles = [this.sampleBundle1, this.sampleBundle2]
 
+    componentDidMount() {
+      fetch('http://localhost:3000/getProductList')
+        .then(res => res.json())
+        .then(result => {
+          let fetchedListings = [];
+          for (let id in result.products) {
+            if (result.products[id].sellerID == localStorage.getItem('facebookID')) {
+              fetchedListings.push(result.products[id]);
+            }
+          }
+          this.setState({
+            listings: fetchedListings
+          })
+        });
+    }
+
     render() {
         const items = this.items;
         const bundle = this.bundles;
+        const listingComponents = this.state.listings.map(listing => (
+          <div className="listing-item-container">
+            <div className="listing-item-name">{listing.name}</div>
+            <a className="listing-item-delete" onClick={(target) => {
+              fetch(`http://localhost:3000/deletePosting/${listing.productID}`, {
+                method: 'DELETE'
+              })
+                .then(() => {
+                  window.location.reload(false);
+                });
+            }}>DELETE</a>
+          </div>
+        ));
 
         return (
             <div>
@@ -69,9 +101,7 @@ export default class Listings extends Component {
                                 > + </a>
                         </div>
                         <div className="listing-item">
-                            <Checkbox items={this.items}
-                                      inBundle={this.state.listingInBundle}
-                            />
+                          {listingComponents}
                         </div>
                     </div>
                     <div className="bundle-table">
