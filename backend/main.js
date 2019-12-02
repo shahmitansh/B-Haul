@@ -199,6 +199,14 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
 mongoDao = initDb()
 
+/**
+ * Get related elevation information from both the Buyer and Seller
+ * @param  {Number} latSrc - Latitude from Buyer.
+ * @param  {Number} longSrc - Longitude from Buyer.
+ * @param  {Number} latDest - Latitude from Seller.
+ * @param  {Number} longDest - Longitude from Seller.
+ * @return {Promise<>} - Promise that resolves when operation is done.
+ */
 function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	return new Promise(function(resolve, reject) {
 		const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
@@ -229,6 +237,10 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	
 }
 
+/**
+ * Generates new ID for each new product added
+ * @return {Number} - Integer that represents the lastest generated productID.
+ */
 async function nextProductID(){
 	await initDb();
 	let listings = await mongoDao.readCollection('products');
@@ -243,7 +255,10 @@ async function nextProductID(){
 	return maxID + 1;
 }
 
-
+/**
+ * Generates a ProductList object containing all the products in the database.
+ * @return {ProductList} - ProductList object that contains all the products in the database.
+ */
 async function getProductListClass(){
 	await initDb();
 	let listings = await mongoDao.readCollection('products');
@@ -259,6 +274,10 @@ async function getProductListClass(){
 
 // getListings()
 
+/**
+ * Initiates the databse for the web page.
+ * @return {MongoDao} - MongoDao object that represents the database for the web page
+ */
 async function initDb() {
 	if (!mongoDao) {
 		mongoDao = await new MongoDao(url, dbName);
