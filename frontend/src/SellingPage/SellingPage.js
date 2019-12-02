@@ -743,14 +743,14 @@ export default class SellingPage extends Component {
                                         lat: res[0],
                                         lng: res[1]
                                       },
-                                      sellerID: 1234,
+                                      sellerID: localStorage.getItem('facebookID'),
                                       type: value.GlobalType,
                                       color: value.Color,
                                       distance: '',
                                       elevation: '',
                                       price: value.Price
                                     };
-
+                                    console.log(postObj, 'postobj')
                                     fetch('http://localhost:3000/addListing', {
                                       method: 'POST',
                                       headers: {
