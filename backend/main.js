@@ -38,26 +38,28 @@ app.get('/getProductList/filtered',  async (req, res, next) => {
 	try {
 		await initDb();
 		let products = await getProductListClass();
+		if (Object.keys(req.query).length == 0) {
+			res.send(products);
+		} else {
+			let filterType = req.query['type'].toLowerCase();
+			if (!(filterType== undefined)){
+				products = new ProductList(products.returnFilteredProductsType(filterType));
+			}
+			let filterPrice = req.query['price']
+			if (!(filterPrice== undefined)){
+				let [lowPrice, highPrice] = filterPrice.split(',')
+				lowPrice = parseFloat(lowPrice)
+				highPrice = parseFloat(highPrice)
 
-		let filterType = req.query['type'].toLowerCase();
-		if (!(filterType== undefined)){
-			products = new ProductList(products.returnFilteredProductsType(filterType));
+				products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
+			}
+			let filterColor = req.query['color'].toLowerCase();
+			if (!(filterColor== undefined)){
+				products = new ProductList(products.returnFilteredProductsColor(filterColor));
+			}
+			console.log(JSON.stringify(products))
+			res.send(products)
 		}
-		let filterPrice = req.query['price']
-		if (!(filterPrice== undefined)){
-			let [lowPrice, highPrice] = filterPrice.split(',')
-			lowPrice = parseFloat(lowPrice)
-			highPrice = parseFloat(highPrice)
-
-			products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
-		}
-		let filterColor = req.query['color'].toLowerCase();
-		if (!(filterColor== undefined)){
-			products = new ProductList(products.returnFilteredProductsColor(filterColor));
-		}
-		console.log(JSON.stringify(products))
-		res.send(products)
-
 	} catch (error) {
 		let err = new Error('Database connection issue');
 		err.statusCode = 503;
