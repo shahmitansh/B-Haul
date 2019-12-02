@@ -32,7 +32,7 @@ const componentClicked = () => {
         <a  href="/landing"
             className="Preference-Pad Preference-Opts"
             target="_self"
-            rel="noopener noreferrer"> Get Searching ! </a>
+            rel="noopener noreferrer"> Get Searching! </a>
     </div>
     </>
   )

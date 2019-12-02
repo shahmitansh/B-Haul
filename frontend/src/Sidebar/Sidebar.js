@@ -2,14 +2,21 @@ import React from 'react';
 import './Sidebar.css';
 
 import SidebarItem from './SidebarItem/SidebarItem';
+import SidebarDropdown from './SidebarItem/SidebarDropdown.js';
 
 class Sidebar extends React.Component {
   render() {
     const sidebarItemList = this.props.items.map((item, index) =>
-      <SidebarItem
-        item={item}
-        index={index}
-      />
+      <div>
+        <SidebarItem
+          item={item}
+          index={index}
+        />
+        <SidebarDropdown 
+          item={item}
+          index={index}
+        />
+      </div>
     );
 
     return (
