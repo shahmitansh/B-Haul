@@ -15,6 +15,9 @@ export default class HeaderBuy extends Component {
                   <img src={logo} className="Logo" alt="logo" />
                 </a>
               </div>
+              {console.log(this.props.display, 'display')}
+              {this.props.display ?
+              <div></div> :
               <div className="text-container">
                 <a  href="/listings"
                     className="Text Buy"
@@ -22,6 +25,7 @@ export default class HeaderBuy extends Component {
                     rel="noopener noreferrer"
                 >Looking to sell?</a>
               </div>
+              }
             </header>
         )
     }
