@@ -5,7 +5,7 @@ module.exports = {
 			return filterType(products, param);
 		} else if (method == "pricelower" || method == "PriceLower"){
 			return filterPriceLower(products, param);
-		}else if (method =="pricehigher" || method == "PriveHigher"){
+		}else if (method =="pricehigher" || method == "PriceHigher"){
 			return filterPriceHigher(products, param);
 		}else if (method == "color"){
 			return filterColor(products, param)
