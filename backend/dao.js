@@ -65,7 +65,7 @@ MongoDao.prototype.printDocument = function(collectionName, doc) {
 /**
  * Inserts a document into a collection
  * @param  {String} collectionName - Name of the collection to insert into.
- * @return {Promise<>} - Promise that resolves when operation is done.
+ * @return {Promise} - Promise that resolves when operation is done.
  */
 MongoDao.prototype.insertDocument = function(collectionName, doc) {
 	let _this = this;
@@ -86,7 +86,7 @@ MongoDao.prototype.insertDocument = function(collectionName, doc) {
  * @param  {String} collectionName - Name of the collection to update.
  * @param  {String} doc - Filter to use.
  * @param  {String} updateDocument - New document to replace with.
- * @return {Promise<>} - Promise that resolves when operation is done.
+ * @return {Promise} - Promise that resolves when operation is done.
  */
 MongoDao.prototype.updateDocument = function(collectionName, doc, updateDocument) {
 	let _this = this;
@@ -106,7 +106,7 @@ MongoDao.prototype.updateDocument = function(collectionName, doc, updateDocument
  * Deletes a document from a collection
  * @param  {String} collectionName - Name of the collection to delete from.
  * @param  {String} doc - Document to delete.
- * @return {Promise<>} - Promise that resolves when operation is done.
+ * @return {Promise} - Promise that resolves when operation is done.
  */
 MongoDao.prototype.deleteDocument = function(collectionName, doc) {
 	let _this = this;
@@ -125,7 +125,7 @@ MongoDao.prototype.deleteDocument = function(collectionName, doc) {
 /**
  * Deletes all documents from a collection
  * @param  {String} collectionName - Name of the collection to delete from.
- * @return {Promise<>} - Promise that resolves when operation is done.
+ * @return {Promise} - Promise that resolves when operation is done.
  */
 MongoDao.prototype.deleteAllDocuments = function(collectionName) {
 	let _this = this;
