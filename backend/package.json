@@ -8,8 +8,11 @@
     "mongodb": "^3.3.4",
     "request": "^2.88.0",
     "sinon": "^7.5.0"
-  }, 
+  },
   "scripts": {
-    "test": "mocha"
+    "test": "nyc --reporter=text mocha --exit"
+  },
+  "devDependencies": {
+    "nyc": "^14.1.1"
   }
 }
