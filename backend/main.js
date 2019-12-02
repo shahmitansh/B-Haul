@@ -205,7 +205,7 @@ mongoDao = initDb()
  * @param  {Number} longSrc - Longitude from Buyer.
  * @param  {Number} latDest - Latitude from Seller.
  * @param  {Number} longDest - Longitude from Seller.
- * @return {Promise<>} - Promise that resolves when operation is done.
+ * @return {Promise} - Promise that resolves when operation is done.
  */
 function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	return new Promise(function(resolve, reject) {
