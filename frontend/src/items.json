@@ -5,8 +5,8 @@
       "filterType": "dropdown",
       "filterOptions": [
         "Seating",
-        "Beds",
-        "Tables",
+        "Bed",
+        "Table",
         "Storage",
         "Other"
       ],
@@ -73,7 +73,7 @@
         }
       ]
     },
-    "beds": {
+    "bed": {
       "localFilters": [
         {
           "filterName": "size",
@@ -100,7 +100,7 @@
         }
       ]
     },
-    "tables": {
+    "table": {
       "localFilters": [
         {
           "filterName": "category",

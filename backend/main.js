@@ -31,15 +31,15 @@ app.get('/getProductList', async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 app.get('/getProductList/filtered',  async (req, res, next) => {
 	try {
 		await initDb();
 		let products = await getProductListClass();
-	
-		let filterType = req.query['type']
+
+		let filterType = req.query['type'].toLowerCase();
 		if (!(filterType== undefined)){
 			products = new ProductList(products.returnFilteredProductsType(filterType));
 		}
@@ -51,7 +51,7 @@ app.get('/getProductList/filtered',  async (req, res, next) => {
 
 			products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
 		}
-		let filterColor = req.query['color']
+		let filterColor = req.query['color'].toLowerCase();
 		if (!(filterColor== undefined)){
 			products = new ProductList(products.returnFilteredProductsColor(filterColor));
 		}
@@ -63,7 +63,7 @@ app.get('/getProductList/filtered',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 
@@ -81,7 +81,7 @@ app.get('/getProductList/type/:filterType',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res, next) => {
@@ -99,7 +99,7 @@ app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 app.get('/getProductList/color/:filterColor',  async (req, res, next) => {
 	try {
@@ -115,13 +115,13 @@ app.get('/getProductList/color/:filterColor',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 app.get('/getProductList/size/:filterSize',  async (req, res, next) => {
 	try {
 		await initDb();
 		let products = await getProductListClass();
-	
+
 		let filterSize = req.params['filterSize']
 		let filteredProducts = new ProductList(products.returnFilteredProductsSize(filterSize));
 		// console.log(JSON.stringify(filteredProducts))
@@ -132,7 +132,7 @@ app.get('/getProductList/size/:filterSize',  async (req, res, next) => {
 		err.statusCode = 503;
   		return next(err);
 	}
-}); 
+});
 
 
 app.post('/addListing', async function(request, response, next){
@@ -182,7 +182,7 @@ app.delete('/deletePosting/:productID', async function(request, response, next){
 })
 
 app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res, next) => {
-	let [latSrc, latLong, latDest, longDest] = 
+	let [latSrc, latLong, latDest, longDest] =
 	[req.params["latSrc"], req.params["longSrc"], req.params["latDest"], req.params["longDest"]];
 
 	try {
@@ -205,7 +205,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 		let latLongCollection = `${latSrc},${longSrc},${latDest},${longDest}`;
 		let request_url = `${base_url}?key=${API_KEY}&latLngCollection=${latLongCollection}`;
 		console.log(request_url);
-		
+
 		let resp =  request(request_url, function (error, response, body){
 			if (error) {
 				console.error('error:', error); // Print the error if one occurred
@@ -226,7 +226,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 			}
 		});
 	})
-	
+
 }
 
 async function nextProductID(){
@@ -277,4 +277,3 @@ async function initDb() {
 
 // For testing
 module.exports = app;
-
