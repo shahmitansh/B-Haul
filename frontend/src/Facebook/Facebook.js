@@ -32,7 +32,7 @@ const componentClicked = () => {
         <a  href="/landing"
             className="Preference-Pad Preference-Opts"
             target="_self"
-            rel="noopener noreferrer"> Get Searching! </a>
+            rel="noopener noreferrer"> Get Searching ! </a>
     </div>
     </>
   )
@@ -45,10 +45,14 @@ const componentClicked = () => {
       return (
         <div>
             <HeaderBuy />
-                <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}>
-                { this.state.user ? <UserScreen user={this.state.user}/> :
+                <div>
+                { this.state.user ? 
+                  <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}> 
+                    <UserScreen user={this.state.user}/> 
+                  </div>  :
                   <div>
                     <div className="Preference-Prompt"> Welcome to B-Haul </div>
+                    <div className="Preference-Slogan"> Moving Furniture Never Got Easier </div>
                     <LoginButton className = "Facebook" facebookResponse={this.facebookResponse}/>
                   </div>
                 }

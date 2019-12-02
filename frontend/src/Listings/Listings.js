@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './Listings.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
-import ListingItem from './ListingItem/ListingItem.js';
 import Checkbox from './Checkbox.js';
 import Bundle from './Bundle.js';
 
