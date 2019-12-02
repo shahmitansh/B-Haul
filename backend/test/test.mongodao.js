@@ -55,4 +55,30 @@ describe('MongoDao', () => {
 			chai.assert.equal(docs.length, 0);
 		});
 	});
+
+	describe('Update one product from MongoDao', () => {
+		it('it should update the product', async () => {
+			let orig_doc = {"key1": "value1"};
+			let new_doc = {"key1": "value2", "key2": "value2"};
+			await mongoDao.insertDocument(collection, orig_doc);
+			await mongoDao.updateDocument(collection, orig_doc, {$set: new_doc});
+
+			let docs = await mongoDao.readCollection(collection);
+
+			chai.assert.equal(docs.length, 1);
+			chai.assert.equal(docs[0]["key1"], new_doc["key1"]);
+			chai.assert.equal(docs[0]["key2"], new_doc["key2"]);
+		});
+	});
+
+	describe('Delete all products from MongoDao', () => {
+		it('it should delete all products', async () => {
+			await mongoDao.insertDocument(collection, {"key1": "value1"});
+			await mongoDao.insertDocument(collection, {"key1": "value1"});
+			await mongoDao.deleteAllDocuments(collection);
+			
+			let docs = await mongoDao.readCollection(collection);
+			chai.assert.equal(docs.length, 0);
+		});
+	});
 });

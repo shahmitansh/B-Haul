@@ -71,3 +71,16 @@
     border-radius: 17px;
     font-size: 24px;
 }
+
+.check-with-label:checked + .label-for-check {
+    font-weight: bold;
+}
+
+.item-title {
+    padding-bottom: 10px;
+    font-weight: 400;
+}
+
+.padding {
+    padding-bottom: 10px;
+}

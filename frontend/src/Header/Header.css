@@ -16,6 +16,7 @@
     font-style: italic;
     margin-right: 25px;
     text-decoration: none;
+    text-align: right;
 }
 
 .logo-container {
@@ -26,4 +27,9 @@
 .text-container {
   display: flex;
   align-items: center;
+}
+
+.User-Pic {
+  border-radius: 40px;
+  margin-right: 2vw;
 }

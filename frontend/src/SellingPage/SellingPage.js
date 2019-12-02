@@ -6,7 +6,7 @@ import './SellingPage.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
 
-const fields = 
+const fields =
 [
   {
     "id": "GLOBAL_TYPE",
@@ -25,12 +25,12 @@ const fields =
             "value": "Seating"
           },
           {
-            "label": "Beds",
-            "value": "Beds"
+            "label": "Bed",
+            "value": "Bed"
           },
           {
-            "label": "Tables",
-            "value": "Tables"
+            "label": "Table",
+            "value": "Table"
           },
           {
             "label": "Storage",
@@ -53,6 +53,76 @@ const fields =
     "omitWhenHidden": false,
     "valueDelimiter": "",
     "useChangesAsValues": false
+  },
+  {
+    "id": "TITLE",
+    "name": "Title",
+    "type": "text",
+    "label": "Title",
+    "description": "",
+    "placeholder": "Title",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in title",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Bed"
+          },
+          {
+            "value": "Table"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
+  },
+  {
+    "id": "DESCRIPTION",
+    "name": "Description",
+    "type": "text",
+    "label": "Description",
+    "description": "",
+    "placeholder": "Description",
+    "defaultValue": "",
+    "options": [],
+    "visible": false,
+    "required": true,
+    "disabled": false,
+    "visibleWhen": [
+      {
+        "id": "Puts in description",
+        "field": "GLOBAL_TYPE",
+        "is": [
+          {
+            "value": "Seating"
+          },
+          {
+            "value": "Bed"
+          },
+          {
+            "value": "Table"
+          },
+          {
+            "value": "Storage"
+          }
+        ]
+      }
+    ],
+    "requiredWhen": [],
+    "disabledWhen": []
   },
   {
     "id": "BEDS_SIZE",
@@ -102,7 +172,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Beds"
+            "value": "Bed"
           }
         ]
       }
@@ -149,7 +219,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Beds"
+            "value": "Bed"
           }
         ]
       }
@@ -161,7 +231,7 @@ const fields =
     "id": "SEATING",
     "name": "SeatingType",
     "type": "select",
-    "label": "Seating Type",
+    "label": "Category",
     "description": "",
     "placeholder": "Type",
     "defaultValue": "",
@@ -261,7 +331,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           }
         ]
       }
@@ -273,7 +343,7 @@ const fields =
     "id": "STORAGE_TYPE",
     "name": "StorageType",
     "type": "select",
-    "label": "Storage Type",
+    "label": "Category",
     "description": "",
     "placeholder": "Type",
     "defaultValue": "",
@@ -342,10 +412,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -377,10 +447,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -412,10 +482,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -447,10 +517,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -536,10 +606,10 @@ const fields =
             "value": "Seating"
           },
           {
-            "value": "Beds"
+            "value": "Bed"
           },
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -568,7 +638,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -597,7 +667,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -626,7 +696,7 @@ const fields =
         "field": "GLOBAL_TYPE",
         "is": [
           {
-            "value": "Tables"
+            "value": "Table"
           },
           {
             "value": "Storage"
@@ -640,17 +710,16 @@ const fields =
 ];
 
 export default class SellingPage extends Component {
-    computeLatLng = (address, city, zipcode) => {
+
+    async computeLatLng(address, city, zipcode) {
       const url = 'http://open.mapquestapi.com/geocoding/v1/address?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&location=' + address + ', ' + city + ', ' + zipcode
-      axios.get(url)
-        .then(response => 
-          {
-            console.log(response.data.results[0].locations[0].latLng.lat, 'response lat')
-            //returns lat
-            console.log(response.data.results[0].locations[0].latLng.lng, 'response lng')
-            //returns lng
-          }
-        )
+      try {
+        let res = await axios.get(url);
+        return [res.data.results[0].locations[0].latLng.lat, res.data.results[0].locations[0].latLng.lng];
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
 
     render() {
@@ -660,26 +729,101 @@ export default class SellingPage extends Component {
                 <div className="Landing-Prompt"> What are you selling? </div>
                 <div className="columns">
                     <Form renderer={renderer} defaultFields={fields}>
-                        <FormButton 
-                            onClick={(value: FormValue) => 
+                        <FormButton
+                            onClick={(value: FormValue) =>
                               {
                                 console.log("Button value", value)
                                 this.computeLatLng(value.Address, value.City, value.Zipcode)
+                                  .then(res => {
+                                    const postObj = {
+                                      name: value.Title,
+                                      description: value.Description,
+                                      image: '',
+                                      location: {
+                                        lat: res[0],
+                                        lng: res[1]
+                                      },
+                                      sellerID: localStorage.getItem('facebookID'),
+                                      type: value.GlobalType,
+                                      color: value.Color,
+                                      distance: '',
+                                      elevation: '',
+                                      price: value.Price
+                                    };
+                                    console.log(postObj, 'postobj')
+                                    fetch('http://localhost:3000/addListing', {
+                                      method: 'POST',
+                                      headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                      },
+                                      body: JSON.stringify(postObj)
+                                    });
+                                  })
+
+                                // const postObj = {
+                                //   title: value.Title,
+                                //   description: value.Description,
+                                //   image: '',
+                                //   sellerID: 1234,
+                                //   location: {
+                                //     lat: 34.070040,
+                                //     lng: -118.453400
+                                //   },
+                                //   properties: {
+                                //     price: value.Price,
+                                //     type: value.GlobalType,
+                                //     color: value.Color,
+                                //     distance: '',
+                                //     elevation: ''
+                                //   }
+                                // };
+                                //
+                                // if (postObj.properties.type === 'Seating') {
+                                //   postObj.properties.category = value.SeatingType;
+                                // } else if (postObj.properties.type === 'Storage') {
+                                //   postObj.properties.category = value.StorageType;
+                                // } else if (postObj.properties.type === 'Bed') {
+                                //   postObj.properties.size = value.BedSize;
+                                // } else if (postObj.properties.type === 'Table') {
+                                //   postObj.properties.category = value.TableType;
+                                // }
                               }
-                              // Address: "10965 Strathmore Drive"
+                              // Address: "1470 Via Di Salerno"
                               // BedSize: ""
-                              // City: "Los Angeles"
-                              // Color: "Black"
+                              // City: "Pleasanton"
+                              // Color: "Green"
+                              // Description: "a"
                               // GlobalType: "Seating"
                               // Height: ""
                               // Length: ""
                               // Mattress: ""
-                              // Price: "1"
+                              // Price: "a"
                               // SeatingType: "Chair"
                               // StorageType: ""
                               // TableType: ""
+                              // Title: "a"
                               // Width: ""
-                              // Zipcode: "90024"
+                              // Zipcode: "94566"
+
+                                  // Example product:
+    // {
+    //   title: "Small Wooden Dining Table",
+    //   description: "A small wooden dining table.",
+    //   image: table6,
+    //   productID: 13,
+    //   sellerID: 15,
+    //   location: {
+    //     lat: 34.070040,
+    //     lng: -118.453400
+    //   },
+    //   properties: {
+    //     color: "Mocha",
+    //     distance: "",
+    //     size: "2.1 ft x 6.3 ft x 4.2 ft",
+    //     elevation: ""
+    //   }
+    // }
                             }
                         />
                     </Form>

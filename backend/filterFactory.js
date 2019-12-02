@@ -5,7 +5,7 @@ module.exports = {
 			return filterType(products, param);
 		} else if (method == "pricelower" || method == "PriceLower"){
 			return filterPriceLower(products, param);
-		}else if (method =="pricehigher" || method == "PriveHigher"){
+		}else if (method =="pricehigher" || method == "PriceHigher"){
 			return filterPriceHigher(products, param);
 		}else if (method == "color"){
 			return filterColor(products, param)
@@ -30,6 +30,9 @@ function filterSize(products, size){
 
 
 function filterColor(products, color){
+	if (color === 'all') {
+		return products;
+	}
 	let returnList = [];
 	for (let key in products){
 		if (products[key].color == color){
@@ -41,6 +44,9 @@ function filterColor(products, color){
 
 
 function filterType(products, type){
+	if (type == 'all') {
+		return products;
+	}
 	let returnList = [];
 	// console.log("in filter function")
 	// console.log(JSON.stringify(products))
@@ -78,7 +84,3 @@ function filterPriceHigher(products, lowerbound){
 	}
 	return returnList;
 }
-
-
-
-

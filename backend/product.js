@@ -1,9 +1,9 @@
-const productTypes = {"table": 1, "bed": 2, "chair": 3, "couch": 4};
+const productTypes = {"seating": 1, "bed": 2, "table": 3, "storage": 4, "other": 5};
 const productColors = {"red": 1, "green": 2, "blue":3, "black":4, "grey":5, "brown":6, "orange":7, "white":8}
 const filterFactory =  require('./filterFactory.js');
 
 class Product {
-	constructor(productID, name, elevation, address, description, 
+	constructor(productID, name, elevation, address, description,
 		sellerID, price, type, location, hasElevator, color, size){
 		this.productID = productID;
 		this.name = name;

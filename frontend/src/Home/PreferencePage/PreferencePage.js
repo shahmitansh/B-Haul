@@ -16,7 +16,7 @@ export default class PreferencePage extends Component {
     render() {
         return(
             <div className="middle-home-container">
-                <div className="Preference-Prompt"> Any preference? </div>
+                <div className="Preference-Prompts"> Any preference? </div>
                 <div className="Preference-Options-Container">
                   <Dropdown className='Preference-Options' options={typeOptions} placeholder='Type'/>
                   <Dropdown className='Preference-Options' options={shapeOptions} placeholder='Shape' />
