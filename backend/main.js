@@ -143,7 +143,7 @@ app.post('/addListing', async function(request, response, next){
 		await initDb();
 		let productID = await nextProductID()
 		let doc = request.body
-		let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"])
+		let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"])
 		await mongoDao.insertDocument("products", product, () => {});
 		response.send("Successfully inserted document")
 
@@ -255,7 +255,7 @@ async function getProductListClass(){
 	for (let i = 0; i < arraylength; i++){
 		let doc = listings[i];
 		let productID = doc["productID"];
-		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"]);
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"]);
 	}
 	return new ProductList(products);
 }
