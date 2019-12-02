@@ -124,6 +124,41 @@ const fields =
     "requiredWhen": [],
     "disabledWhen": []
   },
+{
+  "id": "IMAGE",
+  "name": "Image",
+  "type": "text",
+  "label": "Image URL",
+  "description": "",
+  "placeholder": "URL",
+  "defaultValue": "",
+  "options": [],
+  "visible": false,
+  "required": true,
+  "disabled": false,
+  "visibleWhen": [
+    {
+      "id": "Puts in URL",
+      "field": "GLOBAL_TYPE",
+      "is": [
+        {
+          "value": "Seating"
+        },
+        {
+          "value": "Bed"
+        },
+        {
+          "value": "Table"
+        },
+        {
+          "value": "Storage"
+        }
+      ]
+    }
+  ],
+  "requiredWhen": [],
+  "disabledWhen": []
+},
   {
     "id": "BEDS_SIZE",
     "name": "BedSize",
