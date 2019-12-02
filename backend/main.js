@@ -21,107 +21,177 @@ const dbName = 'bhaul';
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/getProductList', async (req, res) => {
-	await initDb();
-	let products = await getProductListClass();
-	res.send(products)
-}); 
-
-
-app.get('/getProductList/filtered',  async (req, res) => {
-	await initDb();
-	let products = await getProductListClass();
-	let filterType = req.query['type']
-	if (!(filterType== undefined)){
-		products = new ProductList(products.returnFilteredProductsType(filterType));
+app.get('/getProductList', async (req, res, next) => {
+	try {
+		await initDb();
+		let products = await getProductListClass();
+		res.send(products)
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
 	}
-	let filterPrice = req.query['price']
-	if (!(filterPrice== undefined)){
-		let [lowPrice, highPrice] = filterPrice.split(',')
-		lowPrice = parseFloat(lowPrice)
-		highPrice = parseFloat(highPrice)
+}); 
 
-		products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
+
+app.get('/getProductList/filtered',  async (req, res, next) => {
+	try {
+		await initDb();
+		let products = await getProductListClass();
+	
+		let filterType = req.query['type']
+		if (!(filterType== undefined)){
+			products = new ProductList(products.returnFilteredProductsType(filterType));
+		}
+		let filterPrice = req.query['price']
+		if (!(filterPrice== undefined)){
+			let [lowPrice, highPrice] = filterPrice.split(',')
+			lowPrice = parseFloat(lowPrice)
+			highPrice = parseFloat(highPrice)
+
+			products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
+		}
+		let filterColor = req.query['color']
+		if (!(filterColor== undefined)){
+			products = new ProductList(products.returnFilteredProductsColor(filterColor));
+		}
+		console.log(JSON.stringify(products))
+		res.send(products)
+
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
 	}
-	let filterColor = req.query['color']
-	if (!(filterColor== undefined)){
-		products = new ProductList(products.returnFilteredProductsColor(filterColor));
+}); 
+
+
+
+app.get('/getProductList/type/:filterType',  async (req, res, next) => {
+	try {
+		await initDb();
+		let products = await getProductListClass();
+		let filterType = req.params['filterType']
+		let filteredProducts = new ProductList(products.returnFilteredProductsType(filterType));
+		console.log(JSON.stringify(filteredProducts))
+		res.send(filteredProducts)
+
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
 	}
-	console.log(JSON.stringify(products))
-	res.send(products)
 }); 
 
 
+app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res, next) => {
+	try {
+		await initDb();
+		let products = await getProductListClass();
+		let lowPrice = req.params['lowPrice']
+		let highPrice = req.params["highPrice"]
+		let filteredProducts = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
+		console.log(JSON.stringify(filteredProducts))
+		res.send(filteredProducts)
 
-app.get('/getProductList/type/:filterType',  async (req, res) => {
-	await initDb();
-	let products = await getProductListClass();
-	let filterType = req.params['filterType']
-	let filteredProducts = products.returnFilteredProductsType(filterType);
-	console.log(JSON.stringify(filteredProducts))
-	res.send(filteredProducts)
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+}); 
+
+app.get('/getProductList/color/:filterColor',  async (req, res, next) => {
+	try {
+		await initDb();
+		let products = await getProductListClass();
+		let filterColor = req.params['filterColor']
+		let filteredProducts = new ProductList(products.returnFilteredProductsColor(filterColor));
+		// console.log(JSON.stringify(filteredProducts))
+		res.send(filteredProducts)
+
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+}); 
+
+app.get('/getProductList/size/:filterSize',  async (req, res, next) => {
+	try {
+		await initDb();
+		let products = await getProductListClass();
+	
+		let filterSize = req.params['filterSize']
+		let filteredProducts = new ProductList(products.returnFilteredProductsSize(filterSize));
+		// console.log(JSON.stringify(filteredProducts))
+		res.send(filteredProducts)
+
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
 }); 
 
 
-app.get('/getProductList/price/:lowPrice/:highPrice', async(req, res) => {
-	await initDb();
-	let products = await getProductListClass();
-	let lowPrice = req.params['lowPrice']
-	let highPrice = req.params["highPrice"]
-	let filteredProducts = products.returnFilteredProductsPrice(lowPrice, highPrice);
-	console.log(JSON.stringify(filteredProducts))
-	res.send(filteredProducts)
-}); 
+app.post('/addListing', async function(request, response, next){
+	try {
+		await initDb();
+		let productID = await nextProductID()
+		let doc = request.body
+		let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"])
+		await mongoDao.insertDocument("products", product, () => {});
+		response.send("Successfully inserted document")
 
-app.get('/getProductList/color/:filterColor',  async (req, res) => {
-	await initDb();
-	let products = await getProductListClass();
-	let filterColor = req.params['filterColor']
-	let filteredProducts = products.returnFilteredProductsColor(filterColor);
-	// console.log(JSON.stringify(filteredProducts))
-	res.send(filteredProducts)
-}); 
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
 
-app.get('/getProductList/size/:filterSize',  async (req, res) => {
-	await initDb();
-	let products = await getProductListClass();
-	let filterSize = req.params['filterSize']
-	let filteredProducts = products.returnFilteredProductsSize(filterSize);
-	// console.log(JSON.stringify(filteredProducts))
-	res.send(filteredProducts)
-}); 
-
-
-app.post('/addListing', async function(request, response){
-	initDb();
-	let productID = await nextProductID()
-	let doc = request.body
-	let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"])
-	mongoDao.insertDocument("products", product, () => {});
-	response.send("Successfully inserted document")
 });
 
 
-app.get('/getProductById/:productID', async function(request, response){
-	initDb();
-	let pID = Number(request.params["productID"])
-	let product = await mongoDao.findDocuments('products', {productID: pID});
-	response.send(product[0])
+app.get('/getProductById/:productID', async function(request, response, next){
+	try {
+		await initDb();
+		let pID = Number(request.params["productID"])
+		let product = await mongoDao.findDocuments('products', {productID: pID});
+		response.send(product[0])
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
 })
 
-app.delete('/deletePosting/:productID', async function(request, response){
-	initDb();
-	let toDeleteProductID = Number(request.params["productID"])
-	let query = {productID: toDeleteProductID}
-	console.log(query)
-	mongoDao.deleteDocument('products', query)
-	response.send("Successfully deleted document")
+app.delete('/deletePosting/:productID', async function(request, response, next){
+	try {
+		initDb();
+		let toDeleteProductID = Number(request.params["productID"])
+		let query = {productID: toDeleteProductID}
+		console.log(query)
+		await mongoDao.deleteDocument('products', query)
+		response.send("Successfully deleted document")
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
 })
 
-app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res) => {
+app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res, next) => {
 	let [latSrc, latLong, latDest, longDest] = 
 	[req.params["latSrc"], req.params["longSrc"], req.params["latDest"], req.params["longDest"]];
-	let elevationRequestResponse = await getElevationProfile(latSrc, latLong, latDest, longDest);
+
+	try {
+		let elevationRequestResponse = await getElevationProfile(latSrc, latLong, latDest, longDest);
+	} catch (error) {
+		let err = new Error('Error fetching elevation profile');
+		err.statusCode = 503;
+  		return next(err);
+	}
 	res.send(elevationRequestResponse);
 });
 
