@@ -200,9 +200,9 @@ async function initDb() {
 
 
 //Catchall that sends any request not specified above to index.html
-app.get('*', (req,res) =>{
-	res.sendFile(path.join(__dirname +'../frontend/public/index.html'));
-});
+//app.get('*', (req,res) =>{
+//	res.sendFile(path.join(__dirname +'../frontend/public/index.html'));
+//});
 
 
 // For testing
