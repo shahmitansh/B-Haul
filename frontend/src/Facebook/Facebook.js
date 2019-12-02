@@ -51,7 +51,8 @@ const componentClicked = () => {
                   <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}> 
                     <UserScreen user={this.state.user}/> 
                     {localStorage.setItem('facebookID', this.state.user.id)}
-
+                    {localStorage.setItem('facebookURL', this.state.user.picture.data.url)}
+                    {localStorage.setItem('facebookEmail', this.state.user.email)}
                     {console.log(localStorage.getItem('facebookID'), 'facebookID')}
                     {console.log(this.state.user.picture.data.url, "pic")}
                     {localStorage.setItem('facebookURL', this.state.user.picture.data.url)}

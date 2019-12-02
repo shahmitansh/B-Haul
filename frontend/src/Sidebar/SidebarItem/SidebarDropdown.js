@@ -30,7 +30,7 @@ class SidebarDropdown extends React.Component {
             {
                 setMoreInfo: propertyList,
                 setLessInfo: false,
-                value: 'test@test.com'
+                value: localStorage.getItem('facebookEmail')
             }
         )
     }
@@ -54,9 +54,8 @@ class SidebarDropdown extends React.Component {
                 }
                 {this.state.setMoreInfo ? 
                     <div className="sidebar-opts"> 
-                        <div className="sidebar-col"> {this.state.setMoreInfo} </div>
                         <div className="sidebar-col">
-                            <div className="sidebar-email"> Email if interested! </div>
+                            <div className="sidebar-email"> Contact Seller! </div>
                             <div>
                                 <CopyToClipboard 
                                     text={this.state.value}
