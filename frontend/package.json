@@ -8,6 +8,7 @@
     "npm": "^6.13.0",
     "react": "^16.11.0",
     "react-compound-slider": "^2.4.0",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.11.0",
     "react-dropdown": "^1.6.4",
     "react-facebook-login": "^4.1.1",

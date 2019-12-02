@@ -4,6 +4,7 @@ import downArrow from './sort-down.svg';
 
 import SidebarItem from './SidebarItem/SidebarItem';
 import FiltersPanel from './FiltersPanel/FiltersPanel';
+import SidebarDropdown from './SidebarItem/SidebarDropdown.js';
 
 class Sidebar extends React.Component {
 
@@ -19,10 +20,16 @@ class Sidebar extends React.Component {
 
   render() {
     const sidebarItemList = this.props.items.map((item, index) =>
-      <SidebarItem
-        item={item}
-        index={index}
-      />
+      <div>
+        <SidebarItem
+          item={item}
+          index={index}
+        />
+        <SidebarDropdown 
+          item={item}
+          index={index}
+        />
+      </div>
     );
 
     return (

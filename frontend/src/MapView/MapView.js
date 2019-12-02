@@ -179,6 +179,7 @@ class MapView extends React.Component {
 
   render() {
     const items = this.state.listings;
+    // console.log(items, 'items')
     if (!this.distanceSet && items.length > 0 && this.props.userLat != undefined && this.props.userLng != undefined) {
       this.distanceSet = true;
       this._computeDistances();

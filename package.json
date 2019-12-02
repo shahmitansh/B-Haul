@@ -4,7 +4,9 @@
   "description": "classifieds application",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "package": "npm install",
+    "dependent": "cd $(backend) & npm package",
+    "start": "npm dependent & node backend/main.js"
   },
   "repository": {
     "type": "git",
