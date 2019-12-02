@@ -4,7 +4,7 @@
   "description": "classifieds application",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node backend/main.js"
   },
   "repository": {
     "type": "git",
