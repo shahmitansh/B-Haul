@@ -1,8 +1,14 @@
 # B-Haul
-CS 130 Project
+Moving Furniture Just got Easier!
 
+CS 130 Project for Ken Gu, Brian Lee, Edward Chu, Manish Rao, Mitansh Shah, Sanketh Hegde
 
-Note: Some of my early commits (Ken) did not show up under my github account if you take a look at the commit history you can find it. 
+## Deploying
+In one terminal tab:
+`cd backend && node main.js`
+
+In another terminal tab:
+`cd frontend && yarn start`
 
 ## Testing
 To run backend tests:
