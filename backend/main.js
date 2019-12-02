@@ -1,6 +1,7 @@
 const {Product, ProductList} = require('./product.js')
 const bodyParser = require('body-parser')
 const express = require('express');
+const path = require('path')
 const API_KEY = 'yVorBMk3X9NbVuWK6h9I8TwEDC0hTUgT';
 const request = require('request');
 const app = express();
@@ -9,6 +10,9 @@ app.use(bodyParser());
 const port = 3000;
 const FilterFactory = require('./filterFactory.js')
 const MongoDao = require('./dao.js');
+
+//Serving static files from the react app as necessary
+//app.use(express.static(path.join(__dirname, '../frontend/src')))
 
 // Connection URL
 var mongoDao = null;
@@ -22,6 +26,7 @@ app.get('/getProductList', async (req, res) => {
 	let products = await getProductListClass();
 	res.send(products)
 }); 
+
 
 app.get('/getProductList/filtered',  async (req, res) => {
 	await initDb();
@@ -192,6 +197,13 @@ async function initDb() {
 
 	return mongoDao
 }
+
+
+//Catchall that sends any request not specified above to index.html
+app.get('*', (req,res) =>{
+	res.sendFile(path.join(__dirname +'../frontend/public/index.html'));
+});
+
 
 // For testing
 module.exports = app;
