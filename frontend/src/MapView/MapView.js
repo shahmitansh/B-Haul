@@ -22,9 +22,10 @@ class MapView extends React.Component {
     super(props);
     this.state = {
       listings: [],
-      globalFilters: this._initGlobalFilters(),
-      localFilters: {}
+      globalFilters: this._initGlobalFilters()
     };
+    this.state.localFilters = this._initLocalFilters(this.state.globalFilters.type.current);
+    console.log(this.state);
     this.distanceSet = false;
   }
 
@@ -42,6 +43,26 @@ class MapView extends React.Component {
     const params = queryString.parse(this.props.location.location.search);
     for (let filter of ITEM_SCHEMA.globalFilters) {
       const queryFilter = params[filter.filterName];
+      res[filter.filterName] = {
+        ...filter,
+        current: queryFilter != undefined && this._verifyFilterFormat(queryFilter, filter.filterType, filter.filterOptions) ? queryFilter : filter.defaultOption
+      };
+    }
+    return res;
+  }
+
+  _initLocalFilters(type) {
+    type = type.toLowerCase();
+
+    if (type === 'all' || !(type in ITEM_SCHEMA.categories)) {
+      return {};
+    }
+
+    let res = {};
+    const params = queryString.parse(this.props.location.location.search);
+    for (let filter of ITEM_SCHEMA.categories[type].localFilters) {
+      const dashFilterName = `_${filter.filterName}`
+      const queryFilter = params[dashFilterName];
       res[filter.filterName] = {
         ...filter,
         current: queryFilter != undefined && this._verifyFilterFormat(queryFilter, filter.filterType, filter.filterOptions) ? queryFilter : filter.defaultOption

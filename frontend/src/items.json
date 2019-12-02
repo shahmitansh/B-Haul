@@ -19,7 +19,7 @@
         0,
         5000
       ],
-      "defaultOption": "0,50000"
+      "defaultOption": "0,5000"
     },
     {
       "filterName": "color",
@@ -57,7 +57,7 @@
     }
   ],
   "categories": {
-    "Seating": {
+    "seating": {
       "localFilters": [
         {
           "filterName": "category",
@@ -73,7 +73,7 @@
         }
       ]
     },
-    "Beds": {
+    "beds": {
       "localFilters": [
         {
           "filterName": "size",
@@ -86,7 +86,8 @@
             "King",
             "California King",
             "Other"
-          ]
+          ],
+          "defaultOption": "All"
         },
         {
           "filterName": "includesMattress",
@@ -99,7 +100,7 @@
         }
       ]
     },
-    "Tables": {
+    "tables": {
       "localFilters": [
         {
           "filterName": "category",
@@ -117,7 +118,7 @@
         }
       ]
     },
-    "Storage": {
+    "storage": {
       "localFilters": [
         {
           "filterName": "category",
@@ -132,6 +133,9 @@
           "defaultOption": "All"
         }
       ]
+    },
+    "all": {
+      "localFilters": []
     }
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import './FiltersPanel.css';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import { capitalize } from '../../utils';
+import { capitalize, capitalizeCamelCase } from '../../utils';
 
 import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider'
 import { SliderRail, Handle, Track, Tick } from './components'
@@ -13,14 +13,50 @@ class FiltersPanel extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      type: props.globalFilters.type.current.toLowerCase()
+      global: {},
+      local: {}
     };
+
+    for (let filter of ITEM_SCHEMA.globalFilters) {
+      if (filter.filterName in props.globalFilters) {
+        this.state.global[filter.filterName] = props.globalFilters[filter.filterName].current;
+      } else {
+        this.state.global[filter.filterName] = filter.defaultOption;
+      }
+    }
+
+    for (let category in ITEM_SCHEMA.categories) {
+      this.state.local[category] = {};
+      for (let filter of ITEM_SCHEMA.categories[category].localFilters) {
+        if (filter.filterName in props.localFilters) {
+          this.state.local[category][filter.filterName] = props.localFilters[filter.filterName].current;
+        } else {
+          this.state.local[category][filter.filterName] = filter.defaultOption;
+        }
+      }
+    }
   }
 
-  _getFilterComponent = (filter, filterPool) => {
-    const tempVal = filterPool[filter.filterName];
-    const val = tempVal ? tempVal.current : filter.defaultOption;
+  _applyFilters = () => {
+    console.log(this.state);
+    let urlParams = '?';
+    for (let globalFilter in this.state.global) {
+      urlParams += `${globalFilter}=${this.state.global[globalFilter]}&`
+    }
+
+    const localFilters = this.state.local[this.state.global.type.toLowerCase()];
+    for (let localFilter in localFilters) {
+      urlParams += `_${localFilter}=${localFilters[localFilter]}&`
+    }
+
+    window.location = `/map${urlParams.slice(0,-1)}`
+  }
+
+  _getFilterComponent = (filter, isGlobal) => {
+    const type = this.state.global.type.toLowerCase();
+    const val = isGlobal ? this.state.global[filter.filterName] : this.state.local[type][filter.filterName];
     let prompt;
 
     if (filter.filterType == 'dropdown') {
@@ -29,7 +65,14 @@ class FiltersPanel extends React.Component {
           options={['All'].concat(filter.filterOptions)}
           value={val}
           className="dropdown-prompt"
-          onChange={filter.filterName == 'type' ? (target) => this.setState({type: target.value}) : () => {}} />
+          onChange={(target) => this.setState((state) => {
+            if (isGlobal) {
+              state.global[filter.filterName] = target.value;
+            } else {
+              state.local[state.global.type.toLowerCase()][filter.filterName] = target.value;
+            }
+            return state;
+          })} />
       );
     } else if (filter.filterType == 'number') {
       const domain = [filter.filterOptions[0], filter.filterOptions[1]];
@@ -49,6 +92,16 @@ class FiltersPanel extends React.Component {
           reversed={reversed}
           rootStyle={sliderStyle}
           values={values}
+          onChange={(change) => {
+            this.setState((state) => {
+              if (isGlobal) {
+                state.global[filter.filterName] = `${change[0]},${change[1]}`;
+              } else {
+                state.local[state.global.type.toLowerCase()][filter.filterName] = `${change[0]},${change[1]}`;
+              }
+              return state;
+            });
+          }}
         >
           <Rail>
             {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
@@ -97,7 +150,7 @@ class FiltersPanel extends React.Component {
     return (
       <div className="filter-item">
         <div className="filter-item-label">
-          {filter.filterName}
+          {capitalizeCamelCase(filter.filterName)}
         </div>
         <div className="filter-item-prompt">
           {prompt}
@@ -107,27 +160,32 @@ class FiltersPanel extends React.Component {
   }
 
   render() {
-    const type = capitalize(this.state.type);
+    const type = this.state.global.type.toLowerCase();
 
-    const globalPrompts = ITEM_SCHEMA.globalFilters.map(f => this._getFilterComponent(f, this.props.globalFilters));
-    const localPrompts = type === 'All' || !(type in ITEM_SCHEMA.categories) ? [] : ITEM_SCHEMA.categories[type].localFilters.map(f => this._getFilterComponent(f, this.props.localFilters));
+    const globalPrompts = ITEM_SCHEMA.globalFilters.map(f => this._getFilterComponent(f, true));
+    const localPrompts = type === 'all' || !(type in ITEM_SCHEMA.categories) ? [] : ITEM_SCHEMA.categories[type].localFilters.map(f => this._getFilterComponent(f, false));
 
     return (
-      <div id="filters">
-        <div className="filter-section-title">
-          Global Filters
-        </div>
-        <div id="global-filters">
-          {globalPrompts}
-        </div>
-        {localPrompts.length > 0 &&
+      <div id="filters-container">
+        <div id="filters">
           <div className="filter-section-title">
-            Filters for {type}
-          </div>}
-        {localPrompts.length > 0 &&
-          <div id="local-filters">
-            {localPrompts}
-          </div>}
+            Global Filters
+          </div>
+          <div id="global-filters">
+            {globalPrompts}
+          </div>
+          {localPrompts.length > 0 &&
+            <div className="filter-section-title">
+              Filters for {capitalize(type)}
+            </div>}
+          {localPrompts.length > 0 &&
+            <div id="local-filters">
+              {localPrompts}
+            </div>}
+        </div>
+        <a id="apply-filters" onClick={this._applyFilters}>
+          APPLY FILTERS
+        </a>
       </div>
     );
   }
