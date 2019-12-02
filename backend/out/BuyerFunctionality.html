@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: SellerFunctionality</title>
+    <title>JSDoc: Class: BuyerFunctionality</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: SellerFunctionality</h1>
+    <h1 class="page-title">Class: BuyerFunctionality</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>SellerFunctionality<span class="signature">(userID)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>BuyerFunctionality<span class="signature">(userID)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="SellerFunctionality"><span class="type-signature"></span>new SellerFunctionality<span class="signature">(userID)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="BuyerFunctionality"><span class="type-signature"></span>new BuyerFunctionality<span class="signature">(userID)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Represents functions used by Sellers.
+    Represents functions used by Buyers.
 </div>
 
 
@@ -101,7 +101,7 @@
 
             
 
-            <td class="description last">Unique ID of User we want to give access to Seller functions</td>
+            <td class="description last">Unique ID of User we want to give access to Buyer functions</td>
         </tr>
 
     
@@ -142,7 +142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="user.js.html">user.js</a>, <a href="user.js.html#line66">line 66</a>
+        <a href="user.js.html">user.js</a>, <a href="user.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -198,7 +198,7 @@
     
 
     
-    <h4 class="name" id="addListing"><span class="type-signature"></span>addListing<span class="signature">(product)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addProduct"><span class="type-signature"></span>addProduct<span class="signature">(product)</span><span class="type-signature"></span></h4>
     
 
     
@@ -206,7 +206,7 @@
 
 
 <div class="description">
-    Allows Seller to add a Product to their list of items they are selling.
+    Allows Buyer to add a Product to their list of saved items they are interested in purchasing.
 </div>
 
 
@@ -248,7 +248,7 @@
             <td class="type">
             
                 
-<span class="param-type">Product</span>
+<span class="param-type"><a href="Product.html">Product</a></span>
 
 
             
@@ -258,7 +258,7 @@
 
             
 
-            <td class="description last">Product object that a Seller wishes to add to their items listed for sale</td>
+            <td class="description last">Product object that a Buyer wishes to add to their list of saved items</td>
         </tr>
 
     
@@ -299,7 +299,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="user.js.html">user.js</a>, <a href="user.js.html#line74">line 74</a>
+        <a href="user.js.html">user.js</a>, <a href="user.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -335,7 +335,7 @@
     
 
     
-    <h4 class="name" id="removeListing"><span class="type-signature"></span>removeListing<span class="signature">(productID)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeProduct"><span class="type-signature"></span>removeProduct<span class="signature">(productID)</span><span class="type-signature"></span></h4>
     
 
     
@@ -343,7 +343,7 @@
 
 
 <div class="description">
-    Allows Seller to remove a Product from their list of items they are selling.
+    Allows Buyer to remove a Product from their list of saved items they are interested in purchasing.
 </div>
 
 
@@ -395,7 +395,7 @@
 
             
 
-            <td class="description last">Unique ID of Product that the Seller wishes to remove from their items listed for sale</td>
+            <td class="description last">Unique ID of Product that the Buyer wishes to remove from their saved items list</td>
         </tr>
 
     
@@ -436,7 +436,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="user.js.html">user.js</a>, <a href="user.js.html#line82">line 82</a>
+        <a href="user.js.html">user.js</a>, <a href="user.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -482,13 +482,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BuyerFunctionality.html">BuyerFunctionality</a></li><li><a href="SellerFunctionality.html">SellerFunctionality</a></li><li><a href="User.html">User</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BuyerFunctionality.html">BuyerFunctionality</a></li><li><a href="MongoDao.html">MongoDao</a></li><li><a href="Product.html">Product</a></li><li><a href="ProductList.html">ProductList</a></li><li><a href="SellerFunctionality.html">SellerFunctionality</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#filterColor">filterColor</a></li><li><a href="global.html#filterPriceHigher">filterPriceHigher</a></li><li><a href="global.html#filterPriceLower">filterPriceLower</a></li><li><a href="global.html#filterSize">filterSize</a></li><li><a href="global.html#filterType">filterType</a></li><li><a href="global.html#getElevationProfile">getElevationProfile</a></li><li><a href="global.html#getProductListClass">getProductListClass</a></li><li><a href="global.html#initDb">initDb</a></li><li><a href="global.html#nextProductID">nextProductID</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 02 2019 04:16:30 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 02 2019 10:54:09 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
