@@ -47,11 +47,12 @@ describe('MongoDao', () => {
 	
 	describe('Removing one product from MongoDao', () => {
 		it('it should remove one product', async () => {
-			let doc = {"key2": "value2"}
+			let doc = {"key3": "value3"}
 			await mongoDao.insertDocument(collection, doc);
-			let docs = await mongoDao.deleteDocument(collection, doc);
+			await mongoDao.deleteDocument(collection, doc);
+			let docs = await mongoDao.readCollection(collection);
 
-			chai.assert.notExists(docs);
+			chai.assert.equal(docs.length, 0);
 		});
 	});
 });
