@@ -26,8 +26,9 @@ export default class Main extends Component {
                     <Route exact path='/preference'>
                       <Home pageMode='buy' pageType='preference' />
                     </Route>
-                    <Route exact path='/map'>
-                      <MapView userLat={this.props.userLat} userLng={this.props.userLng} />
+                    <Route exact path='/map' render={location => (
+                      <MapView location={location} userLat={this.props.userLat} userLng={this.props.userLng} />
+                    )}>
                     </Route>
                     <Route exact path='/listings'>
                       <Listings />
