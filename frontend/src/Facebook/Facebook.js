@@ -26,7 +26,7 @@ const componentClicked = () => {
     <>
     <div className="User">
         <div className="User-Name">Hey {user.name}!</div>
-        {console.log(user.picture.data.url)}
+        {/* {console.log(user.picture.data.url)} */}
         {/* <div className="User-Email">{ user.email }</div>
         <img className="User-Pic" src={user.picture.data.url} height={user.picture.height} width={user.picture.width} alt="avatar"/> <br></br> */}
         <a  href="/landing"
@@ -38,13 +38,13 @@ const componentClicked = () => {
   )
   
   export default class Facebook extends Component {
-    state = {user:false}
-    facebookResponse = (response) => { console.log( response ); this.setState( {...this.state, user: response } ) }
+    state = {user:false, display:true}
+    facebookResponse = (response) => { console.log( response ); this.setState( {...this.state, user: response, display: false } ) }
   
     render() {
       return (
         <div>
-            <HeaderBuy />
+            <HeaderBuy display={this.state.display}/>
                 <div>
                 { this.state.user ? 
                   <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}> 
