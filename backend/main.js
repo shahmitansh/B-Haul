@@ -5,7 +5,6 @@ const path = require('path')
 const API_KEY = 'yVorBMk3X9NbVuWK6h9I8TwEDC0hTUgT';
 const request = require('request');
 const app = express();
-const sign_s3 = require ('./awsController.js')
 app.use(bodyParser());
 
 const port = 3000;
