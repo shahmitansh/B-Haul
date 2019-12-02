@@ -41,9 +41,9 @@ app.get('/getProductList/filtered',  async (req, res, next) => {
 		if (Object.keys(req.query).length == 0) {
 			res.send(products);
 		} else {
-			let filterType = req.query['type'].toLowerCase();
+			let filterType = req.query['type'];
 			if (!(filterType== undefined)){
-				products = new ProductList(products.returnFilteredProductsType(filterType));
+				products = new ProductList(products.returnFilteredProductsType(filterType.toLowerCase()));
 			}
 			let filterPrice = req.query['price']
 			if (!(filterPrice== undefined)){
@@ -53,14 +53,15 @@ app.get('/getProductList/filtered',  async (req, res, next) => {
 
 				products = new ProductList(products.returnFilteredProductsPrice(lowPrice, highPrice));
 			}
-			let filterColor = req.query['color'].toLowerCase();
+			let filterColor = req.query['color'];
 			if (!(filterColor== undefined)){
-				products = new ProductList(products.returnFilteredProductsColor(filterColor));
+				products = new ProductList(products.returnFilteredProductsColor(filterColor.toLowerCase()));
 			}
 			console.log(JSON.stringify(products))
 			res.send(products)
 		}
 	} catch (error) {
+		console.log(error);
 		let err = new Error('Database connection issue');
 		err.statusCode = 503;
   		return next(err);
