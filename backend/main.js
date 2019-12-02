@@ -198,7 +198,7 @@ app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res
 	res.send(elevationRequestResponse);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
 mongoDao = initDb()
 
