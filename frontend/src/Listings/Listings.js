@@ -14,7 +14,7 @@ export default class Listings extends Component {
         listingInBundle : true,
         bundleClicked: true
     }
-    
+
     sampleItem1 = {
         title: "Small Wooden Dining Table",
         index: 0,
@@ -61,14 +61,14 @@ export default class Listings extends Component {
                 <div className="status-listing">
                     <div className="divider">
                         <div className="listing-header">
-                            <div className="listing-name"> Listings </div> 
+                            <div className="listing-name"> Listings </div>
                             <a  href="/sell"
                                 className="listing-add"
                                 target="_self"
-                                rel="noopener noreferrer" 
+                                rel="noopener noreferrer"
                                 > + </a>
                         </div>
-                        <div className="listing-item"> 
+                        <div className="listing-item">
                             <Checkbox items={this.items}
                                       inBundle={this.state.listingInBundle}
                             />
@@ -76,15 +76,15 @@ export default class Listings extends Component {
                     </div>
                     <div className="bundle-table">
                         <div className="bundle-header">
-                            <div className="listing-name"> Bundles </div> 
-                            <a  
+                            <div className="listing-name"> Bundles </div>
+                            <a
                                 // href="/sell"
                                 className="listing-add"
                                 target="_self"
-                                rel="noopener noreferrer" 
+                                rel="noopener noreferrer"
                                 > + </a>
                         </div>
-                        <div className="listing-item bundle-item"> 
+                        <div className="listing-item bundle-item">
                             <Bundle bundles={this.bundles}
                                     bundleClicked={this.state.bundleClicked}
                             />

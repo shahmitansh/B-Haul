@@ -1,0 +1,141 @@
+{
+  "globalFilters": [
+    {
+      "filterName": "type",
+      "filterType": "dropdown",
+      "filterOptions": [
+        "Seating",
+        "Beds",
+        "Tables",
+        "Storage",
+        "Other"
+      ],
+      "defaultOption": "All"
+    },
+    {
+      "filterName": "price",
+      "filterType": "number",
+      "filterOptions": [
+        0,
+        5000
+      ],
+      "defaultOption": "0,5000"
+    },
+    {
+      "filterName": "color",
+      "filterType": "dropdown",
+      "filterOptions": [
+        "Red",
+        "Green",
+        "Blue",
+        "Black",
+        "Grey",
+        "Brown",
+        "Orange",
+        "White",
+        "Other"
+      ],
+      "defaultOption": "All"
+    },
+    {
+      "filterName": "distance",
+      "filterType": "number",
+      "filterOptions": [
+        0,
+        50
+      ],
+      "defaultOption": "0,50"
+    },
+    {
+      "filterName": "elevation",
+      "filterType": "number",
+      "filterOptions": [
+        0,
+        300
+      ],
+      "defaultOption": "0,300"
+    }
+  ],
+  "categories": {
+    "seating": {
+      "localFilters": [
+        {
+          "filterName": "category",
+          "filterType": "dropdown",
+          "filterOptions": [
+            "Chair",
+            "Stool",
+            "Couch",
+            "Bench",
+            "Other"
+          ],
+          "defaultOption": "All"
+        }
+      ]
+    },
+    "beds": {
+      "localFilters": [
+        {
+          "filterName": "size",
+          "filterType": "dropdown",
+          "filterOptions": [
+            "Twin",
+            "TwinXL",
+            "Full",
+            "Queen",
+            "King",
+            "California King",
+            "Other"
+          ],
+          "defaultOption": "All"
+        },
+        {
+          "filterName": "includesMattress",
+          "filterType": "dropdown",
+          "filterOptions": [
+            "Yes",
+            "No"
+          ],
+          "defaultOption": "All"
+        }
+      ]
+    },
+    "tables": {
+      "localFilters": [
+        {
+          "filterName": "category",
+          "filterType": "dropdown",
+          "filterOptions": [
+            "Desk",
+            "Coffee Table",
+            "Dining Table",
+            "Folding Table",
+            "TV Table",
+            "Nightstand",
+            "Other"
+          ],
+          "defaultOption": "All"
+        }
+      ]
+    },
+    "storage": {
+      "localFilters": [
+        {
+          "filterName": "category",
+          "filterType": "dropdown",
+          "filterOptions": [
+            "Bookshelf",
+            "Cabinet/Cupboard",
+            "Dresser/Drawer",
+            "Wardrobe",
+            "Other"
+          ],
+          "defaultOption": "All"
+        }
+      ]
+    },
+    "all": {
+      "localFilters": []
+    }
+  }
+}

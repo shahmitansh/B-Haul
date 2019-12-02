@@ -6,6 +6,9 @@ import Map from '../Map/Map';
 import Sidebar from '../Sidebar/Sidebar';
 import HeaderBuy from '../Header/HeaderBuy';
 
+import ITEM_SCHEMA from '../items.json';
+import queryString from 'query-string';
+
 import table1 from './mock/table1.jpg';
 import table2 from './mock/table2.jpg';
 import table3 from './mock/table3.jpg';
@@ -18,8 +21,11 @@ class MapView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listings: []
+      listings: [],
+      globalFilters: this._initGlobalFilters()
     };
+    this.state.localFilters = this._initLocalFilters(this.state.globalFilters.type.current);
+    console.log(this.state);
     this.distanceSet = false;
   }
 
@@ -32,8 +38,57 @@ class MapView extends React.Component {
       .then(result => this._processListings(result));
   }
 
+  _initGlobalFilters() {
+    let res = {};
+    const params = queryString.parse(this.props.location.location.search);
+    for (let filter of ITEM_SCHEMA.globalFilters) {
+      const queryFilter = params[filter.filterName];
+      res[filter.filterName] = {
+        ...filter,
+        current: queryFilter != undefined && this._verifyFilterFormat(queryFilter, filter.filterType, filter.filterOptions) ? queryFilter : filter.defaultOption
+      };
+    }
+    return res;
+  }
+
+  _initLocalFilters(type) {
+    type = type.toLowerCase();
+
+    if (type === 'all' || !(type in ITEM_SCHEMA.categories)) {
+      return {};
+    }
+
+    let res = {};
+    const params = queryString.parse(this.props.location.location.search);
+    for (let filter of ITEM_SCHEMA.categories[type].localFilters) {
+      const dashFilterName = `_${filter.filterName}`
+      const queryFilter = params[dashFilterName];
+      res[filter.filterName] = {
+        ...filter,
+        current: queryFilter != undefined && this._verifyFilterFormat(queryFilter, filter.filterType, filter.filterOptions) ? queryFilter : filter.defaultOption
+      };
+    }
+    return res;
+  }
+
+  _verifyFilterFormat(value, type, options) {
+    if (type == 'number') {
+      const arr = value.split(',');
+      return arr.length == 2 &&
+             !isNaN(arr[0]) &&
+             !isNaN(arr[1]) &&
+             Number(arr[0]) <= Number(arr[0]) &&
+             Number(arr[0]) >= options[0] &&
+             Number(arr[1]) <= options[1];
+    } else if (type == 'dropdown') {
+      const lowerCaseOptions = options.map(x => x.toLowerCase());
+      return value == 'all' || lowerCaseOptions.includes(value.toLowerCase());
+    }
+    return true;
+  }
+
   _processListings(rawListings) {
-    // Example product
+    // Example product:
     // {
     //   title: "Small Wooden Dining Table",
     //   description: "A small wooden dining table.",
@@ -105,7 +160,9 @@ class MapView extends React.Component {
         .then(result => {
           this.setState(state => {
             const tempListings = state.listings;
-            tempListings[index].properties.elevation = result.elevationProfile[1].height.toString() + ' m';
+            if (result.elevationProfile.length > 0) {
+              tempListings[index].properties.elevation = result.elevationProfile[1].height.toString() + ' m';
+            }
             return {listings: tempListings};
           });
         });
@@ -136,6 +193,8 @@ class MapView extends React.Component {
           <div id="sidebar">
             <Sidebar
               items={items}
+              globalFilters={this.state.globalFilters}
+              localFilters={this.state.localFilters}
             />
           </div>
           <div id="map">
