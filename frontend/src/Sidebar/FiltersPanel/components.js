@@ -110,7 +110,7 @@ const railOuterStyle = {
 const railInnerStyle = {
   position: 'absolute',
   width: '100%',
-  height: 14,
+  height: 8,
   transform: 'translate(0%, -50%)',
   borderRadius: 7,
   pointerEvents: 'none',
@@ -168,7 +168,7 @@ export class Handle extends Component {
             }}
           >
             <div className="tooltip">
-              <span className="tooltiptext">Value: {value}</span>
+              <span className="tooltiptext">{value}</span>
             </div>
           </div>
         ) : null}
@@ -201,8 +201,8 @@ export class Handle extends Component {
             transform: 'translate(-50%, -50%)',
             WebkitTapHighlightColor: 'rgba(0,0,0,0)',
             zIndex: 300,
-            width: 24,
-            height: 24,
+            width: 14,
+            height: 14,
             border: 0,
             borderRadius: '50%',
             boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)',
@@ -239,7 +239,7 @@ export function Track({ source, target, getTrackProps, disabled }) {
       style={{
         position: 'absolute',
         transform: 'translate(0%, -50%)',
-        height: 14,
+        height: 8,
         zIndex: 1,
         backgroundColor: disabled ? '#999' : '#8b6068',
         borderRadius: 7,
@@ -290,7 +290,7 @@ export function Tick({ tick, count, format }) {
       <div
         style={{
           position: 'absolute',
-          marginTop: 25,
+          marginTop: 12,
           fontSize: 10,
           textAlign: 'center',
           marginLeft: `${-(100 / count) / 2}%`,

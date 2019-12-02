@@ -1,7 +1,9 @@
 #filters {
   height: 100%;
   width: 100%;
-  background-color: lightgray;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .filter-item {
@@ -10,4 +12,32 @@
   margin-right: 20px;
   margin-top: 5px;
   margin-bottom: 5px;
+  display: flex;
+}
+
+.filter-item-prompt {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.filter-item-label {
+  padding-right: 30px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.dropdown-prompt {
+  width: 100%;
+}
+
+.filter-section-title {
+  text-align: center;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
 }
