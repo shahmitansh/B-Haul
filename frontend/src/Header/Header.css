@@ -30,6 +30,8 @@
 }
 
 .User-Pic {
+  height: 30px;
   border-radius: 40px;
   margin-right: 2vw;
+  border: 3px solid white;
 }

@@ -39,17 +39,23 @@ const componentClicked = () => {
 
   export default class Facebook extends Component {
     state = {user:false, display:true}
-    facebookResponse = (response) => { console.log( response ); this.setState( {...this.state, user: response, display: false } ) }
-  
+    facebookResponse = (response) => {
+      console.log( response );
+      localStorage.setItem('facebookID', response.id);
+      localStorage.setItem('facebookURL', response.picture.data.url);
+      localStorage.setItem('facebookEmail', response.email);
+      window.location = '/landing';
+    }
+
     render() {
       console.log(this.state);
       return (
-        <div>
+        <div className="fb-container">
             <HeaderBuy display={this.state.display}/>
                 <div>
-                { this.state.user && this.state.user.status != 'unknown' ? 
-                  <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}> 
-                    <UserScreen user={this.state.user}/> 
+                { this.state.user && this.state.user.status != 'unknown' ?
+                  <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}>
+                    <UserScreen user={this.state.user}/>
                     {localStorage.setItem('facebookID', this.state.user.id)}
                     {localStorage.setItem('facebookURL', this.state.user.picture.data.url)}
                     {localStorage.setItem('facebookEmail', this.state.user.email)}

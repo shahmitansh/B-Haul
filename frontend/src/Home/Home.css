@@ -10,3 +10,37 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.landing-button {
+  font-size: 20px;
+}
+
+.landing-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+.landing-button-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100px;
+}
+
+.landing-button-container:hover {
+  opacity: 0.5;
+}
+
+.landing-button-arrow {
+  height: 20px;
+  padding-left: 6px;
+}
+
+.landing-button-arrow-left {
+  height: 20px;
+  padding-right: 6px;
+  transform: rotate(180deg);
+}

@@ -4,6 +4,7 @@ import '../Home.css';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import arrowSvg from '../next.svg';
 
 const options = [
   'All', 'Tables', 'Beds', 'Seating', 'Storage'
@@ -32,10 +33,11 @@ export default class Landing extends Component {
             <div className="middle-home-container">
                 <div className="Landing-Prompt"> What are you looking for? </div>
                 <Dropdown onChange={this._onSelect} className='Landing-Options' options={options} value={defaultOption}/>
-                <div className="Landing-Click">
-                    <a  onClick={this._onClick}
-                        className="Landing-Color"
-                        > Next > </a>
+                <div className="landing-buttons-container">
+                  <div onClick={this._onClick} className="landing-button-container">
+                    <div className="landing-button">Next</div>
+                    <img className="landing-button-arrow" src={arrowSvg} />
+                  </div>
                 </div>
             </div>
         )
