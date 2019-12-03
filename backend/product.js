@@ -18,10 +18,11 @@ class Product {
   	* @param {String} location - Description of Product location
   	* @param {Boolean} hasElevator - Whether location has an elevator or not
   	* @param {String} color - Description of Product color
-  	* @param {String} size - Description of Product size
+	* @param {String} size - Description of Product size
+	* @param {String} image - Description of Product image URL
  	*/
 	constructor(productID, name, elevation, address, description,
-		sellerID, price, type, location, hasElevator, color, size){
+		sellerID, price, type, location, hasElevator, color, size, image){
 		this.productID = productID;
 		this.name = name;
 		this.address = address;
@@ -31,6 +32,7 @@ class Product {
 		this.elevation = elevation;
 		this.hasElevator = hasElevator
 		this.size = size
+		this.image = image
 		// if (!(color in productColors)){
 		// 	console.log(`product color ${color} not in allowed product colors ${JSON.stringify(productColors)}`);
 		// }

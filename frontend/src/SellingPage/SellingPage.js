@@ -773,7 +773,7 @@ export default class SellingPage extends Component {
                                     const postObj = {
                                       name: value.Title,
                                       description: value.Description,
-                                      image: '',
+                                      image: value.Image,
                                       location: {
                                         lat: res[0],
                                         lng: res[1]
@@ -786,6 +786,7 @@ export default class SellingPage extends Component {
                                       price: value.Price
                                     };
                                     console.log(postObj, 'postobj')
+                                    //image posts correctly
                                     fetch('http://localhost:3000/addListing', {
                                       method: 'POST',
                                       headers: {
