@@ -4,6 +4,9 @@
     width: 35vw;
     border-bottom: 1px solid lightgray;
     justify-content: space-between;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .bundle-header {
@@ -13,6 +16,7 @@
     margin-left: 5vw;
     border-bottom: 1px solid lightgray;
     justify-content: space-between;
+    padding-bottom: 5px;
 }
 
 .listing-name {
@@ -24,19 +28,30 @@
 .listing-item {
     display: flex;
     flex-direction: column;
-    padding: 20px 20px 20px 0px;
+    padding: 20px 0px 20px 0px;
 }
 
 .listing-item-container {
   height: 30px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.listing-item-container:hover {
+  background-color: #f3f3f3;
 }
 
 .listing-item-delete {
   color: red;
   font-weight: 600;
   cursor: pointer;
+}
+
+.listing-item-delete:hover {
+  opacity: 0.5;
 }
 
 .bundle-item {
@@ -73,15 +88,22 @@
 }
 
 .listing-add {
-    padding-left: 1vw;
-    padding-right:1vw;
     text-decoration: none;
-    margin-right: 3vw;
-    margin-bottom: 2px;
     background-color: rgb(108, 202, 233);
     color: white;
-    border-radius: 17px;
+    border-radius: 18px;
     font-size: 24px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plus-svg {
+  fill: white;
+  height: 12px;
+  width: 12px;
 }
 
 .check-with-label:checked + .label-for-check {
@@ -95,4 +117,8 @@
 
 .padding {
     padding-bottom: 10px;
+}
+
+.trash-container {
+  justify-content: center;
 }

@@ -4,6 +4,8 @@ import './Listings.css';
 import HeaderSell from '../Header/HeaderSell.js';
 import Checkbox from './Checkbox.js';
 import Bundle from './Bundle.js';
+import addSvg from './add.svg';
+import deleteSvg from './delete.svg';
 
 export default class Listings extends Component {
     constructor(props) {
@@ -83,7 +85,7 @@ export default class Listings extends Component {
                 .then(() => {
                   window.location.reload(false);
                 });
-            }}>DELETE</a>
+            }}><img style={{width: '15px'}} src={deleteSvg} /></a>
           </div>
         ));
 
@@ -98,7 +100,7 @@ export default class Listings extends Component {
                                 className="listing-add"
                                 target="_self"
                                 rel="noopener noreferrer"
-                                > + </a>
+                                ><img className="plus-svg" src={addSvg} /></a>
                         </div>
                         <div className="listing-item">
                           {listingComponents}
@@ -112,7 +114,7 @@ export default class Listings extends Component {
                                 className="listing-add"
                                 target="_self"
                                 rel="noopener noreferrer"
-                                > + </a>
+                                ><img className="plus-svg" src={addSvg} /></a>
                         </div>
                         <div className="listing-item bundle-item">
                             <Bundle bundles={this.bundles}
