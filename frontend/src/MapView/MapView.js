@@ -30,6 +30,8 @@ class MapView extends React.Component {
     this.distanceSet = false;
   }
 
+  imageURL = 'https://skypic.attic.city/?bucket=cdn.attic.city&key=items/9f3cc7dcf926d6adb92eb4eedf21bfaeface62ebe4b6a6d92fcdb44b2d242de3-w670h705q75fit.jpeg';
+
   componentDidMount(){
     console.log(this.props.location);
     const reqPics = require.context('./mock', true, /\.jpg$/)
@@ -112,12 +114,16 @@ class MapView extends React.Component {
     // }
 
     let productList = Object.values(rawListings['products']);
+    console.log(productList, 'productList')
+    //no image
     let tempListings = [];
 
     for (let product of productList) {
       tempListings.push({
         title: product.name,
         description: product.description,
+        // image: product.image,
+        // image URL not posting correctly
         image: table1,
         location: product.location,
         productID: product.productID,
@@ -131,6 +137,7 @@ class MapView extends React.Component {
           elevation: product.elevation
         }
       });
+      console.log(tempListings, 'all listings')
     }
 
     this.setState({listings: tempListings});
