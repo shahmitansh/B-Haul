@@ -805,6 +805,7 @@ export default class SellingPage extends Component {
                 <div className="columns">
                     <Form renderer={renderer} defaultFields={fields}>
                         <div className="image-upload">
+                          <div className="image-upload-title">Image</div>
                           <input ref={(ref) => {this.uploadInput = ref;}} type="file" />
                         </div>
                         <FormButton

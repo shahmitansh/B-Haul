@@ -124,7 +124,7 @@ class MapView extends React.Component {
         description: product.description,
         // image: product.image,
         // image URL not posting correctly
-        image: table1,
+        imageURL: product.imageURL,
         location: product.location,
         productID: product.productID,
         sellerID: product.sellerID,

@@ -16,7 +16,7 @@ class SidebarItem extends React.Component {
       </div>
     );
 
-    const imgPath = `${this.props.item.image}`;
+    const imgPath = `${this.props.item.imageURL}`;
     console.log(imgPath);
 
     return (

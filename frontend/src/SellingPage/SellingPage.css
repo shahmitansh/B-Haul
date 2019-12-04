@@ -12,3 +12,18 @@
 .selling-title {
   margin-top: 100px;
 }
+
+.image-upload-title {
+  font-size: 0.8571428571428571em;
+  font-style: inherit;
+  line-height: 1.3333333333333333;
+  color: #6B778C;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  margin-top: 0;
+}
+
+.image-upload {
+  margin-bottom: 20px;
+}
