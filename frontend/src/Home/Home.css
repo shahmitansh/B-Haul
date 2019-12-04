@@ -36,11 +36,11 @@
 
 .landing-button-arrow {
   height: 20px;
-  padding-left: 6px;
+  margin-left: 6px;
 }
 
 .landing-button-arrow-left {
   height: 20px;
-  padding-right: 6px;
+  margin-right: 6px;
   transform: rotate(180deg);
 }

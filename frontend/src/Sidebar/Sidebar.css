@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  justify-content: center;
   border-bottom: 1px solid lightgray;
   cursor: pointer;
 }
@@ -22,4 +23,10 @@
 
 .sidebar-dropdown {
   text-align: center;
+}
+
+.sidebar-section-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

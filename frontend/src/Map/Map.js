@@ -43,7 +43,7 @@ class Map extends React.Component {
     } = this.state
 
     const [userLat, userLng] = [this.props.userLat, this.props.userLng];
-    
+
     return (
       <ReactMapGL
         width='100%'

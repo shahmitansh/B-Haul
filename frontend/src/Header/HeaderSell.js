@@ -7,7 +7,7 @@ export default class HeaderSell extends Component {
         return (
             <header className="App-header">
               <div className="logo-container">
-                <a href="/"
+                <a href="/map"
                     className="Text Buy"
                     target="_self"
                     rel="noopener noreferrer"
@@ -21,7 +21,7 @@ export default class HeaderSell extends Component {
                       target="_self"
                       rel="noopener noreferrer"
                   >Looking to buy?</a>
-                  <img className="User-Pic" src={(localStorage.getItem('facebookURL'))} alt="avatar"/> <br></br>  
+                  <img className="User-Pic" src={(localStorage.getItem('facebookURL'))} alt="avatar"/> <br></br>
                 </div>
             </header>
         )
