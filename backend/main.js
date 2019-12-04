@@ -1,4 +1,4 @@
-const {Product, ProductList} = require('./product.js')
+const {Bundle, Product, ProductList} = require('./product.js')
 const bodyParser = require('body-parser')
 const express = require('express');
 const path = require('path')
@@ -71,6 +71,73 @@ app.get('/getProductList', async (req, res, next) => {
   		return next(err);
 	}
 });
+
+
+app.get('/getBundleList', async (req, res, next) => {
+	try {
+		await initDb();
+		let bundles = await mongoDao.readCollection('bundles');
+		res.send(bundles)
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+});
+
+
+app.post('/addBundle', async function(request, response, next){
+	try {
+		await initDb();
+		let bundleID = await nextBundleID()
+		let doc = request.body
+		let productIDs = doc["productIDs"]
+		let arraylength = productIDs.length
+		for (let i = 0; i < arraylength; i++){
+			let pID = productIDs[i]
+			let product = await mongoDao.findDocuments('products', {productID: pID});
+			product[0].bundleID = bundleID					
+			await mongoDao.updateDocument('products', {productID: pID}, {$set: product[0]});
+		}
+		
+		let bundle = new Bundle(bundleID, doc["productIDs"])
+
+		await mongoDao.insertDocument("bundles", bundle, () => {});
+		response.send("Successfully inserted bundle")
+
+	} catch (error) {
+		console.log(error)
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+
+});
+
+
+app.delete('/deleteBundle/:bundleID', async function(request, response, next){
+	try {
+		initDb();
+		let toDeleteBundleID = Number(request.params["bundleID"])
+		let query = {bundleID: toDeleteBundleID}
+		let bundle = await mongoDao.findDocuments('bundles', query);
+		let productIDs = bundle[0].productIDs
+		let arraylength = productIDs.length
+		for (let i = 0; i < arraylength; i++){
+			let pID = productIDs[i]
+			let product = await mongoDao.findDocuments('products', {productID: pID});
+			product[0].bundleID = undefined
+			await mongoDao.updateDocument('products', {productID: pID}, {$set: product[0]})
+		}
+		await mongoDao.deleteDocument('bundles', query)
+		response.send("Successfully deleted bundle")
+	} catch (error) {
+		console.log(error)
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+})
 
 
 app.get('/getProductList/filtered',  async (req, res, next) => {
@@ -298,6 +365,22 @@ async function nextProductID(){
 	return maxID + 1;
 }
 
+
+async function nextBundleID(){
+	await initDb();
+	let listings = await mongoDao.readCollection('bundles');
+	let arraylength = listings.length
+	let maxID = 0
+	for (let i = 0; i < arraylength; i++){
+		let pID = listings[i]["bundleID"]
+		if (pID > maxID){
+			maxID = pID
+		}
+	}
+	return maxID + 1;
+}
+
+
 /**
  * Generates a ProductList object containing all the products in the database.
  * @return {ProductList} - ProductList object that contains all the products in the database.
@@ -310,7 +393,7 @@ async function getProductListClass(){
 	for (let i = 0; i < arraylength; i++){
 		let doc = listings[i];
 		let productID = doc["productID"];
-		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"]);
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"], doc["bundleID"]);
 	}
 	return new ProductList(products);
 }
