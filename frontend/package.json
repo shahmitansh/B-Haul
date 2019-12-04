@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "jest": {
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "setupFiles": ["./src/setupTests.js"],
     "transformIgnorePatterns": ["<rootDir>/bower_components/", "<rootDir>/node_modules/"]
   },
   "dependencies": {
@@ -48,6 +50,11 @@
     ]
   },
   "devDependencies": {
-    "react-doc-generator": "^1.2.5"
+    "react-doc-generator": "^1.2.5",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "jest": "23.6.0",
+    "jest-enzyme": "^7.0.1"
   }
+
 }
