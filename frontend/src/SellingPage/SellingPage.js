@@ -712,7 +712,7 @@ const fields =
 export default class SellingPage extends Component {
 
     async computeLatLng(address, city, zipcode) {
-      const url = 'http://open.mapquestapi.com/geocoding/v1/address?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&location=' + address + ', ' + city + ', ' + zipcode
+      const url = 'https://open.mapquestapi.com/geocoding/v1/address?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&location=' + address + ', ' + city + ', ' + zipcode
       try {
         let res = await axios.get(url);
         return [res.data.results[0].locations[0].latLng.lat, res.data.results[0].locations[0].latLng.lng];

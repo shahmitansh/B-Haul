@@ -183,7 +183,7 @@ class MapView extends React.Component {
     const currentListings = this.state.listings;
     let index = 0;
     for (let listing of currentListings) {
-      const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&shapeFormat=raw&latLngCollection=' + this.props.userLat + ',' + this.props.userLng + ',' + listing.location.lat + ',' + listing.location.lng;
+      const elevation_url = 'https://open.mapquestapi.com/elevation/v1/profile?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&shapeFormat=raw&latLngCollection=' + this.props.userLat + ',' + this.props.userLng + ',' + listing.location.lat + ',' + listing.location.lng;
       _elevationHelper(elevation_url, index);
       index++;
     }
