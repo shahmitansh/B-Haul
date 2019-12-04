@@ -57,7 +57,7 @@ export default class Listings extends Component {
     bundles = [this.sampleBundle1, this.sampleBundle2]
 
     componentDidMount() {
-      fetch('http://localhost:3000/getProductList')
+      fetch('https://bhaulucla.herokuapp.com/getProductList')
         .then(res => res.json())
         .then(result => {
           let fetchedListings = [];
@@ -79,7 +79,7 @@ export default class Listings extends Component {
           <div className="listing-item-container">
             <div className="listing-item-name">{listing.name}</div>
             <a className="listing-item-delete" onClick={(target) => {
-              fetch(`http://localhost:3000/deletePosting/${listing.productID}`, {
+              fetch(`https://bhaulucla.herokuapp.com/deletePosting/${listing.productID}`, {
                 method: 'DELETE'
               })
                 .then(() => {

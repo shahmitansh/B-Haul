@@ -730,7 +730,7 @@ export default class SellingPage extends Component {
       let fileName = fileParts[0];
       let fileType = fileParts[1];
       console.log("Preparing the upload");
-      return axios.post("http://localhost:3000/sign_s3",{
+      return axios.post("https://bhaulucla.herokuapp.com/sign_s3",{
         fileName : fileName,
         fileType : fileType
       })
@@ -798,7 +798,7 @@ export default class SellingPage extends Component {
                                         };
                                         console.log(postObj, 'postobj')
                                         //image posts correctly
-                                        fetch('http://localhost:3000/addListing', {
+                                        fetch('https://bhaulucla.herokuapp.com/addListing', {
                                           method: 'POST',
                                           headers: {
                                             'Accept': 'application/json',
