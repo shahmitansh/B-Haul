@@ -1,0 +1,69 @@
+.item-fullview-container {
+  overflow-x: scroll;
+}
+
+.item-fullview-image-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-fullview-image {
+  width: calc(100% - 40px);
+}
+
+.item-fullview-title {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.item-fullview-description {
+  padding: 20px;
+  text-align: left;
+}
+
+.item-fullview-backbtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.item-fullview-backbtn:hover {
+  opacity: 0.5;
+}
+
+.item-fullview-property-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px 20px;
+}
+
+.item-fullview-contact-seller {
+  margin: 0 auto;
+  height: 50px;
+  width: calc(100% - 40px);
+  text-align: center;
+  background-color: #0080ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.item-fullview-copied-label {
+  text-align: center;
+  color: gray;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.item-fullview-contact-seller:hover {
+  opacity: 0.5;
+}

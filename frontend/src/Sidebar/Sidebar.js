@@ -41,10 +41,6 @@ class Sidebar extends React.Component {
           index={index}
           showItem={this.showItem}
         />
-        <SidebarDropdown
-          item={item}
-          index={index}
-        />
       </div>
     );
 
