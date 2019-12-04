@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './PreferencePage.css';
 import '../Home.css';
+import { capitalize, capitalizeCamelCase } from '../../utils';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -40,7 +41,7 @@ export default class PreferencePage extends Component {
   }
 
   _nextClicked = (target) => {
-    window.location = `/map?type=Table&_category=${this.state.value}`;
+    window.location = `/map?type=${capitalize(this.type)}&_category=${this.state.value}`;
   }
 
   _prevClicked = (target) => {
