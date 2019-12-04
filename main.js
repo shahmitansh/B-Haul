@@ -1,4 +1,4 @@
-const {Product, ProductList} = require('./product.js')
+const {Bundle, Product, ProductList} = require('./product.js')
 const bodyParser = require('body-parser')
 const express = require('express');
 const path = require('path')
@@ -11,6 +11,17 @@ const port = 3000;
 const FilterFactory = require('./filterFactory.js')
 const MongoDao = require('./dao.js');
 
+const aws = require('aws-sdk');
+require('dotenv').config(); // Configure dotenv to load in the .env file
+// Configure aws with your accessKeyId and your secretAccessKey
+aws.config.update({
+  region: 'us-west-1', // Put your aws region here
+  accessKeyId: process.env.AWSAccessKeyId,
+  secretAccessKey: process.env.AWSSecretKey
+})
+
+const S3_BUCKET = process.env.Bucket
+
 //Serving static files from the react app as necessary
 app.use(express.static(path.join(__dirname, '/frontend/build')))
 
@@ -19,7 +30,35 @@ var mongoDao = null;
 const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?retryWrites=true&w=majority';
 const dbName = 'bhaul';
 
-// app.get('/', (req, res) => res.send('Hello World!'));
+app.post('/sign_s3', (req,res) => {
+  const s3 = new aws.S3();  // Create a new instance of S3
+  const fileName = req.body.fileName;
+  const fileType = req.body.fileType;
+// Set up the payload of what we are sending to the S3 api
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 500,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+// Make a request to the S3 API to get a signed URL which we can use to upload our file
+s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+      res.json({success: false, error: err})
+    }
+    // Data payload of what we are sending back, the url of the signedRequest and a URL where we can access the content after its saved.
+const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+    // Send it all back
+    res.json({success:true, data:{returnData}});
+  });
+});
+
+app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/getProductList', async (req, res, next) => {
 	try {
@@ -32,6 +71,73 @@ app.get('/getProductList', async (req, res, next) => {
   		return next(err);
 	}
 });
+
+
+app.get('/getBundleList', async (req, res, next) => {
+	try {
+		await initDb();
+		let bundles = await mongoDao.readCollection('bundles');
+		res.send(bundles)
+	} catch (error) {
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+});
+
+
+app.post('/addBundle', async function(request, response, next){
+	try {
+		await initDb();
+		let bundleID = await nextBundleID()
+		let doc = request.body
+		let productIDs = doc["productIDs"]
+		let arraylength = productIDs.length
+		for (let i = 0; i < arraylength; i++){
+			let pID = productIDs[i]
+			let product = await mongoDao.findDocuments('products', {productID: pID});
+			product[0].bundleID = bundleID
+			await mongoDao.updateDocument('products', {productID: pID}, {$set: product[0]});
+		}
+
+		let bundle = new Bundle(bundleID, doc["productIDs"])
+
+		await mongoDao.insertDocument("bundles", bundle, () => {});
+		response.send("Successfully inserted bundle")
+
+	} catch (error) {
+		console.log(error)
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+
+});
+
+
+app.delete('/deleteBundle/:bundleID', async function(request, response, next){
+	try {
+		initDb();
+		let toDeleteBundleID = Number(request.params["bundleID"])
+		let query = {bundleID: toDeleteBundleID}
+		let bundle = await mongoDao.findDocuments('bundles', query);
+		let productIDs = bundle[0].productIDs
+		let arraylength = productIDs.length
+		for (let i = 0; i < arraylength; i++){
+			let pID = productIDs[i]
+			let product = await mongoDao.findDocuments('products', {productID: pID});
+			product[0].bundleID = undefined
+			await mongoDao.updateDocument('products', {productID: pID}, {$set: product[0]})
+		}
+		await mongoDao.deleteDocument('bundles', query)
+		response.send("Successfully deleted bundle")
+	} catch (error) {
+		console.log(error)
+		let err = new Error('Database connection issue');
+		err.statusCode = 503;
+  		return next(err);
+	}
+})
 
 
 app.get('/getProductList/filtered',  async (req, res, next) => {
@@ -144,6 +250,7 @@ app.post('/addListing', async function(request, response, next){
 		let productID = await nextProductID()
 		let doc = request.body
 		let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"])
+		console.log(product);
 		await mongoDao.insertDocument("products", product, () => {});
 		response.send("Successfully inserted document")
 
@@ -258,6 +365,22 @@ async function nextProductID(){
 	return maxID + 1;
 }
 
+
+async function nextBundleID(){
+	await initDb();
+	let listings = await mongoDao.readCollection('bundles');
+	let arraylength = listings.length
+	let maxID = 0
+	for (let i = 0; i < arraylength; i++){
+		let pID = listings[i]["bundleID"]
+		if (pID > maxID){
+			maxID = pID
+		}
+	}
+	return maxID + 1;
+}
+
+
 /**
  * Generates a ProductList object containing all the products in the database.
  * @return {ProductList} - ProductList object that contains all the products in the database.
@@ -270,7 +393,7 @@ async function getProductListClass(){
 	for (let i = 0; i < arraylength; i++){
 		let doc = listings[i];
 		let productID = doc["productID"];
-		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"]);
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"], doc["bundleID"]);
 	}
 	return new ProductList(products);
 }
@@ -290,15 +413,11 @@ async function initDb() {
 	return mongoDao
 }
 
-
 //Catchall that sends any request not specified above to index.html
-//app.get('*', (req,res) =>{
-//	res.sendFile(path.join(__dirname +'../frontend/public/index.html'));
-//});
-
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
 })
+
 
 // For testing
 module.exports = app;
