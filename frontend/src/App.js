@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Component } from 'react-router-dom';
-import './App.css';
+//import './App.css';
 import Main from './Main/Main.js';
 
 import { geolocated } from 'react-geolocated';
