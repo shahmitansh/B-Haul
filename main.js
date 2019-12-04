@@ -58,7 +58,7 @@ const returnData = {
   });
 });
 
-app.get('/', (req, res) => res.send('Hello World!'));
+// app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/getProductList', async (req, res, next) => {
 	try {
