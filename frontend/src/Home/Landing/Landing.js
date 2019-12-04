@@ -7,7 +7,7 @@ import 'react-dropdown/style.css';
 import arrowSvg from '../next.svg';
 
 const options = [
-  'All', 'Tables', 'Beds', 'Seating', 'Storage'
+  'All', 'Table', 'Bed', 'Seating', 'Storage'
 ]
 const defaultOption = options[0];
 

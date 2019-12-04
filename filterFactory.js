@@ -1,6 +1,6 @@
 
 module.exports = {
-	
+
 	/**
  	* Returns a list of Products filtered based on Buyer input.
 	* @param {ProductList} products - ProductList containing all the products
@@ -53,7 +53,7 @@ function filterColor(products, color){
 	}
 	let returnList = [];
 	for (let key in products){
-		if (products[key].color == color){
+		if (products[key].color.toLowerCase() == color){
 			returnList.push(products[key])
 		}
 	}
@@ -77,7 +77,7 @@ function filterType(products, type){
 		if (Array.isArray(products[key].type) && products[key].type.includes(type)){
 			returnList.push(products[key])
 
-		}else if (products[key].type == type){
+		}else if (products[key].type.toLowerCase() == type){
 			returnList.push(products[key])
 		}
 	}
