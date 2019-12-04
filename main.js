@@ -14,10 +14,6 @@ const MongoDao = require('./dao.js');
 //Serving static files from the react app as necessary
 app.use(express.static(path.join(__dirname, '/frontend/build')))
 
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
-})
-
 // Connection URL
 var mongoDao = null;
 const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?retryWrites=true&w=majority';
@@ -300,6 +296,9 @@ async function initDb() {
 //	res.sendFile(path.join(__dirname +'../frontend/public/index.html'));
 //});
 
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
+})
 
 // For testing
 module.exports = app;
