@@ -15,7 +15,6 @@ export default class HeaderBuy extends Component {
                   <img src={logo} className="Logo" alt="logo" />
                 </a>
               </div>
-              {console.log(this.props.display, 'display')}
               {this.props.display ?
                 <div>
                   {/* <img className="User-Pic" src={(localStorage.getItem('facebookURL'))} alt="avatar"/> <br></br>   */}

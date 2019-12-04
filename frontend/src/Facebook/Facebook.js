@@ -48,7 +48,6 @@ const componentClicked = () => {
     }
 
     render() {
-      console.log(this.state);
       return (
         <div className="fb-container">
             <HeaderBuy display={this.state.display}/>

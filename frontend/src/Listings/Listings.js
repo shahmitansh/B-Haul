@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './Listings.css';
 
 import HeaderSell from '../Header/HeaderSell.js';
-import Checkbox from './Checkbox.js';
 import Bundle from './Bundle.js';
 import addSvg from './add.svg';
 import deleteSvg from './delete.svg';

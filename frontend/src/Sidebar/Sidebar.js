@@ -5,7 +5,6 @@ import downArrow from './sort-down.svg';
 import SidebarItem from './SidebarItem/SidebarItem';
 import FiltersPanel from './FiltersPanel/FiltersPanel';
 import ItemPanel from './ItemPanel/ItemPanel';
-import SidebarDropdown from './SidebarItem/SidebarDropdown.js';
 
 class Sidebar extends React.Component {
 
