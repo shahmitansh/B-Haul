@@ -2,21 +2,8 @@ const productTypes = {"seating": 1, "bed": 2, "table": 3, "storage": 4, "other":
 const productColors = {"red": 1, "green": 2, "blue":3, "black":4, "grey":5, "brown":6, "orange":7, "white":8}
 const filterFactory =  require('./filterFactory.js');
 
-class Bundle {
-  /**
- 	* Represents Product object.
- 	* @constructor
- 	* @param {Number} bundleID - ID to represent unique bundle
- 	* @param {Array} productIDs - list of productIDs that are part of this bundle
-  */
-	constructor(bundleID, productIDs){
-		this.bundleID = bundleID;
-		this.productIDs = productIDs;
-	}
-}
-
 class Product {
-
+	
 	/**
  	* Represents Product object.
  	* @constructor
@@ -33,11 +20,9 @@ class Product {
   	* @param {String} color - Description of Product color
 	* @param {String} size - Description of Product size
 	* @param {String} imageURL - Description of Product image URL
-  * @param {Number} bundleID - ID of bundle this product is associated with if any
-
  	*/
 	constructor(productID, name, elevation, address, description,
-		sellerID, price, type, location, hasElevator, color, size, imageURL, bundleID){
+		sellerID, price, type, location, hasElevator, color, size, imageURL){
 		this.productID = productID;
 		this.name = name;
 		this.address = address;
@@ -61,8 +46,6 @@ class Product {
 		this.type = type;
 		this.color = color
 		this.location = location;
-    this.bundleID = bundleID;
-
 	}
 }
 
@@ -141,4 +124,4 @@ class ProductList{
 
 }
 
-module.exports = {Bundle, Product, ProductList };
+module.exports = { Product, ProductList };

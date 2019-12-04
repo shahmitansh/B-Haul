@@ -124,7 +124,7 @@ class MapView extends React.Component {
         description: product.description,
         // image: product.image,
         // image URL not posting correctly
-        image: table1,
+        imageURL: product.imageURL,
         location: product.location,
         productID: product.productID,
         sellerID: product.sellerID,
@@ -159,7 +159,7 @@ class MapView extends React.Component {
     const currentListings = this.state.listings;
     let index = 0;
     for (let listing of currentListings) {
-      const distance_url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&json={locations:[%20{%20latLng:{%20lat:' + this.props.userLat + ',%20lng:' + this.props.userLng +'%20}%20},%20{%20latLng:{%20lat:' + listing.location.lat + ',%20lng:'+ listing.location.lng + '}%20}%20],%20options:{%20manyToOne:true%20}}';
+      const distance_url = 'https://www.mapquestapi.com/directions/v2/routematrix?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&json={locations:[%20{%20latLng:{%20lat:' + this.props.userLat + ',%20lng:' + this.props.userLng +'%20}%20},%20{%20latLng:{%20lat:' + listing.location.lat + ',%20lng:'+ listing.location.lng + '}%20}%20],%20options:{%20manyToOne:true%20}}';
       _distanceHelper(distance_url, index);
       index++;
     }
@@ -183,7 +183,7 @@ class MapView extends React.Component {
     const currentListings = this.state.listings;
     let index = 0;
     for (let listing of currentListings) {
-      const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&shapeFormat=raw&latLngCollection=' + this.props.userLat + ',' + this.props.userLng + ',' + listing.location.lat + ',' + listing.location.lng;
+      const elevation_url = 'http://open.mapquestapi.com/elevation/v1/profile?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&shapeFormat=raw&latLngCollection=' + this.props.userLat + ',' + this.props.userLng + ',' + listing.location.lat + ',' + listing.location.lng;
       _elevationHelper(elevation_url, index);
       index++;
     }

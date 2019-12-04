@@ -1,4 +1,32 @@
-const {Bundle, Product, ProductList} = require('./product.js')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const {Product, ProductList} = require('./product.js')
 const bodyParser = require('body-parser')
 const express = require('express');
 const path = require('path')
@@ -11,52 +39,13 @@ const port = 3000;
 const FilterFactory = require('./filterFactory.js')
 const MongoDao = require('./dao.js');
 
-const aws = require('aws-sdk');
-require('dotenv').config(); // Configure dotenv to load in the .env file
-// Configure aws with your accessKeyId and your secretAccessKey
-aws.config.update({
-  region: 'us-west-1', // Put your aws region here
-  accessKeyId: process.env.AWSAccessKeyId,
-  secretAccessKey: process.env.AWSSecretKey
-})
-
-const S3_BUCKET = process.env.Bucket
-
 //Serving static files from the react app as necessary
-app.use(express.static(path.join(__dirname, '../frontend/src')))
+//app.use(express.static(path.join(__dirname, '../frontend/src')))
 
 // Connection URL
 var mongoDao = null;
-const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb+srv://admin:supereasytormb@cluster0-bgrbj.mongodb.net/test?retryWrites=true&amp;w=majority';
 const dbName = 'bhaul';
-
-app.post('/sign_s3', (req,res) => {
-  const s3 = new aws.S3();  // Create a new instance of S3
-  const fileName = req.body.fileName;
-  const fileType = req.body.fileType;
-// Set up the payload of what we are sending to the S3 api
-  const s3Params = {
-    Bucket: S3_BUCKET,
-    Key: fileName,
-    Expires: 500,
-    ContentType: fileType,
-    ACL: 'public-read'
-  };
-// Make a request to the S3 API to get a signed URL which we can use to upload our file
-s3.getSignedUrl('putObject', s3Params, (err, data) => {
-    if(err){
-      console.log(err);
-      res.json({success: false, error: err})
-    }
-    // Data payload of what we are sending back, the url of the signedRequest and a URL where we can access the content after its saved.
-const returnData = {
-      signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-    };
-    // Send it all back
-    res.json({success:true, data:{returnData}});
-  });
-});
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
@@ -71,73 +60,6 @@ app.get('/getProductList', async (req, res, next) => {
   		return next(err);
 	}
 });
-
-
-app.get('/getBundleList', async (req, res, next) => {
-	try {
-		await initDb();
-		let bundles = await mongoDao.readCollection('bundles');
-		res.send(bundles)
-	} catch (error) {
-		let err = new Error('Database connection issue');
-		err.statusCode = 503;
-  		return next(err);
-	}
-});
-
-
-app.post('/addBundle', async function(request, response, next){
-	try {
-		await initDb();
-		let bundleID = await nextBundleID()
-		let doc = request.body
-		let productIDs = doc["productIDs"]
-		let arraylength = productIDs.length
-		for (let i = 0; i < arraylength; i++){
-			let pID = productIDs[i]
-			let product = await mongoDao.findDocuments('products', {productID: pID});
-			product[0].bundleID = bundleID					
-			await mongoDao.updateDocument('products', {productID: pID}, {$set: product[0]});
-		}
-		
-		let bundle = new Bundle(bundleID, doc["productIDs"])
-
-		await mongoDao.insertDocument("bundles", bundle, () => {});
-		response.send("Successfully inserted bundle")
-
-	} catch (error) {
-		console.log(error)
-		let err = new Error('Database connection issue');
-		err.statusCode = 503;
-  		return next(err);
-	}
-
-});
-
-
-app.delete('/deleteBundle/:bundleID', async function(request, response, next){
-	try {
-		initDb();
-		let toDeleteBundleID = Number(request.params["bundleID"])
-		let query = {bundleID: toDeleteBundleID}
-		let bundle = await mongoDao.findDocuments('bundles', query);
-		let productIDs = bundle[0].productIDs
-		let arraylength = productIDs.length
-		for (let i = 0; i < arraylength; i++){
-			let pID = productIDs[i]
-			let product = await mongoDao.findDocuments('products', {productID: pID});
-			product[0].bundleID = undefined
-			await mongoDao.updateDocument('products', {productID: pID}, {$set: product[0]})
-		}
-		await mongoDao.deleteDocument('bundles', query)
-		response.send("Successfully deleted bundle")
-	} catch (error) {
-		console.log(error)
-		let err = new Error('Database connection issue');
-		err.statusCode = 503;
-  		return next(err);
-	}
-})
 
 
 app.get('/getProductList/filtered',  async (req, res, next) => {
@@ -250,7 +172,6 @@ app.post('/addListing', async function(request, response, next){
 		let productID = await nextProductID()
 		let doc = request.body
 		let product = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"])
-		console.log(product);
 		await mongoDao.insertDocument("products", product, () => {});
 		response.send("Successfully inserted document")
 
@@ -305,7 +226,7 @@ app.get('/elevationprofile/:latSrc/:longSrc/:latDest/:longDest', async (req, res
 	res.send(elevationRequestResponse);
 });
 
-app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 console.log("Hi");
 mongoDao = initDb()
 
@@ -321,7 +242,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 	return new Promise(function(resolve, reject) {
 		const base_url = 'http://open.mapquestapi.com/elevation/v1/profile';
 		let latLongCollection = `${latSrc},${longSrc},${latDest},${longDest}`;
-		let request_url = `${base_url}?key=${API_KEY}&latLngCollection=${latLongCollection}`;
+		let request_url = `${base_url}?key=${API_KEY}&amp;latLngCollection=${latLongCollection}`;
 		console.log(request_url);
 
 		let resp =  request(request_url, function (error, response, body){
@@ -330,7 +251,7 @@ function getElevationProfile(latSrc, longSrc, latDest, longDest){
 				reject(error);
 			} else {
 				let responsedict = {};
-				console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+				console.log('statusCode:', response &amp;&amp; response.statusCode); // Print the response status code if a response was received
 				console.log('body:', body); // Print the HTML for the Google homepage.
 				let elevationProfile = JSON.parse(body)["elevationProfile"];
 				let elevationSrc = elevationProfile[0]["height"]
@@ -356,7 +277,7 @@ async function nextProductID(){
 	let listings = await mongoDao.readCollection('products');
 	let arraylength = listings.length
 	let maxID = 0
-	for (let i = 0; i < arraylength; i++){
+	for (let i = 0; i &lt; arraylength; i++){
 		let pID = listings[i]["productID"]
 		if (pID > maxID){
 			maxID = pID
@@ -364,22 +285,6 @@ async function nextProductID(){
 	}
 	return maxID + 1;
 }
-
-
-async function nextBundleID(){
-	await initDb();
-	let listings = await mongoDao.readCollection('bundles');
-	let arraylength = listings.length
-	let maxID = 0
-	for (let i = 0; i < arraylength; i++){
-		let pID = listings[i]["bundleID"]
-		if (pID > maxID){
-			maxID = pID
-		}
-	}
-	return maxID + 1;
-}
-
 
 /**
  * Generates a ProductList object containing all the products in the database.
@@ -390,10 +295,10 @@ async function getProductListClass(){
 	let listings = await mongoDao.readCollection('products');
 	let arraylength = listings.length;
 	let products = {};
-	for (let i = 0; i < arraylength; i++){
+	for (let i = 0; i &lt; arraylength; i++){
 		let doc = listings[i];
 		let productID = doc["productID"];
-		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"], doc["bundleID"]);
+		products[productID] = new Product(productID, doc["name"], doc["elevation"], doc["address"], doc["description"], doc["sellerID"], doc["price"], doc["type"], doc["location"], doc["hasElevator"], doc["color"], doc["size"], doc["imageURL"]);
 	}
 	return new ProductList(products);
 }
@@ -422,3 +327,26 @@ async function initDb() {
 
 // For testing
 module.exports = app;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BuyerFunctionality.html">BuyerFunctionality</a></li><li><a href="MongoDao.html">MongoDao</a></li><li><a href="Product.html">Product</a></li><li><a href="ProductList.html">ProductList</a></li><li><a href="SellerFunctionality.html">SellerFunctionality</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#filterColor">filterColor</a></li><li><a href="global.html#filterPriceHigher">filterPriceHigher</a></li><li><a href="global.html#filterPriceLower">filterPriceLower</a></li><li><a href="global.html#filterSize">filterSize</a></li><li><a href="global.html#filterType">filterType</a></li><li><a href="global.html#getElevationProfile">getElevationProfile</a></li><li><a href="global.html#getProductListClass">getProductListClass</a></li><li><a href="global.html#initDb">initDb</a></li><li><a href="global.html#nextProductID">nextProductID</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 02 2019 10:54:09 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

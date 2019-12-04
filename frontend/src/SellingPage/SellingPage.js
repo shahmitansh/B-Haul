@@ -747,7 +747,7 @@ const fields =
 export default class SellingPage extends Component {
 
     async computeLatLng(address, city, zipcode) {
-      const url = 'http://open.mapquestapi.com/geocoding/v1/address?key=aGF9qhMVGLXeMA5UGCdSZt7rIIp600r8&location=' + address + ', ' + city + ', ' + zipcode
+      const url = 'http://open.mapquestapi.com/geocoding/v1/address?key=aEYU2G6Ah30Jm0SmggIOtfu2qhQGD74P&location=' + address + ', ' + city + ', ' + zipcode
       try {
         let res = await axios.get(url);
         return [res.data.results[0].locations[0].latLng.lat, res.data.results[0].locations[0].latLng.lng];
@@ -757,46 +757,93 @@ export default class SellingPage extends Component {
       }
     }
 
+    // Perform the upload
+    handleUpload = (ev) => {
+      let file = this.uploadInput.files[0];
+      // Split the filename to get the name and type
+      let fileParts = this.uploadInput.files[0].name.split('.');
+      let fileName = fileParts[0];
+      let fileType = fileParts[1];
+      console.log("Preparing the upload");
+      return axios.post("http://localhost:3000/sign_s3",{
+        fileName : fileName,
+        fileType : fileType
+      })
+      .then(response => {
+        var returnData = response.data.data.returnData;
+        var signedRequest = returnData.signedRequest;
+        var url = returnData.url;
+        console.log("S3 URL: " + url);
+        console.log("Recieved a signed request " + signedRequest);
+
+       // Put the fileType in the headers for the upload
+        var options = {
+          headers: {
+            'Content-Type': fileType
+          }
+        };
+        return axios.put(signedRequest,file,options)
+        .then(result => {
+          console.log("Response from s3")
+          return url;
+        })
+        .catch(error => {
+          console.log(error);
+          alert("ERROR " + JSON.stringify(error));
+        })
+      })
+      .catch(error => {
+        alert(JSON.stringify(error));
+      })
+    }
+
     render() {
         return (
             <div>
                 <HeaderSell />
-                <div className="Landing-Prompt"> What are you selling? </div>
+                <div className="Landing-Prompt selling-title"> What are you selling? </div>
                 <div className="columns">
                     <Form renderer={renderer} defaultFields={fields}>
+                        <div className="image-upload">
+                          <div className="image-upload-title">Image</div>
+                          <input ref={(ref) => {this.uploadInput = ref;}} type="file" />
+                        </div>
                         <FormButton
                             onClick={(value: FormValue) =>
                               {
                                 console.log("Button value", value)
                                 this.computeLatLng(value.Address, value.City, value.Zipcode)
-                                  .then(res => {
-                                    const postObj = {
-                                      name: value.Title,
-                                      description: value.Description,
-                                      image: value.Image,
-                                      location: {
-                                        lat: res[0],
-                                        lng: res[1]
-                                      },
-                                      sellerID: localStorage.getItem('facebookID'),
-                                      type: value.GlobalType,
-                                      color: value.Color,
-                                      distance: '',
-                                      elevation: '',
-                                      price: value.Price
-                                    };
-                                    console.log(postObj, 'postobj')
-                                    //image posts correctly
-                                    fetch('http://localhost:3000/addListing', {
-                                      method: 'POST',
-                                      headers: {
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                      },
-                                      body: JSON.stringify(postObj)
-                                    })
-                                      .then(() => {
-                                        window.location = '/listings';
+                                  .then(latlngres => {
+                                    this.handleUpload()
+                                      .then(imgres => {
+                                        const postObj = {
+                                          name: value.Title,
+                                          description: value.Description,
+                                          imageURL: imgres,
+                                          location: {
+                                            lat: latlngres[0],
+                                            lng: latlngres[1]
+                                          },
+                                          sellerID: localStorage.getItem('facebookID'),
+                                          type: value.GlobalType,
+                                          color: value.Color,
+                                          distance: '',
+                                          elevation: '',
+                                          price: value.Price
+                                        };
+                                        console.log(postObj, 'postobj')
+                                        //image posts correctly
+                                        fetch('http://localhost:3000/addListing', {
+                                          method: 'POST',
+                                          headers: {
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                          },
+                                          body: JSON.stringify(postObj)
+                                        })
+                                          .then(() => {
+                                            window.location = '/listings';
+                                          });
                                       });
                                   })
 
