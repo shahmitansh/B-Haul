@@ -12,7 +12,8 @@
     "sinon": "^7.5.0"
   },
   "scripts": {
-    "test": "nyc --reporter=text mocha --exit"
+    "test": "nyc --reporter=text mocha --exit",
+    "start": "node main.js"
   },
   "devDependencies": {
     "jsdoc": "^3.6.3",
