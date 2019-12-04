@@ -5,6 +5,7 @@ CS 130 Project for Ken Gu, Brian Lee, Edward Chu, Manish Rao, Mitansh Shah, Sank
 
 ## Documentation
 Documentation is available inside /out. Generate documentation using `jsdoc *.js`.
+
 An HTML preview is available at [here](https://htmlpreview.github.io/?https://github.com/shahmitansh/B-Haul/blob/master/out/index.html).
 
 ## Deploying
