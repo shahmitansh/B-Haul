@@ -37,7 +37,7 @@ class MapView extends React.Component {
     const reqPics = require.context('./mock', true, /\.jpg$/)
     const paths = reqPics.keys()
 
-    const fetchUrl = `https://bhaulucla.herokuapp.com/getProductList/filtered${this.props.location.location.search}`;
+    const fetchUrl = `http://localhost:3000/getProductList/filtered${this.props.location.location.search}`;
     console.log(fetchUrl);
     fetch(fetchUrl)
       .then(res => res.json())

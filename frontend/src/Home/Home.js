@@ -15,7 +15,7 @@ export default class Home extends React.Component {
     return (
       <div id="home">
         {this.props.pageMode == 'buy' ? <HeaderBuy /> : <HeaderSell />}
-        {this.props.pageType == 'landing' ? <Landing /> : <PreferencePage />}
+        {this.props.pageType == 'landing' ? <Landing /> : <PreferencePage location={this.props.location} />}
         <FooterPictures />
       </div>
     );
