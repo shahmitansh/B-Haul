@@ -61,7 +61,7 @@ import FooterPictures from '../FooterPictures/FooterPictures.js';
                   </div>  :
                   <div>
                     <div className="Preference-Prompt"> Welcome to B-Haul </div>
-                    <div className="Preference-Slogan"> Moving Furniture Never Got Easier </div>
+                    <div className="Preference-Slogan"> Moving Furniture Has Never Been Easier </div>
                     <LoginButton className = "Facebook" facebookResponse={this.facebookResponse}/>
                   </div>
                 }
