@@ -12,7 +12,7 @@ const FilterFactory = require('./filterFactory.js')
 const MongoDao = require('./dao.js');
 
 //Serving static files from the react app as necessary
-app.use(express.static(path.join(__dirname, '../frontend/src')))
+app.use(express.static(path.join(__dirname, '../frontend/build')))
 
 // Connection URL
 var mongoDao = null;
