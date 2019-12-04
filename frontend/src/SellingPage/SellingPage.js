@@ -729,7 +729,6 @@ export default class SellingPage extends Component {
       let fileParts = this.uploadInput.files[0].name.split('.');
       let fileName = fileParts[0];
       let fileType = fileParts[1];
-      console.log("Preparing the upload");
       return axios.post("https://bhaulucla.herokuapp.com/sign_s3",{
         fileName : fileName,
         fileType : fileType
@@ -738,8 +737,6 @@ export default class SellingPage extends Component {
         var returnData = response.data.data.returnData;
         var signedRequest = returnData.signedRequest;
         var url = returnData.url;
-        console.log("S3 URL: " + url);
-        console.log("Recieved a signed request " + signedRequest);
 
        // Put the fileType in the headers for the upload
         var options = {
@@ -749,7 +746,6 @@ export default class SellingPage extends Component {
         };
         return axios.put(signedRequest,file,options)
         .then(result => {
-          console.log("Response from s3")
           return url;
         })
         .catch(error => {
@@ -776,7 +772,6 @@ export default class SellingPage extends Component {
                         <FormButton
                             onClick={(value: FormValue) =>
                               {
-                                console.log("Button value", value)
                                 this.computeLatLng(value.Address, value.City, value.Zipcode)
                                   .then(latlngres => {
                                     this.handleUpload()
@@ -796,7 +791,6 @@ export default class SellingPage extends Component {
                                           elevation: '',
                                           price: value.Price
                                         };
-                                        console.log(postObj, 'postobj')
                                         //image posts correctly
                                         fetch('https://bhaulucla.herokuapp.com/addListing', {
                                           method: 'POST',

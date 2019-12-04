@@ -5,9 +5,9 @@ import FacebookLogin from 'react-facebook-login';
 import HeaderBuy from '../Header/HeaderBuy.js';
 import FooterPictures from '../FooterPictures/FooterPictures.js';
 
-const componentClicked = () => {
-    console.log( "Clicked!" )
-  }
+// const componentClicked = () => {
+//     console.log( "Clicked!" )
+//   }
 
   const LoginButton = ({facebookResponse}) => (
     <div className="Facebook">
@@ -15,7 +15,7 @@ const componentClicked = () => {
       appId="448199699195984"
       // autoLoad
       fields="name,email,picture"
-      onClick={componentClicked}
+      // onClick={componentClicked}
       callback={facebookResponse}
       icon="fa-facebook"/>
     </div>
@@ -40,7 +40,6 @@ const componentClicked = () => {
   export default class Facebook extends Component {
     state = {user:false, display:true}
     facebookResponse = (response) => {
-      console.log( response );
       localStorage.setItem('facebookID', response.id);
       localStorage.setItem('facebookURL', response.picture.data.url);
       localStorage.setItem('facebookEmail', response.email);
@@ -58,10 +57,7 @@ const componentClicked = () => {
                     {localStorage.setItem('facebookID', this.state.user.id)}
                     {localStorage.setItem('facebookURL', this.state.user.picture.data.url)}
                     {localStorage.setItem('facebookEmail', this.state.user.email)}
-                    {console.log(localStorage.getItem('facebookID'), 'facebookID')}
-                    {console.log(this.state.user.picture.data.url, "pic")}
                     {localStorage.setItem('facebookURL', this.state.user.picture.data.url)}
-                    {console.log(localStorage.getItem('facebookURL'), 'facebookURL')}
                   </div>  :
                   <div>
                     <div className="Preference-Prompt"> Welcome to B-Haul </div>

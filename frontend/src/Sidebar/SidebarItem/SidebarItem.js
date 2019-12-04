@@ -11,7 +11,6 @@ class SidebarItem extends React.Component {
 
   render() {
     const properties = this.props.item.properties;
-    console.log(properties, 'properties')
     Object.keys(properties).forEach(key => properties[key] == undefined || properties[key] == '' || properties[key] == null ? delete properties[key] : '');
 
     const propertyList = Object.keys(properties).map((pair) =>
@@ -22,7 +21,6 @@ class SidebarItem extends React.Component {
     );
 
     const imgPath = `${this.props.item.imageURL}`;
-    console.log(imgPath);
 
     return (
       <div className="sidebar-item" onClick={this.itemClicked}>

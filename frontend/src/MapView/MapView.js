@@ -26,19 +26,16 @@ class MapView extends React.Component {
       globalFilters: this._initGlobalFilters()
     };
     this.state.localFilters = this._initLocalFilters(this.state.globalFilters.type.current);
-    console.log(this.state);
     this.distanceSet = false;
   }
 
   imageURL = 'https://skypic.attic.city/?bucket=cdn.attic.city&key=items/9f3cc7dcf926d6adb92eb4eedf21bfaeface62ebe4b6a6d92fcdb44b2d242de3-w670h705q75fit.jpeg';
 
   componentDidMount(){
-    console.log(this.props.location);
     const reqPics = require.context('./mock', true, /\.jpg$/)
     const paths = reqPics.keys()
 
     const fetchUrl = `https://bhaulucla.herokuapp.com/getProductList/filtered${this.props.location.location.search}`;
-    console.log(fetchUrl);
     fetch(fetchUrl)
       .then(res => res.json())
       .then(result => this._processListings(result));
@@ -114,7 +111,6 @@ class MapView extends React.Component {
     // }
 
     let productList = Object.values(rawListings['products']);
-    console.log(productList, 'productList')
     //no image
     let tempListings = [];
 
@@ -137,7 +133,6 @@ class MapView extends React.Component {
           elevation: product.elevation
         }
       });
-      console.log(tempListings, 'all listings')
     }
 
     this.setState({listings: tempListings});
@@ -191,7 +186,6 @@ class MapView extends React.Component {
 
   render() {
     const items = this.state.listings;
-    // console.log(items, 'items')
     if (!this.distanceSet && items.length > 0 && this.props.userLat != undefined && this.props.userLng != undefined) {
       this.distanceSet = true;
       this._computeDistances();

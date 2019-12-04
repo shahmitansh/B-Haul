@@ -119,7 +119,6 @@ export default class Listings extends Component {
                             <Bundle bundles={this.bundles}
                                     bundleClicked={this.state.bundleClicked}
                             />
-                        {console.log(localStorage.getItem('facebookID'), 'facebookID')}
                         {/* {this.sampleBundle.title}  */}
                         </div>
                     </div>
