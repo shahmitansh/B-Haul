@@ -17,9 +17,9 @@
       "filterType": "number",
       "filterOptions": [
         0,
-        5000
+        1000
       ],
-      "defaultOption": "0,5000"
+      "defaultOption": "0,1000"
     },
     {
       "filterName": "color",
