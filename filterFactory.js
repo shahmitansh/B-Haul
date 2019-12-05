@@ -77,7 +77,7 @@ function filterType(products, type){
 		if (Array.isArray(products[key].type) && products[key].type.includes(type)){
 			returnList.push(products[key])
 
-		}else if (products[key].type == type){
+		}else if (products[key].type.toLowerCase() == type){
 			returnList.push(products[key])
 		}
 	}
