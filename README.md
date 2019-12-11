@@ -15,6 +15,9 @@ In one terminal tab:
 In another terminal tab:
 `cd frontend && yarn start`
 
+Heroku:
+Check out our app [here](https://bhaulucla.herokuapp.com)
+
 ## Testing
 To run backend tests:
 `cd backend && npm test`
